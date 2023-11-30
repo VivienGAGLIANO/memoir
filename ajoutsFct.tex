@@ -1,0 +1,118 @@
+% -------------------------------------------------
+% PACKAGES SUPPLEMENTAIRES au besoin
+% -------------------------------------------------
+
+% Les paquets déjà chargés sont les suivants :
+%-->    \usepackage[utf8]{inputenc} ou \usepackage[latin1]{inputenc}
+%-->    \usepackage[T1]{fontenc}
+%-->    \usepackage{lmodern}
+%-->    \usepackage{enumerate}
+%-->    \usepackage{amsfonts, amsmath, amssymb, stmaryrd, latexsym}
+%-->    \usepackage{xspace, setspace}
+%-->    \usepackage{array}
+%-->    \usepackage[dvipsnames,usenames]{color}
+%-->    \usepackage[table]{xcolor}
+%-->    \usepackage{wrapfig, epsfig}
+%-->    \usepackage[english,frenchb]{babel}
+%-->    \usepackage{frbib} % bibliography en francais
+%-->    \usepackage{fancyhdr}
+%-->    \usepackage{geometry}
+%-->    \usepackage{ulem} % for sout and underline
+%-->    \usepackage{times,helvet,courier}
+%-->    \usepackage{listings} (pour le code source)
+%-->    \usepackage[pdftex, colorlinks, linkcolor=blue]{hyperref}
+%-->    \usepackage[square, numbers]{natbib}
+%-->    \usepackage[nomain, automake, abbreviations, nonumberlist, toc]{glossaries-extra} % abréviations
+%-->    \usepackage{booktabs} 
+%-->    \usepackage{doi}
+%-->    \usepackage{refstyle}   % permet de faciliter les références croisées et le changement de langue
+%-->    \usepackage[final]{pdfpages} % permet l'inclusion de pdf dans le document (voir contenu/articlePublie.tex)
+%-->    \usepackage[a-1b]{pdfx}	
+
+%\usepackage{biblatex}
+
+%\usepackage{splitbib}
+%\begin{category}[A]{First category}
+%	\SBentries{deschenes98,BuDo.99-guide-B}
+%\end{category}
+%\begin{category}[B]{Second category}
+%		\SBentries{Abr.96-BBook,Hoa.85-CSP,Jac.83-JSD,Mil.89-CCS}
+%\end{category}
+
+%% =====================================
+%% Ajoutez, enlevez ou adaptez ICI
+%% =====================================
+% \usepackage[nooneline]{subfigure} % deprecated
+\usepackage{graphicx}
+\usepackage{datetime}
+\usepackage{algorithm}
+\usepackage{algpseudocode} % permet de faire du pseudo code en francais
+\usepackage{amsmath}
+%\usepackage{caption}
+\usepackage{subcaption} % subfigures
+% \usepackage{soul} % strike through % workn't
+\usepackage{float}
+\usepackage{mathrsfs} % stylised H for Hilbert tranform
+\usepackage{tikz} % draw in LaTex
+\usepackage{pgfplots} % draw plots directly in LaTex
+\pgfplotsset{width=6cm, height=4.5cm, compat=1.9}
+\usepgfplotslibrary{external} % externalize plot compute for faster render time
+\tikzexternalize
+
+\if@english 
+	% defaut du paquet
+\else % vous pouvez adapter au besoin
+	\algrenewcommand\algorithmicwhile{\textbf{tant\_que}}
+	\algnewcommand\algorithmiccase{\textbf{}}
+	\algnewcommand\algorithmicswitch{\textbf{selon}}
+	\algnewcommand\algorithmicelsif{\textbf{sinon si}}
+	\algrenewcommand\algorithmicdo{}%\textbf{faire}
+	\algrenewcommand\algorithmicif{\textbf{si}}
+	\algrenewcommand\algorithmicelse{\textbf{sinon}}
+	\algrenewcommand\algorithmicthen{\textbf{alors}}
+	\algrenewcommand\algorithmicend{\textbf{fin}}
+	\algrenewcommand\algorithmicfunction{\textbf{fonction}}
+	\algrenewcommand\algorithmicfor{\textbf{pour}}
+	\algrenewcommand\algorithmicrepeat{\textbf{répéter}}
+	\algrenewcommand\algorithmicuntil{\textbf{jusqu'à}}
+	\algrenewcommand\algorithmicreturn{\textbf{retourner}}
+	\algrenewtext{EndFunction}{\algorithmicend}
+	\algrenewtext{EndFor}{\algorithmicend\_\algorithmicfor}
+	\algrenewtext{EndCase}{\algorithmicend\_\algorithmiccase}
+	\algrenewtext{EndIf}{\algorithmicend\_\algorithmicif}
+	\algrenewtext{EndSwitch}{\algorithmicend\_\algorithmicswitch}
+	\algrenewtext{EndWhile}{\algorithmicend\_\algorithmicwhile}
+	\algdef{SE}[WHILE]{While}{EndWhile}[1]{\algorithmicwhile\ #1\ \algorithmicdo}{\algorithmicend\_\algorithmicwhile}%
+	\algdef{SE}[SWITCH]{Switch}{EndSwitch}[1]{\algorithmicswitch\ #1}{\algorithmicend\_\algorithmicswitch}%
+	\algdef{SE}[CASE]{Case}{EndCase}[1]{\algorithmiccase\ #1 :}{\algorithmicend\_\algorithmiccase}%
+	\algtext*{EndCase}
+	\algrenewcommand\algorithmicrequire{\textbf{Pré-condition}}
+	\algrenewcommand\algorithmicensure{\textbf{Post-condition}}
+        \DeclareMathOperator{\sgn}{sgn}
+        \DeclareMathOperator{\hil}{\mathscr{H}}
+\fi
+
+% -------------------------------------------------
+% COMMANDES SUPPLEMENTAIRES
+% -------------------------------------------------
+
+%---- pour l'anglais ----
+\newcommand{\ie}{{i.e.}\xspace}
+\newcommand{\eg}{{e.g.}\xspace}
+\newcommand{\cf}{{\it cf.}\xspace}
+
+%---- pour le francais ----
+\newcommand{\cad}{{c'est-\`a-dire}\xspace}
+\newcommand{\Cad}{{C'est-\`a-dire}\xspace}
+\newcommand{\etc}{{\it etc.}\xspace}
+
+%---- Math ----
+\newcommand{\N}{\ensuremath{\mathbb{N}}\xspace}
+\newcommand{\Z}{\ensuremath{\mathbb{Z}}\xspace}
+
+% Nouvelles d\'efintion d'environnement de th\'eor\`eme et de d\'efinition.
+\newtheorem{frtheoreme}{Th\'eor\`eme}[section]
+\newtheorem{frlemme}[frtheoreme]{Lemme}
+\newtheorem{frprop}[frtheoreme]{Proposition}
+\newtheorem{frcoro}[frtheoreme]{Corollaire}
+\newtheorem{frdefinition}{D\'efinition}[section]

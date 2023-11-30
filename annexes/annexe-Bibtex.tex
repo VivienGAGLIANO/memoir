@@ -1,0 +1,103 @@
+% !TeX spellcheck = fr_FR
+
+\chapter{Comment utiliser bibtex}
+\label{app:bibtex}
+
+Les notices de la bibliographie doivent \^etre mises dans un document \texttt{.bib}. La bibliographie de ce gabarit est située dans le fichier \texttt{bibliographie.bib} (précisé dans le document principal). Vous y trouverez une panoplie d'exemples de notices de toutes sortes. C'est \LaTeX~avec bibtex qui s'occupe de classer et d'int\'egrer les bons liens dans votre document, ainsi que de g\'en\'erer la bibliographie correctement.
+
+Il y a plusieurs types de documents pouvant \^etre utilis\'es:
+\begin{description}
+	\item[book] livre (exemples~\cite{Abr.96-BBook,Hoa.85-CSP, Jac.83-JSD,Mil.89-CCS});
+	\item[manual] manuel d'utilisation, sensiblement \'equivalent \`a un livre \cite{STE.97-Manuel-B};
+	\item[inbook] chapitre d'un livre(exemple ~\cite{Ch.96-Programmer-avec-Scheme, kevorkian90});
+	\item[article] article de recherche classique publi\'e dans un journal (et non une conf\'erence) (exemples \cite{Bo.84-VVS,FFL.05-SOSYM,FSd.03-eb3});
+	\item[proceedings] les actes d'une conf\'erence (exemples \cite{ArGnMa.03-FME, LeWe.09-IFM});
+	\item[inproceedings] parution dans un acte de conf\'erence (exemples \cite{Matra.99-Meteor,FF.07-ICFEM,Pn.79-The-Temporal-Semantics-of-Concurrent-Programs}) \'eventuellement avec une r\'ef\'erence crois\'ee  (\texttt{crossref}) (exemple \cite{LeBu.03-ProB});
+	\item[conference] identique au pr\'ec\'edent;
+	\item[phdthesis] th\`ese de doctorat (\cite{FRA.06-thesis});
+	\item[masterthesis] m\'emoire de ma\^itrise (\cite{Ri.01-EB3});
+	\item[techreport] rapport de recherche paru dans une institution (universitaire ou autre) et disponible publiquement (\cite{FRA.05-TR9});
+	\item[incollection] article d'une collection d'articles parus ailleurs (\cite{BB.89-LOTOS, CitekeyIncollection});
+	\item[booklet] livret ou un document comme une th\`ese d'habilitation \`a diriger la recherche ou un manuel utilisateur (\cite{La.02-CDBD,STE.97-Manuel-B});
+	\item[unpublished] document non publi\'es, par exemple pour cause de confidentialit\'e (\cite{deschenes98, BuDo.99-guide-B});
+	\item[misc] n'importe quel autre document, utile pour un site Internet ou un document publié sur un site personnel (\cite{INRIA.cadp, Gi.08-Logic-Vs.-Intelligence}). On évitera ce genre de référence dans la bibliographie puisqu'elle est hautement volatile.
+\end{description}
+
+Les références des articles \cite{FRA.05-TR9, FF.07-ICFEM} illustrent pourquoi on ne doit, en général pas mettre de lien URL vers un article puisque l'éditeur des résumés a réorganisé son site et l'adresse n'est plus valide. L'usage d'un identifiant numérique d'objet (DOI, \textit{Digital object identifier}) si disponible est plus pertinent : \cite{FF.07-ICFEM, FFL.05-SOSYM} pour trouver l'article sur Internet \cite{Uqam.presGuide.18} \footnote{Veuillez consulter le site \\
+\url{http://bib-it.sourceforge.net/help/fieldsAndEntryTypes.php} pour plus de détails}.
+
+Les commandes de référence standards de base sont :
+\begin{itemize}
+	\item Référence unique : \cite{Abr.96-BBook};
+	\item Références multiples : \cite{deriche95, tschumperle02, weickert97};
+	\item Références par le nom des personnes autrices (avec lien) : \citeauthor{deriche95}.
+\end{itemize}
+La dernière option devrait être utilisée lorsque le document a déjà été référé avec son numéro dans du texte qui précède d'assez près.
+
+\section{Natbib}
+
+Avec le paquet \texttt{natbib} inclus dans la classe (options crochets et numéros)
+
+Références uniques :
+\begin{itemize} 
+	\item Numéro seul : \citep{deriche95};
+	\item Nom des personnes autrices et numéro de la notice : \citet{deriche95};
+	\item Nom des personnes autrices sans numéro (avec lien) : \citeauthor{deriche95};
+	\item Année de la publication (avec lien) : \citeyear{deriche95};
+	\item Précision de l'endroit dans le document : \citep[chap. 2]{deriche95};
+	\item Ajout d'une note au préalable : \citep[par exemple][]{Essen2012};
+	\item Précision de l'endroit et note préalable : \citep[p.ex.][p. 32]{Essen2012}.
+\end{itemize}
+
+
+Références multiples :
+\begin{itemize} 
+	\item Numéros seuls : \citep{auclair02a, tschumperle02, weickert97};
+	\item Nom des personnes autrices et numéros des notices : \citet{auclair02a, tschumperle02, weickert97};
+	\item Nom des personnes autrices sans numéro : \citeauthor{auclair02a, tschumperle02, weickert97};
+	\item Années de publication : \citeyear{auclair02a, tschumperle02, weickert97}.
+\end{itemize}
+
+\section{Noms des auteurs et autrices}
+
+Lorsque la liste des auteurs et autrices contient beaucoup de noms, les deux styles de bibliographies fournis (\texttt{UdeSDIfr.bst} et \texttt{UdeSDIeng.bst}) remplacent les derniers auteurs par \textit{et al.}. Par exemple la notice dans le fichier .bib se lit comme suit:
+\begin{lstlisting}[nolol,numbers=none,frame=]
+@article{Essen2012,
+	author = {Essen, D.C. and Ugurbil, K and Auerbach, Edward and Barch, Deanna and Behrens, T.E.J. and Bucholz, Richard and Chang, A and Chen, Liyong and Corbetta, Maurizio and Curtiss, Sandra and Della Penna, Stefania and Feinberg, David and Glasser, Matthew and Harel, Noam and Heath, A.C. and Larson-Prior, Linda and Marcus, Daniel and Michalareas, Georgios and Moeller, Steen and Yacoub, Essa},
+	year = {2012},
+	month = {02},
+	pages = {2222-31},
+	title = {The Human Connectome Project: A data acquisition perspective},
+	volume = {62},
+	journal = {NeuroImage},
+	doi = {10.1016/j.neuroimage.2012.02.018}}
+\end{lstlisting}
+
+Notez que la notice visible dans la bibliographie ne contient que six des noms des auteurs et que les prénoms ont été remplacés par l'initiale du premier prénom :
+% TODO: \usepackage{graphicx} required
+\begin{center}
+	\includegraphics[width=\linewidth]{"Notice"}
+\end{center}
+
+Exemples de citations dans le texte :
+
+\begin{itemize}
+	\item Noms des six premiers auteurs et numéro : \citet*{Essen2012}
+	\item Nom du premier auteur sans numéro (avec lien) : \citeauthor{Essen2012}
+	\item Noms des six premiers auteurs sans numéro (avec lien) : \citeauthor*{Essen2012}	
+\end{itemize}
+
+Il est aussi possible d'ajouter dans la notice \texttt{and others} pour remplacer tous les derniers auteurs ou autrices par un terme générique.
+
+\begin{lstlisting}[nolol,numbers=none,frame=]
+@book{kevorkian90,
+	author = {J. Kevorkian and others},
+	title = {{Partial Differential Equations : Analytical Solution Techniques}},
+	...
+\end{lstlisting}
+
+Notez que le terme \texttt{others} a été remplacé dans la notice visible comme suit.
+\begin{center}
+	\includegraphics[width=\linewidth]{"NoticeEtal"}
+\end{center}
+

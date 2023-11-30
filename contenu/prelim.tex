@@ -1,0 +1,64 @@
+% -------------------------------------------------
+% PAGE DE TITRE
+% -------------------------------------------------
+
+%
+% ATTENTION : ne pas utiliser les macros \title \author ou \date !!!
+%
+\auteur{Vivien Gagliano}
+\titre{Synthèse de texture procédurale pour environnement virtuel}
+
+% n'existe que si la thèse est rédigée en anglais (pas obligatoire)
+\englishTitle{Title in english}
+
+
+% n'existent que si l'option cotutelle est présente
+\institutionPartenaire{Université XYZ} 
+\departementPartenaire{au département (centre, institut) ABC} 
+\gradePartenaire{docteur en informatique} 
+
+%\dedicace{À quelqu'un de significant} %%% ajouter un item de dédicace
+
+% -------------------------------------------------
+
+% DESCRIPTION DU SOMMAIRE (EN FRANCAIS) -----------
+\sommaire{Écrire ici votre sommaire en français.}
+\motsCles{Mettre vos mots-clés ici séparés par des virgules}
+
+%  optionnel, valide si votre document est en anglais 
+%  optionnal, valid only if your document is written in english, you have to provide a french abstract 
+%  option	english du document
+\abstract{Write here your abstract in english}
+\keywords{Put your keywords here separated by commas}
+
+
+% REMERCIEMENTS -----------------------------------
+\remerciements{Ajoutez ici vos remerciements. Those can be in english if the document is in english.}
+
+% LISTE DES ABREVIATIONS --------------------------
+%% Insérez ici  toutes les abréviations que vous souhaitez utiliser dans le document.
+% les entrées seront triées
+
+\newacronym{etiquette}{ABR}{Expression à remplacer}
+\newacronym{edp}{EDP}{Équations aux dérivees partielles}
+\newacronym{sw}{SW}{Star Wars}
+\newacronym{st}{ST}{Star Trek}
+\newacronym{bv}{BV}{Babylon V}
+
+% La commande \glsaddallunused qui est juste avant \end{document} dans le fichier .tex principal fait en sorte que toutes les entrées 
+% d'abréviations définies dans le fichier prelim sont incluses dans la liste
+% si ce comportement n'est pas souhaité, mettrze en commentaires.
+
+% Si cette ligne est en commentaire, les abréviations seront listées dans la table des abréviations 
+% si elles sont utilisées dans le texte seulement. Pour ce faire, vous devez utiliser la
+% commande \gls(etiquette) à chaque fois dans le texte.
+% en début de chapitre, utiliser \glsentryfull{edp} à la première utilisation.
+% consulter glossariesbegin.pdf dans la documentation du paquetage glossaries 
+% ou la page LaTeX/Glossary dans le wikibook sur Latex (https://en.wikibooks.org/wiki/LaTeX/Glossary)
+
+% Précisions
+% Don’t use \gls in chapter or section headings as it can have some unpleasant
+% side-effects. Instead use \glsentrytext for regular entries and one of
+% \glsentryshort, \glsentrylong or \glsentryfull for acronyms.
+% Alternatively use glossaries-extra which provides special commands for use in
+% section headings and captions, such as \glsfmtshort{⟨label⟩}.
