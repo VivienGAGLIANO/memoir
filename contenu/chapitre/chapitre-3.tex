@@ -115,7 +115,7 @@ où l'amplitude des composantes de fréquences positives est doublée, par souci
     \end{axis}
     \end{tikzpicture}
 
-    \captionof{figure}{Création du signal analytique dans le domaine fréquentiel (seule la partie réelle est montrée). Le signal original réel (gauche), qui présente une symétrie hermitienne, est ajouté à sa transformée de Hilbert (milieu), lui impair, pour former le signal analytique (droite), dépourvu de fréquence négative.}
+    \caption[Signal analytique pour un signal simple]{Création du signal analytique dans le domaine fréquentiel (seule la partie réelle est montrée). Le signal original réel (gauche), qui présente une symétrie hermitienne, est ajouté à sa transformée de Hilbert (milieu), lui impair, pour former le signal analytique (droite), dépourvu de fréquence négative.}
     \label{fig:complex-analytic-representation}
 \end{figure}
 
@@ -137,10 +137,11 @@ où $F_h(\omega)$ est la « version impaire » du signal $F(\omega)$ :
     \right.
 \end{equation}
 
-que l'on peut reformuler à l'aide de la fonction signe $\sgn$ :
+que l'on peut reformuler à l'aide de la fonction signe :
 
 \begin{equation}
-    F_h(\omega) = F(\omega)\cdot \sgn(\omega).
+    F_h(\omega) = \sgn(\omega)\cdotF(\omega).
+    \label{eq:2.5}
 \end{equation}
 
 On rappelle l'expression de la fonction signe :
@@ -196,7 +197,7 @@ On obtient alors la ré-écriture de l'équation \ref{eq:2.1} :
     \end{axis}
     \end{tikzpicture}
 
-    \captionof{figure}{Exemple de représentation analytique. Le signal original réel (en bleu), et sa transformée de Hilbert imaginaire pure (en rouge).}
+    \caption[Signal analytique pour un signal complexe]{Exemple de représentation analytique. Le signal original réel (en bleu), et sa transformée de Hilbert imaginaire pure (en rouge).}
     \label{fig:analytic-representation}
 \end{figure}
 
@@ -323,7 +324,7 @@ Cette représentation introduit le concept d'\textit{amplitude locale} et de \te
     \end{axis}
     \end{tikzpicture}
 
-    \caption{Extraction d'informations locales pour un cosinus modulé par un sinus. L'amplitude locale (gauche) donne l'enveloppe de la sinusoïde, et la phase locale (droite) nous donne de l'information quant à la position dans le cycle d'oscillation.}
+    \caption[Informations locales pour un signal simple]{Extraction d'informations locales pour un cosinus modulé par un sinus. L'amplitude locale (gauche) donne l'enveloppe de la sinusoïde, et la phase locale (droite) nous donne de l'information quant à la position dans le cycle d'oscillation.}
     \label{fig:local-pha-amp}
 
 \end{figure}
@@ -395,7 +396,7 @@ L'exemple donné avec la figure \ref{fig:local-pha-amp} fonctionne bien car le s
     \end{axis}
     \end{tikzpicture}    
 
-    \caption{Caption}
+    \caption[Informations locales pour un signal complexe]{Informations locales pour un signal complexe, somme de plusieurs sinusoïdes. Pour un tel signal, l'interprétation des informations locales est moins évidente.}
     \label{fig:complex-local-pha-amp}
 \end{figure}
 
@@ -459,7 +460,7 @@ En appliquant un filtre log-Gabor à notre signal avant de lui appliquer la tran
     \end{axis}
     \end{tikzpicture}
 
-    \caption{Représentation dans le domaine fréquentiel de filtres log-Gabor de différents paramètres. En rouge, $\omega_0=0.1, \sigma_0 = 0.5$. En bleu, $\omega_0=0.2, \sigma_0 = 0.5$. En vert, $\omega_0=0.2, \sigma_0 = 0.8$.}
+    \caption[Filtres log-Gabor]{Représentation dans le domaine fréquentiel de filtres log-Gabor de différents paramètres. En rouge, $\omega_0=0.1, \sigma_0 = 0.5$. En bleu, $\omega_0=0.2, \sigma_0 = 0.5$. En vert, $\omega_0=0.2, \sigma_0 = 0.8$.}
     \label{fig:log-gabor-filters}
 \end{figure}
 
@@ -471,17 +472,138 @@ Si l'on compare le modèle du signal analytique à celui de la transformée de F
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{contenu/resources/images/scalogram}
-    \caption{Scalogramme de la phase locale pour un signal complexe. La phase locale est représentée en échelle de gris, et varie en fonction du temps (en abscisse) et de l'échelle en nombre de pixels (en ordonnée). Diagramme par Bridge~\cite{bridge_introduction_2018}.}
+    \caption[Scalogramme de la phase locale]{Scalogramme de la phase locale pour un signal complexe. La phase locale est représentée en échelle de gris, et varie en fonction du temps (en abscisse) et de l'échelle en nombre de pixels (en ordonnée). Diagramme par Bridge~\cite{bridge_introduction_2018}.}
     \label{fig:scalogram}
 \end{figure}
 
 
 \subsection{Deux dimensions, signal monogène}
 
-Le modèle du signal analytique est utile à l'extraction d'informations locales pour des signaux 1D, et il serait intéressant d'avoir accès à ces informations pour des images, donc des signaux 2D. En effet l'importance de la phase dans l'analyse d'image a déjà été soulignée depuis longtemps~\cite{oppenheim_importance_1981}. Cependant, l'application n'est pas directe dans le cas de deux (ou plus) dimensions, car il y a une notion de direction à considérer. C'est ce que le modèle du signal monogène, proposé par Felsberg et Sommer~\cite{felsberg_monogenic_2001}, permet de faire, que nous allons développer dans cette partie.
+Le modèle du signal analytique est utile à l'extraction d'informations locales pour des signaux 1D, et il serait intéressant d'avoir accès à ces informations pour des images, donc des signaux 2D. En effet l'importance de la phase dans l'analyse d'image a déjà été soulignée depuis longtemps~\cite{oppenheim_importance_1981}. Cependant, l'application n'est pas directe dans le cas de deux (ou plus) dimensions, car il y a une notion de direction à considérer. C'est ce que le modèle du signal monogène, proposé par Felsberg et Sommer~\cite{felsberg_monogenic_2001}, permet de faire, et que nous allons développer dans cette partie.
 
 \subsubsection{Construction du signal monogène}
 
+Pour créer la représentation analytique d'un signal 1D, on SY génère un imaginaire pur, en quadrature de phase avec le signal original, en utilisant la transformée de Hilbert. Pour un signal 2D, on a besoin de former deux « parties imaginaires », une pour chaque direction. On ne peut donc pas représenter le signal monogène comme un complexe. Pour un traitement exact, il faudrait utiliser les quaternions, que l'on peut voir comme une extension des nombres complexes à une plus haute dimension. Pour simplifier la compréhension et manipulation, on peut cependant se passer de la théorie des quaternions, et traiter le signal monogène comme s'il avait trois parties réelles distinctes dans un premier temps.
+Pour générer les parties impaires du signal, on utilise une généralisation de la transformée de Hilbert à plusieurs dimensions, la {\it transformée de Riesz}. Soit $f$ un signal d'un espace 2D de la variable $\mathbf{x} = (x, y)^T$, et $F$ sa représentation dans le domaine fréquentiel obtenue par transformée de Fourier 2D, avec $\mathbf{\omega}=(\omega_x, \omega_y)^T$ une fréquence 2D. Alors les parties impaires de $f$, $F_{o1}$ et $F_{o2}$, sont données par :
+
+\begin{align}
+    F_{o1}(\mathbf{\omega}) &= \widehat{\mathcal{R}_1(f)}(\mathbf{\omega}) =
+        \left\{
+        \begin{array}{ll}
+            i\frac{\omega_x}{||\omega||}F(\omega), & \omega > 0 \\
+            0, & \omega = 0,
+        \end{array}
+        \right. \\
+    F_{o2}(\mathbf{\omega}) &= \widehat{\mathcal{R}_2(f)}(\mathbf{\omega}) =
+        \left\{
+        \begin{array}{ll}
+            i\frac{\omega_y}{||\omega||}F(\omega), & \omega > 0 \\
+            0, & \omega = 0.
+        \end{array}
+        \right.
+    \label{eq:2.20}
+\end{align}
+
+Avec cette définition de $F_{o1}$ et $F_{o2}$, on a que les signaux correspondant dans le domaine spatial sont des signaux à valeurs réelles. En effet un signal 2D à valeurs réelles $f$ a un spectre dont la partie réelle est paire, et la partie imaginaire impaire, soit :
+
+\begin{equation}
+    Re\{F(\omega)\} = Re\{F(-\omega)\}, \quad Im\{F(\omega)\} = -Im\{F(-\omega)\}.
+\end{equation}
+
+Dans la définition~\ref{eq:2.20}, comme $F$ est le spectre d'un signal réel, on a que $F_{o1}$ et $F_{o2}$ vérifient ces propriétés de symétrie, et donc que les signaux correspondants dans le domaine spatial sont bien réels.
+
+Si l'on compare à comment la transformée de Hilbert est formée~\ref{eq:2.5}, on remarque que ces parties impaires sont des versions généralisées de la transformée de Hilbert, où l'on prend en compte la direction de la fréquence. Chaque composante fréquentielle dans ces parties impaires est déphasée de $-\pi/2$ et mise à l'échelle de telle sorte que l'amplitude soit partagée entre les deux parties.
+
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{.3\textwidth}
+        \includegraphics[width=\textwidth]{contenu/resources/images/disk}
+        \caption{Signal original}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{.3\textwidth}
+        \includegraphics[width=\textwidth]{contenu/resources/images/r2_disk}
+        \caption{Première partie impaire}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{.3\textwidth}
+        \includegraphics[width=\textwidth]{contenu/resources/images/r1_disk}
+        \caption{Seconde partie impaire}
+    \end{subfigure}
+    \caption[Visualisation du signal monogène pour un disque]{Visualisation du signal monogène pour un disque : le signal original $f$ (gauche), et ses parties impaires $f_{o1}$ (milieu) et  $f_{o2}$ (droite), affichées avec une échelle de couleurs encodant la valeur, de -1 (noir) à +1 (blanc).}
+    \label{fig:monogenic-signal-disk}
+\end{figure}
+
+On obtient ainsi une expression du signal monogène comme un vecteur à trois composantes, une paire et deux impaires :
+
+\begin{equation}
+    f_m(\mathbf{x}) =
+    \left[
+        \begin{array}{c}
+        f_e(\mathbf{x}) \\
+        f_{o1}(\mathbf{x}) \\
+        f_{o2}(\mathbf{x})
+        \end{array}
+    \right],
+\end{equation}
+
+où $f_e$ est le signal original, indexé par un $e$ pour souligner qu'il représente la partie paire du signal monogène. Une représentation d'un signal et de ses parties impaires est présentée à la figure~\ref{fig:monogenic-signal-disk}. On remarque notamment que les parties impaires détectent des changements verticaux et horizontaux dans le signal. Ceci est dû au fait que la transformée de Riesz présente une ressemblance et une connexion au gradient (l'équation~\ref{eq:2.20} rappelle fortement la définition du gradient, à un facteur près), que présente aussi d'ailleurs la transformée de Hilbert en une dimension. Ce rapport au gradient ne sera cependant pas exploré plus en profondeur dans la suite de ce travail.
+
+Il est aussi commun de se représenter le signal monogène comme un vecteur de deux composantes seulement, une paire et une impaire, où cette dernière est en fait une combinaison des deux parties impaires présentées ici. Cette représentation est plus compacte, mais ce au détriment de la perte d'information sur l'orientation. Elle sera parfois utilisée dans la suite de ce travail :
+
+\begin{equation}
+    f_o(\mathbf{x}) = \sqrt{f_{o1}(\mathbf{x})^2 + f_{o2}(\mathbf{x})^2}.
+\end{equation}
+
+
+\subsubsection{Amplitude, phase et orientation locales}
+
+Avec cet outil qu'est le signal monogène, on peut maintenant étendre les concepts d'informations locales à nos images, qui sont des signaux 2D. En 1D, on a deux parties pour le signal analytique, que l'on représente en coordonnées polaires avec l'amplitude et la phase. En 2D, on a trois coordonnées, que l'on représente donc en coordonnées sphériques où sont définis le rayon, l'angle d'élévation et l'azimut, comme montré en figure \ref{fig:spherical-representation}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=.45\textwidth]{contenu/resources/images/spherical_representation}
+    \caption[Représentation du signal monogène en coordonnées sphériques]{Représentation du signal monogène $f_m$ (rouge) en coordonnées sphériques, où les axes sont les différentes parties du signal. Le rayon représente l'amplitude locale, l'angle d'élévation $\phi$ la phase locale, et l'azimut $\theta$ l'orientation locale.}
+    \label{fig:spherical-representation}
+\end{figure}
+
+L'amplitude locale $A$ représente, comme en 1D, le rayon de la représentation :
+
+\begin{align}
+    A(\mathbf{x}) &= \sqrt{f_e(\mathbf{x})^2 + f_{o1}(\mathbf{x})^2 + f_{o2}(\mathbf{x})^2} \\
+    &= \sqrt{f_e(\mathbf{x})^2 + f_o(\mathbf{x})^2}.
+\end{align}
+
+La phase locale $\phi$ mesure l'angle entre la partie paire $f_e$ et la partie impaire combinée $f_o$, et représente donc l'angle d'élévation de la représentation :
+
+\begin{equation}
+    \phi(\mathbf{x}) = \arctan\left(\frac{f_o(\mathbf{x})}{f_e(\mathbf{x})}\right).
+\end{equation}
+
+Enfin l'orientation locale $\theta$ complète la représentation en donnant l'angle d'azimut, soit la direction dominante dans l'image à cet endroit, exprimé comme l'orientation de la partie impaire $f_o$ :
+
+\begin{equation}
+    \theta(\mathbf{x}) = \arctan\left(\frac{f_{o2}(\mathbf{x})}{f_{o1}(\mathbf{x})}\right).
+\end{equation}
+
+\bigskip
+
+Comme pour le signal analytique en 1D, il est intéressant d'utiliser des filtres pour sélectionner un niveau d'échelle à analyser, afin d'extraire de l'information sur certains niveaux de structure en particulier. Ici encore, on peut utiliser des filtres log-Gabor pour séléctionner les parties du signal qui nous intéressent.
+
+\begin{tikzpicture}
+    \begin{axis}[
+        title=Example using the mesh parameter,
+        colormap/hot,
+%        y tick {} %IWASHERE
+    ]
+        \addplot3[
+        mesh,
+        samples=50,
+        domain=-3.5:3.5,
+        ]
+        {exp(-(ln(sqrt(x^2+y^2))^2)/(2*ln(.5)^2))};
+    \end{axis}
+\end{tikzpicture}
 
 
 \section{Transformée de Riesz}

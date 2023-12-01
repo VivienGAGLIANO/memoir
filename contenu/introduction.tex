@@ -23,14 +23,14 @@ Un monde virtuel est une méthode de représentation de scènes, réelles ou ima
     \item le domaine militaire, pour faire des simulations de situations ou des entraînements au combat.
 \end{itemize}
 
-\subsection{Types de rendu}
+\subsection*{Types de rendu}
 
 Pour visualiser les scènes virtuelles, on utilise un moteur de rendu, un logiciel utilisant différents algorithmes permettant de traiter une scène en différentes étapes dans le but de synthétiser une image ; ce que l'on appelle le rendu de la scène. Il existe plusieurs méthodes de rendu, et plusieurs moteurs différents qui implémentent ces méthodes en fonction du niveau de réalisme attendu, des effets visuels présents dans la scène, mais surtout en fonction du type d'application désiré. Pour exécuter leurs calculs, les logiciels de rendu s'appuient sur les capacités des cartes graphiques ({\it Graphics Processing Unit} ou GPU en Anglais), des processeurs hautement parallèles et spécialisés pour des calculs graphiques. On distingue deux grands types de rendus, dont les contextes et enjeux diffèrent sensiblement :
 
 \begin{figure}[h!]
     \centering
     \includegraphics[width=\textwidth]{contenu/resources/images/zero_day_comparison}
-    \caption{{\it Zero-Day} (2015), BEEPLE. À gauche rendu original hors-ligne, à droite rendu temps-réel par SY tracé de chemins, NVIDIA \cite{ZeroDay}}
+    \caption[{\it Zero-Day} (2015), BEEPLE]{{\it Zero-Day} (2015), BEEPLE. À gauche rendu original hors-ligne, à droite rendu temps-réel par SY tracé de chemins, NVIDIA \cite{ZeroDay}}
     \label{fig:zero-day}
 \end{figure}
 
@@ -46,7 +46,7 @@ Ces deux types de rendus sont ainsi très différents, et les méthodes dévelop
 
 {\color{red}est ce qu'on positionne tel quel ? Construction de pyramide et PC sont plutot offline...}
 
-\subsection{Maillage}
+\subsection*{Maillage}
 
 Idéalement, on aimerait représenter les objets des scènes (d'un monde ) virtuel(les) de manière continue et exacte, mais une telle représentation est difficilement accessible. Comme solution pratique, on choisit d'utiliser des maillages, des grilles de polygones (souvent des triangles) qui sont une approximation de notre géometrie, approximation dont la complexité et la densité peuvent varier selon les besoins. Les maillages étant SY stockés comme des tableaux de points et de faces, il se pose en effet des questions de coût en espace mémoire et de tractabilité des calculs qui sont effectués sur ces maillages par la suite, surtout dans le cas du rendu temps réel.
 
@@ -59,7 +59,7 @@ Idéalement, on aimerait représenter les objets des scènes (d'un monde ) virtu
 
 \section{Texture}
 
-\subsection{Plaquage de texture}
+\subsection*{Plaquage de texture}
 
 Le maillage seul ne suffit cependant pas à représenter parfaitement la géometrie (micro mesh goes hehe), qui a trop de détails pour la résolution des maillages tractables avec la technologie actuelle. Pour remédier à ce problème, on utilise des textures, qui ajoutent les détails manquants à une géometrie simplifiée. De manière générale, on appelle texture une fonction d'un espace de coordonnées, souvent deux ou trois dimensions, vers un espace de valeurs numériques à une ou plusieurs dimensions. Les dimensions de l'espace d'arrivée sont appelées canaux de la texture. Ils représentent souvent une couleur (RGB ou RGBA), mais peuvent aussi correspondre à d'autres grandeurs (scalaires par exemple) qui encodent des valeurs physiques utiles au rendu de la scène, comme une profondeur, une hauteur, ou un vecteur normal par exemple. La majorité du temps, les textures sont stockées en mémoire comme des images, des tableaux finis de données multi-dimensionnels, que l'on appelle alors des cartes. 
 
@@ -70,33 +70,33 @@ Pour une même surface, il est courant d'utiliser plusieurs textures pour calcul
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{contenu/resources/images/mutli-material-object}
-    \caption{Plusieurs matériaux différents sont utilisés pour le rendu de cet objet \cite{multi-material}}
+    \caption[Rendu d'un objet comportant plusieurs matériaux]{Plusieurs matériaux différents sont utilisés pour le rendu de cet objet \cite{multi-material}}
     \label{fig:multi-material}
 \end{figure}
 
 La méthode de travail usuelle en industrie consiste à regrouper ces différentes textures, ainsi que le modèle d'éclairage, dans un matériau. Les objets d'une scène sont ainsi composés de plusieurs matériaux, qui présentent chacun des propriétés physiques différentes. Une chaise peut par exemple avoir une armature en bois, un recouvrement en cuir et des clous en métal. Pour créer leurs scènes, les artistes façonnent ainsi leurs objets en commençant par la géométrie, avant de créer (ou réutiliser) les différents matériaux pour habiller leurs objets.
 
-\subsection{Échantillonnage}
+\subsection*{Échantillonnage}
 
 L'intérêt de la texture est donc d'augmenter la quantité de détails de notre rendu à faible coût, puisque la géometrie sous-jacente reste plus grossière, et que la résolution de cette dernière est un des facteurs majeurs de ralentissement du rendu d'une scène. Pour plaquer des textures, qui souvent sont des images carrées, sur une surface quelconque, on utilise un système de coordonnées, dites UV, qui permet d'aligner les deux comme souhaité. Les coordonnées UV, un vecteur entre $(0, 0)$ et $(1, 1)$, sont définies pour tous les sommets au moment de la création du maillage. On peut alors utiliser ces coordonnées comme argument de la texture, dont l'espace de coordonnées de départ est aussi entre 0 et 1.
 
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{contenu/resources/images/uv_suzanne}
-    \caption{Visualisation des coordonnées UV de Suzanne \cite{suzanne-uv}, modèle 3D de référence du logiciel Blender}
+    \caption[Coordonnées UV du modèle Suzanne]{Visualisation des coordonnées UV de Suzanne \cite{suzanne-uv}, modèle 3D de référence du logiciel Blender}
     \label{fig:uv-suzanne}
 \end{figure}
 
 Cette étape dite d'échantillonnage s'effectue au moment du rendu. Dans la pipeline graphique de rastérisation, utilisée classiquement pour faire du rendu intéractif, la scène est projetée sur le plan image, puis découpée en fragments de taille inférieure aux polygones formant le maillage des objets de la scène. Les fragments ont une valeur de coordonnée UV, interpolée entre les valeurs des sommets voisins, et peut donc aller interroger les textures pour récupérer les valeurs aux bons endroits. 
 
-\subsection{Filtrage}
+\subsection*{Filtrage}
 
 Cette méthode pose cependant des problèmes dûs à l'encodage discret des textures en image. En effet les fragments rastérisés et les texels de texture échantillonnés représentent tous les deux des surfaces de petite taille, caractérisés par des coordonnées uniques. Il se peut cependant que les surfaces couvertes par les deux ne soient pas les mêmes, mêmes si les coordonnées UV sont identiques ; c'est particulièrement le cas lorsque la taille du fragment et celle du texel sont différentes. 
 
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{contenu/resources/images/schema_filtrage}
-    \caption{À cette distance de l'écran, l'empreinte du fragment $e(P)$ couvre plusieurs texels. Les coordonnées $(u, v)$ ne sont pas suffisantes pour capturer toute l'information.}
+    \caption[Visualisation du problème d'échantillonnage lors du rendu par rastérisation]{À cette distance de l'écran, l'empreinte du fragment $e(P)$ couvre plusieurs texels. Les coordonnées $(u, v)$ ne sont pas suffisantes pour capturer toute l'information.}
     \label{fig:aliasing}
 \end{figure}
 
@@ -130,7 +130,7 @@ De nombreuses méthodes de filtrage plus élaborées sont employées pour obteni
 
 Bien souvent, les surfaces que l'on souhaite couvrir sont de grande taille, par exemple des sols. Produire et stocker des textures de même taille que les surfaces n'est pas toujours envisageable, le coût en temps de création et en empreinte mémoire est trop élevé. Étirer les textures en utilisant les coordonnées UV est une solution, qui atteint cependant ses limites assez rapidement : on remarque très facilement qu'une texture de plus basse résolution est utilisée. En rendu intéractif, on résoud le problème en synthétisant directement une texture de taille adaptée à notre surface. On peut catégoriser les types de texture existants de plusieurs manières ; pour le présent manuscrit, nous les distinguerons selon le niveau d'organisation des éléments qui les compose \ref{fig:échelle-structure}.
 
-\subsection{Algorithme de synthèse}
+\subsection*{Algorithme de synthèse}
 
 On appelle synthèse de texture un procédé qui permet de produire une texture de taille arbitraire, pouvant prendre en argument des paramètres de différente nature. Par extension, on qualifie aussi de synthèse le résultat d'un algorithme de synthèse. Les avantages à utiliser un procédé de synthèse sont multiples. La texture générée est infinie, il est donc facile de l'appliquer à des surfaces de taille quelconque, avec la résolution désirée. De plus, il n'est pas nécessaire de stocker la texture d'avance en mémoire puisqu'on l'évalue au vol, on réduit donc l'empreinte mémoire.
 
@@ -139,7 +139,7 @@ On appelle synthèse de texture un procédé qui permet de produire une texture 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{contenu/resources/images/structure_scale}
-    \caption{Les textures peuvent être classées selon leur niveau de structure : stochastiques ou gaussiennes (gauche), semi-régulières (milieu), ou structurées (droite)}
+    \caption[Classification des textures selon leur niveau de structure]{Les textures peuvent être classées selon leur niveau de structure : stochastiques ou gaussiennes (gauche), semi-régulières (milieu), ou structurées (droite)}
     \label{fig:échelle-structure}
 \end{figure}
 
@@ -147,7 +147,7 @@ Il existe plusieurs types de synthèses différentes, qui produisent des types d
 {\color{red}PARLER DE la métrique des accès texture pour avoir une estimation de la vitesse ?}
 
 
-\subsection{Synthèse temps-réel} % / Types de synthèse
+\subsection*{Synthèse temps-réel} % / Types de synthèse
 
 Sous ces contraintes d'efficacité et de rapidité, de nombreux algorithmes subsistent ; deux grandes catégories sont la synthèse par ré-organisation et la synthèse par convolution.
 
@@ -159,7 +159,7 @@ Le but d'une synthèse par ré-organisation est de reproduire un extrait de text
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{contenu/resources/images/periodic_tiling}
-    \caption{Artefacts d'alignement créés par le pavage périodique, \textit{Monster Hunter Rise} (2021), Capcom. Crédits à N. Lutz \cite{lutz_processus_2021} pour l'image}
+    \caption[Artefacts d'alignement créés par le pavage périodique]{Artefacts d'alignement créés par le pavage périodique, \textit{Monster Hunter Rise} (2021), Capcom. Crédits à N. Lutz \cite{lutz_processus_2021} pour l'image}
     \label{fig:pavage_periodique}
 \end{figure}
 
@@ -181,7 +181,7 @@ Les méthodes existantes de synthèse ne fonctionnent cependant pas bien lorsque
 
 Une des raisons pour lesquelles la synthèse de textures contenant de la structure est difficile est qu'il faut préserver certaines relations entre les texels de l'image pour garder la structure. Savoir quelles relations préserver, pour garder la structure de l'image, et quelles relations supprimer, pour ajouter de la variation dans la synthèse, est très délicat, surtout dans le contexte du temps-réel. L'idée explorée dans cette recherche est d'appliquer des outils de l'analyse d'image, outils capables d'extraire des caractéristiques d'une image par l'analyse de relations intra-image, à des processus de synthèse.
 
-\subsection{Notion de structure}
+\subsection*{Notion de structure}
 
 La structure d'une image désigne comment les différentes parties de l'image sont agencées les unes par rapport aux autres, comment les éléments de l'image forment certains schémas ou présentent une certaine forme de régularité. Ces relations sont présentes à différents niveaux d'échelle, on a donc différents niveaux de structure. Savoir quels niveaux préserver et comment est important pour reproduire les caractéristiques désirés de la texture.
 
@@ -192,7 +192,7 @@ La structure d'une image désigne comment les différentes parties de l'image so
     \label{fig:structure_level}
 \end{figure}
 
-\subsection{Congruence de phases}
+\subsection*{Congruence de phases}
 
 Lorsque l'on veut préserver la structure d'une image, les éléments saillants tels que des coins et des lignes, ou plus généralement des bords, sont compliqués à reproduire. On appelle bord une région frontière entre un objet et un autre élément de l'image, comme l'arrière plan ou un autre objet. Visuellement, un bord se distingue facilement par un changement brusque de luminosité. Ces changements sont cependant plus difficiles à détecter automatiquement, car le seuil minimum de contraste entre des pixels voisins n'est pas toujours le même, dépendemment de si le bord est franc ou flou. Une approche intéressante est d'utiliser des informations du domaine fréquentiel pour caractériser des bords.
 
@@ -203,14 +203,14 @@ Lorsqu'une image est décomposée dans le domaine de Fourier, on retrouve de nom
 \begin{figure}[h]
     \centering
     \includegraphics[width=.35\linewidth]{contenu/resources/images/pc_1d_kovesi}
-    \caption{Congruence de phase pour un signal 1D, Kovesi (1995) \cite{kovesi_image_1995}}
+    \caption[Congruence de phase pour un signal 1D]{Congruence de phase pour un signal 1D, Kovesi (1995) \cite{kovesi_image_1995}}
     \label{fig:pc_1d_kovesi}
 \end{figure}
 
 % TODO Transformée de Riesz
 Pour détecter un alignement de phase, il est nécessaire d'avoir un modèle donnant des informations locales sur notre image. Kovesi utilise pour cela une banque de filtres à orientation variable. Nous utilisons à la place le modèle mathématique de la transformée de Riesz, qui permet de décomposer une image dans un espace différent, similairement à la transformée de Fourier mais avec des informations locales, au niveau du texel (on rappelle que la transformation de Fourier fournit des informations fréquentiellement locales, mais spatialement globales). Utiliser cette transformée nous permet ainsi d'étudier la présence et préservation de relations dans un autre espace que le domaine spatial, et donc de mieux comprendre et caractériser nos images.
 
-\subsection{Analyse multi-échelle}
+\subsection*{Analyse multi-échelle}
 
 Un objectif de notre méthode est de pouvoir agir avec précision sur certains niveaux d'échelle de structure ciblés. On effectue pour cela une analyse multi-résolutionnelle, qui permet de distinguer des caractéristiques de différentes taille de notre image. Nous décomposons notre image en pyramide d'image Laplacienne, ce qui nous permet d'étudier les différences en termes de détails entre les différents niveaux d'échelle.
 
