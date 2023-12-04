@@ -558,7 +558,7 @@ Il est aussi commun de se représenter le signal monogène comme un vecteur de d
 
 \subsubsection{Amplitude, phase et orientation locales}
 
-Avec cet outil qu'est le signal monogène, on peut maintenant étendre les concepts d'informations locales à nos images, qui sont des signaux 2D. En 1D, on a deux parties pour le signal analytique, que l'on représente en coordonnées polaires avec l'amplitude et la phase. En 2D, on a trois coordonnées, que l'on représente donc en coordonnées sphériques où sont définis le rayon, l'angle d'élévation et l'azimut, comme montré en figure \ref{fig:spherical-representation}.
+Avec cet outil qu'est le signal monogène, on peut maintenant étendre les concepts d'informations locales à nos images, qui sont des signaux 2D. En 1D, on a deux parties pour le signal analytique, que l'on représente en coordonnées polaires avec l'amplitude et la phase. En 2D, on a trois coordonnées, que l'on représente donc en coordonnées sphériques où sont définis le rayon, l'angle d'élévation et l'azimut, comme montré en figure~\ref{fig:spherical-representation}.
 
 \begin{figure}
     \centering
@@ -586,15 +586,27 @@ Enfin l'orientation locale $\theta$ complète la représentation en donnant l'an
     \theta(\mathbf{x}) = \arctan\left(\frac{f_{o2}(\mathbf{x})}{f_{o1}(\mathbf{x})}\right).
 \end{equation}
 
+La figure~\ref{fig:monogenic-local-representation} montre un exemple de représentation locale pour une image, avec l'amplitude, la phase et l'orientation locales.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{contenu/resources/images/local_information_monogenic}
+    \caption[Représentation locale du signal monogène]{Représentation locale du signal monogène pour une image, avec l'amplitude (gauche), la phase (milieu) et l'orientation (droite) locales. Image par Bridge~\ref{bridge_introduction_2018}.}
+    \label{fig:monogenic-local-representation}
+\end{figure}
+
 \bigskip
 
 Comme pour le signal analytique en 1D, il est intéressant d'utiliser des filtres pour sélectionner un niveau d'échelle à analyser, afin d'extraire de l'information sur certains niveaux de structure en particulier. Ici encore, on peut utiliser des filtres log-Gabor pour séléctionner les parties du signal qui nous intéressent.
 
-\begin{tikzpicture}
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
     \begin{axis}[
-        title=Example using the mesh parameter,
         colormap/hot,
-%        y tick {} %IWASHERE
+%        xtick={-.5, 0, .5},
+%        ytick={-.5, 0, .5},
+%        ztick={-1, 0, 1}
     ]
         \addplot3[
         mesh,
@@ -603,9 +615,28 @@ Comme pour le signal analytique en 1D, il est intéressant d'utiliser des filtre
         ]
         {exp(-(ln(sqrt(x^2+y^2))^2)/(2*ln(.5)^2))};
     \end{axis}
-\end{tikzpicture}
+    \end{tikzpicture}
 
+    \caption[Filtre log-Gabor en 2D]{Représentation en domaine fréquentiel d'un filtre log-Gabor. Comme en 1D, le filtre sélectionne une bande de fréquence centrée autour d'une fréquence centrale $\omega_0$, et de largeur de bande $\sigma_0$.}
+    \label{fig:2D-log-gabor}
+\end{figure}
 
-\section{Transformée de Riesz}
+Avec ces filtres, on calcule les parties paires et impaires du signal en sélectionnant plusieurs échelles différentes, et on obtient ainsi une représentation locale qui met en valeur différents niveaux de structure présents dans l'image. La figure~\ref{fig:cameraman-monogenic} montre une image et son signal monogénique, calculé sur plusieurs niveaux d'échelle.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=.75\textwidth]{resources/images/cameraman_monogenic}
+    \caption[Signal monogène calculé pour plusieurs niveaux d'échelle]{Image originale (gauche) et son signal monogène (droite), calculé sur plusieurs niveaux d'échelle. Dans l'image de droite : en colonne les différentes parties, paire $f_e$ (gauche), impaire 1 $f_{o1}$ (milieu) et impaire 2 $f_{o2}$ (droite). En ligne les longueurs d'onde centrale $\lambda_0 = 2\pi/\omega_0$, caractéristiques de l'échelle de structure détectée : $\lambda_0 = 20$~pixels (haut), $\lambda_0 = 60$~pixels (milieu), $\lambda_0 = 100$~pixels (bas). Pour référence, la taille de l'image originale est 256 $\times$ 256 pixels. Image par Bridge~\cite{bridge_introduction_2018}.}
+    \label{fig:cameraman-monogenic}
+\end{figure}
+
+\bigskip
+
+Maintenant que le signal monogène, qui sera notre cadre de travail pour le restant du manuscript, a été plus formellement introduit, nous allons pouvoir nous intéresser à son utilisation pour l'analyse de textures. Avant cela, il nous faut cependant encore décrire le cadre que nous avons choisi pour travailler à différents niveaux de structure. Bridge présente dans son article~\cite{bridge_introduction_2018} un cadre de travail utilisant les filtres log-Gabor, qui possèdent une expression complexe dans le domaine temporel. Pour nos travaux, nous avons utilisé une autre méthode de représentation, la pyramide de Riesz, plus simple à calculer et manipuler, et qui nous permet de nous concentrer sur l'analyse de textures. Nous allons maintenant présenter cette pyramide de Riesz, et montrer comment elle peut être utilisée pour l'analyse de textures.
 
 \section{Pyramide de Riesz}
+
+L'idée d'utiliser une pyramide d'image est introduite par Simoncelli et al.~\cite{simoncelli_shiftable_1992}, dans le but d'avoir une représentation d'image invariante à la rotation
+
+
+\section{Congruence de phase}
