@@ -636,7 +636,12 @@ Maintenant que le signal monogène, qui sera notre cadre de travail pour le rest
 
 \section{Pyramide de Riesz}
 
-L'idée d'utiliser une pyramide d'image est introduite par Simoncelli et al.~\cite{simoncelli_shiftable_1992}, dans le but d'avoir une représentation d'image invariante à la rotation
+L'idée d'utiliser une pyramide d'image est introduite par Simoncelli et al.~\cite{simoncelli_shiftable_1992}, {\color{red}REFOLMURER dans le but d'avoir une représentation possédant des bonnes propriétés d'études.}.
+% AVANTAGES de la pyramide d'image :
+% - steerable, invariance par rotation
+% - invariance par translation et mise à l'échelle
+% - avoids spatial aliasing
+SY Conceptuellement, une pyramide d'image remplit la même fonction qu'une banque de filtres, comme les filtres log-Gabor utlisés par Bridge : on décompose une image en s'intéressant successivement à différentes bandes de fréquences, afin d'extraire de l'information localisée en fréquence. La pyramide que nous utilisons, inspirée de Wadhwa et al. \cite{wadhwa_phase_based_2013}, 
 
 
 \section{Congruence de phase}
