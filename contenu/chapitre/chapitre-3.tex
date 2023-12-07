@@ -636,12 +636,64 @@ Maintenant que le signal monogène, qui sera notre cadre de travail pour le rest
 
 \section{Pyramide de Riesz}
 
-L'idée d'utiliser une pyramide d'image est introduite par Simoncelli et al.~\cite{simoncelli_shiftable_1992}, {\color{red}REFOLMURER dans le but d'avoir une représentation possédant des bonnes propriétés d'études.}.
+% Pyramide d'image inventée par Burt et Adelson~\cite{burt_laplacian_1983} pour la compression d'image.
+L'idée d'utiliser une pyramide d'image est introduite par Simoncelli et al.~\cite{simoncelli_shiftable_1992}, {\color{red}REFOLMURER dans le but d'avoir une représentation possédant des bonnes propriétés d'études.}. C'est une méthode de représentation multi-échelle d'une image.
 % AVANTAGES de la pyramide d'image :
 % - steerable, invariance par rotation
 % - invariance par translation et mise à l'échelle
 % - avoids spatial aliasing
-SY Conceptuellement, une pyramide d'image remplit la même fonction qu'une banque de filtres, comme les filtres log-Gabor utlisés par Bridge : on décompose une image en s'intéressant successivement à différentes bandes de fréquences, afin d'extraire de l'information localisée en fréquence. La pyramide que nous utilisons, inspirée de Wadhwa et al. \cite{wadhwa_phase_based_2013}, 
+SY Conceptuellement, une pyramide d'image remplit la même fonction qu'une banque de filtres, comme les filtres log-Gabor utlisés par Bridge : on décompose une image en s'intéressant successivement à différentes bandes de fréquences, afin d'extraire de l'information localisée en fréquence. La pyramide que nous utilisons, inspirée de Wadhwa et al.~\cite{wadhwa_phase_based_2013}, est construite en formant dans un premier temps la pyramide de Laplace de l'image, qui nous sert à avoir une méthode de reconstruction de notre image. On applique ensuite la transformée de Riesz à tous les étages de la pyramide, pour obtenir le signal monogène de chaque niveau. De là, on extrait les informations locales à tous les niveaux de structure, informations qui seront ultérieurement utilisées pour l'analyse et la synthèse de nos textures.
+
+\subsection{Pyramide de Gauss}
+
+RE La méthode de pyramide d'image est une méthode de représentation multi-échelle d'une image, répandue deans les domaines de la vision par ordinateur et le traitement d'image. Initialement introduite par Burt et Adelson~\cite{burt_laplacian_1983} pour la compression d'image, elle a été étendue par Simoncelli et al.~\cite{simoncelli_shiftable_1992} pour avoir une représentation possédant des bonnes propriétés d'études. L'idée originelle était d'étudier une image à différents niveaux de résolution, afin de faciliter la détection de motifs en sélectionnant le niveau d'échelle correspondant au motif recherché.
+
+Deux types principales de pyramide, passe-bas et passe-bande. Pour créer une pyramide passe-bas, aussi dite de Gauss, on procède itérativement suivant les deux étapes qui suivent :
+
+\begin{itemize}
+    \item une étape de {\textit lissage} (ou filtrage) de l'image, qui consiste à appliquer un filtre passe-bas à l'image, afin de supprimer les hautes fréquences. On obtient ainsi une image lissée, où les détails fins ont été supprimés,
+    \item une étape de {\textit sous-échantillonnage}, qui consiste à réduire la taille de l'image en gardant un pixel sur deux dans chaque direction. On obtient ainsi une image de moitié de la taille de l'image originale.
+\end{itemize}
+
+On répète ces deux étapes sur l'étage nouvellement créé, et ce jusqu'à atteindre la profondeur désirée. On se retrouve ainsi avec une collection d'images de plus en plus petites et grossières (en termes de résolution), qui peut graphiquement être représentée comme une pyramide, en superposant les étages du plus grand au plus petit, comme montré à la figure~\ref{fig:gaussian-pyramid}.
+
+\begin{figure}[h]
+    \centering
+
+    \begin{subfigure}{.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{contenu/resources/images/gauss_0}
+        \caption{Image originale}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{contenu/resources/images/gauss_3}
+        \caption{Étage 3}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{contenu/resources/images/gauss_5}
+        \caption{Étage 5}
+    \end{subfigure}
+%    \hfill
+%    \begin{subfigure}{.22\textwidth}
+%        \centering
+%        \includegraphics[width=\textwidth]{contenu/resources/images/gauss_3}
+%        \caption{Étage 3}
+%    \end{subfigure}
+
+    \caption[Pyramide de Gauss]{Pyramide de Gauss. De gauche à droite, on descend dans les étages de plus en plus petits.}
+    \label{fig:gaussian-pyramid}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=.25\textwidth]{contenu/resources/images/image_pyramid_placeholder}
+    \caption[Représentation pyramidale des étages de la pyramide de Gauss]{Représentation en pyramide des étages de la pyramide de Gauss. {\color{red}PLACEHOLDER CREDIT WIKIPEDIA}}
+    \label{fig:pyramid-gauss}
+\end{figure}
 
 
 \section{Congruence de phase}
