@@ -156,7 +156,7 @@ On rappelle l'expression de la fonction signe :
     \right.
 \end{equation}
 
-On obtient alors la ré-écriture de l'équation \ref{eq:2.1} :
+On obtient alors la ré-écriture de l'équation~\ref{eq:2.1} :
 
 \begin{equation}
     F_{\alpha}(\omega) = (1+\sgn(\omega))F(\omega)
@@ -256,7 +256,7 @@ avec
     \phi(t) &= \arctan\left(\frac{f_h(t)}{f(t)}\right).
 \end{align}
 
-Cette représentation introduit le concept d'\textit{amplitude locale} et de \textit{phase locale} (ici \textit{temporellement} locales), qui sont deux outils d'analyse particulièrement intéressants pour l'étude approfondie du signal original. L'amplitude locale agit comme une mesure de l'\textit{enveloppe} du signal, et la phase locale comme une mesure de la \textit{forme} du signal. Par exemple, une phase de $0$ indique un extremum, et une phase de $\pm\pi$ indique un passage par zéro. La figure \ref{fig:local-pha-amp} montre un signal avec son amplitude locale et sa phase locale. À partir uniquement de notre signal initial, on a ainsi créé un outil nous permettant d'obtenir de l'information bien plus intéressante sur l'apparence et les propriétés du signal.
+Cette représentation introduit le concept d'\textit{amplitude locale} et de \textit{phase locale} (ici \textit{temporellement} locales), qui sont deux outils d'analyse particulièrement intéressants pour l'étude approfondie du signal original. L'amplitude locale agit comme une mesure de l'\textit{enveloppe} du signal, et la phase locale comme une mesure de la \textit{forme} du signal. Par exemple, une phase de $0$ indique un extremum, et une phase de $\pm\pi$ indique un passage par zéro. La figure~\ref{fig:local-pha-amp} montre un signal avec son amplitude locale et sa phase locale. À partir uniquement de notre signal initial, on a ainsi créé un outil nous permettant d'obtenir de l'information bien plus intéressante sur l'apparence et les propriétés du signal.
 
 \begin{figure}[h]
 
@@ -331,7 +331,7 @@ Cette représentation introduit le concept d'\textit{amplitude locale} et de \te
 
 \subsubsection{Notion d'échelle}
 
-L'exemple donné avec la figure \ref{fig:local-pha-amp} fonctionne bien car le signal est simple, l'interprétation de l'amplitude et la phase locale est claire et visuelle. Pour un signal plus complexe, plus représentatif des signaux que l'on doit souvent étudier, ce n'est pas si facile. La figure \ref{fig:complex-local-pha-amp} affiche les informations locales du signal de la figure \ref{fig:analytic-representation}, une somme de trois sinusoïdes de fréquences différentes ; il est moins évident de comprendre ce que les informations locales représentent dans ce cas.
+L'exemple donné avec la figure~\ref{fig:local-pha-amp} fonctionne bien car le signal est simple, l'interprétation de l'amplitude et la phase locale est claire et visuelle. Pour un signal plus complexe, plus représentatif des signaux que l'on doit souvent étudier, ce n'est pas si facile. La figure~\ref{fig:complex-local-pha-amp} affiche les informations locales du signal de la figure~\ref{fig:analytic-representation}, une somme de trois sinusoïdes de fréquences différentes ; il est moins évident de comprendre ce que les informations locales représentent dans ce cas.
 
 \begin{figure}[h]
     \centering
@@ -411,7 +411,7 @@ Il a une réponse en fréquence de forme gaussienne quand observé en échelle l
     G(\omega) = \exp\left(-\frac{\log^2(\frac{|\omega|}{\omega_0})}{2\log(\sigma_0)^2}\right).
 \end{equation}
 
-Ces filtres sont caractérisés par deux paramètres : la fréquence centrale $\omega_0$, qui contrôle quelle échelle de structure est sélectionnée, et la largeur de bande $\sigma_0$, un paramètre de forme qui contrôle la largeur de la bande de fréquence sélectionnée. Des exemples de filtre log-Gabor sont montrés à la figure \ref{fig:log-gabor-filters}.
+Ces filtres sont caractérisés par deux paramètres : la fréquence centrale $\omega_0$, qui contrôle quelle échelle de structure est sélectionnée, et la largeur de bande $\sigma_0$, un paramètre de forme qui contrôle la largeur de la bande de fréquence sélectionnée. Des exemples de filtre log-Gabor sont montrés à la figure~\ref{fig:log-gabor-filters}.
 
 En appliquant un filtre log-Gabor à notre signal avant de lui appliquer la transformée de Hilbert et de déterminer sa représentation analytique, on obtient une représentation locale du signal, centrée autour d'une fréquence $\omega_0$ et d'une échelle $\sigma_0$ que l'on peut faire varier arbitrairement.
 
@@ -484,7 +484,7 @@ Le modèle du signal analytique est utile à l'extraction d'informations locales
 \subsubsection{Construction du signal monogène}
 
 Pour créer la représentation analytique d'un signal 1D, on SY génère un imaginaire pur, en quadrature de phase avec le signal original, en utilisant la transformée de Hilbert. Pour un signal 2D, on a besoin de former deux « parties imaginaires », une pour chaque direction. On ne peut donc pas représenter le signal monogène comme un complexe. Pour un traitement exact, il faudrait utiliser les quaternions, que l'on peut voir comme une extension des nombres complexes à une plus haute dimension. Pour simplifier la compréhension et manipulation, on peut cependant se passer de la théorie des quaternions, et traiter le signal monogène comme s'il avait trois parties réelles distinctes dans un premier temps.
-Pour générer les parties impaires du signal, on utilise une généralisation de la transformée de Hilbert à plusieurs dimensions, la {\it transformée de Riesz}. Soit $f$ un signal d'un espace 2D de la variable $\mathbf{x} = (x, y)^T$, et $F$ sa représentation dans le domaine fréquentiel obtenue par transformée de Fourier 2D, avec $\mathbf{\omega}=(\omega_x, \omega_y)^T$ une fréquence 2D. Alors les parties impaires de $f$, $F_{o1}$ et $F_{o2}$, sont données par :
+Pour générer les parties impaires du signal, on utilise une généralisation de la transformée de Hilbert à plusieurs dimensions, la \textit{transformée de Riesz}. Soit $f$ un signal d'un espace 2D de la variable $\mathbf{x} = (x, y)^T$, et $F$ sa représentation dans le domaine fréquentiel obtenue par transformée de Fourier 2D, avec $\mathbf{\omega}=(\omega_x, \omega_y)^T$ une fréquence 2D. Alors les parties impaires de $f$, $F_{o1}$ et $F_{o2}$, sont données par :
 
 \begin{align}
     F_{o1}(\mathbf{\omega}) &= \widehat{\mathcal{R}_1(f)}(\mathbf{\omega}) =
@@ -642,20 +642,20 @@ L'idée d'utiliser une pyramide d'image est introduite par Simoncelli et al.~\ci
 % - steerable, invariance par rotation
 % - invariance par translation et mise à l'échelle
 % - avoids spatial aliasing
-SY Conceptuellement, une pyramide d'image remplit la même fonction qu'une banque de filtres, comme les filtres log-Gabor utlisés par Bridge : on décompose une image en s'intéressant successivement à différentes bandes de fréquences, afin d'extraire de l'information localisée en fréquence. La pyramide que nous utilisons, inspirée de Wadhwa et al.~\cite{wadhwa_phase_based_2013}, est construite en formant dans un premier temps la pyramide de Laplace de l'image, qui nous sert à avoir une méthode de reconstruction de notre image. On applique ensuite la transformée de Riesz à tous les étages de la pyramide, pour obtenir le signal monogène de chaque niveau. De là, on extrait les informations locales à tous les niveaux de structure, informations qui seront ultérieurement utilisées pour l'analyse et la synthèse de nos textures.
+SY Conceptuellement, une pyramide d'image remplit la même fonction qu'une banque de filtres, comme les filtres log-Gabor utlisés par Bridge : on décompose une image en s'intéressant successivement à différentes bandes de fréquences, afin d'extraire de l'information localisée en fréquence. La pyramide que nous utilisons, inspirée de Wadhwa et al.~\cite{wadhwa_phase_based_2013}, est construite en formant dans un premier temps la pyramide de Gauss, puis de Laplace de l'image, qui elle nous sert à avoir une méthode de reconstruction de notre image. On applique ensuite la transformée de Riesz à tous les étages de la pyramide, pour obtenir le signal monogène de chaque niveau. De là, on extrait les informations locales à tous les niveaux de structure, informations qui seront ultérieurement utilisées pour l'analyse et la synthèse de nos textures.
 
-\subsection{Pyramide de Gauss}
+\subsection{Pyramide gaussienne}
 
-RE La méthode de pyramide d'image est une méthode de représentation multi-échelle d'une image, répandue deans les domaines de la vision par ordinateur et le traitement d'image. Initialement introduite par Burt et Adelson~\cite{burt_laplacian_1983} pour la compression d'image, elle a été étendue par Simoncelli et al.~\cite{simoncelli_shiftable_1992} pour avoir une représentation possédant des bonnes propriétés d'études. L'idée originelle était d'étudier une image à différents niveaux de résolution, afin de faciliter la détection de motifs en sélectionnant le niveau d'échelle correspondant au motif recherché.
+RE La méthode de pyramide d'image est une méthode de représentation multi-échelle d'une image, répandue dans les domaines de la vision par ordinateur et du traitement d'image. Initialement introduite par Burt et Adelson~\cite{burt_laplacian_1983} pour la compression d'image, elle permet d'étudier une image à différents niveaux de résolution, afin de faciliter la détection de motifs en sélectionnant le niveau d'échelle correspondant au motif recherché. Elle est ensuite étendue par Simoncelli et al.~\cite{simoncelli_shiftable_1992} pour RE avoir une représentation possédant des bonnes propriétés d'études. 
 
-Deux types principales de pyramide, passe-bas et passe-bande. Pour créer une pyramide passe-bas, aussi dite de Gauss, on procède itérativement suivant les deux étapes qui suivent :
+Il existe deux types principaux de pyramide, passe-bas et passe-bande. Pour créer une pyramide passe-bas, aussi dite de Gauss, on procède itérativement suivant les deux étapes qui suivent :
 
 \begin{itemize}
-    \item une étape de {\textit lissage} (ou filtrage) de l'image, qui consiste à appliquer un filtre passe-bas à l'image, afin de supprimer les hautes fréquences. On obtient ainsi une image lissée, où les détails fins ont été supprimés,
-    \item une étape de {\textit sous-échantillonnage}, qui consiste à réduire la taille de l'image en gardant un pixel sur deux dans chaque direction. On obtient ainsi une image de moitié de la taille de l'image originale.
+    \item une étape de \textit{lissage} (ou filtrage) de l'image, qui consiste à appliquer un filtre passe-bas à l'image, afin de supprimer les hautes fréquences. On obtient ainsi une image lissée, où les détails fins ont été supprimés. Plusieurs types de noyaux de lissage ont été proposés, comme la famille des noyaux binomiaux que nous utilisons dans notre implémentation ;
+    \item une étape de \textit{sous-échantillonnage}, qui consiste à réduire la taille de l'image en gardant un pixel sur deux dans chaque direction. On obtient ainsi une image de moitié de la taille de l'image originale.
 \end{itemize}
 
-On répète ces deux étapes sur l'étage nouvellement créé, et ce jusqu'à atteindre la profondeur désirée. On se retrouve ainsi avec une collection d'images de plus en plus petites et grossières (en termes de résolution), qui peut graphiquement être représentée comme une pyramide, en superposant les étages du plus grand au plus petit, comme montré à la figure~\ref{fig:gaussian-pyramid}.
+On répète ces deux étapes sur l'étage nouvellement créé, et ce jusqu'à atteindre la profondeur désirée. On se retrouve ainsi avec une collection d'images de plus en plus petites et de moins en moins raffinées (en termes de résolution), qui peut graphiquement être représentée comme une pyramide, en superposant les étages du plus grand au plus petit, comme montré à la figure~\ref{fig:gaussian-pyramid}.
 
 \begin{figure}[h]
     \centering
@@ -688,12 +688,19 @@ On répète ces deux étapes sur l'étage nouvellement créé, et ce jusqu'à at
     \label{fig:gaussian-pyramid}
 \end{figure}
 
+Les pyramides gaussiennes sont notamment beaucoup utilisées dans la synthèse de texture, où elles permettent de former les mip-maps.
+
 \begin{figure}
     \centering
     \includegraphics[width=.25\textwidth]{contenu/resources/images/image_pyramid_placeholder}
     \caption[Représentation pyramidale des étages de la pyramide de Gauss]{Représentation en pyramide des étages de la pyramide de Gauss. {\color{red}PLACEHOLDER CREDIT WIKIPEDIA}}
     \label{fig:pyramid-gauss}
 \end{figure}
+
+\subsection{Pyramide laplacienne}
+
+La pyramide laplacienne est une autre forme de pyramide, très proche de la pyramide gaussienne,
+
 
 
 \section{Congruence de phase}
