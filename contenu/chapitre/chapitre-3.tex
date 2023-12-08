@@ -1,11 +1,11 @@
 \chapter[Modèle de Riesz]{Étude théorique du modèle de Riesz} % signal monogénique ?
 \label{chap:chapitre3}
 
-Dans le but de synthétiser du contenu avec de la structure irrégulière, nous cherchons à avoir une approche locale. Pour cela nous utilisons le modèle du signal monogénique \cite{felsberg_monogenic_2001}, qui permet d'extraire l'énergie locale, en s'appuyant sur la transformée de Riesz. Ce SY procédé est ensuite mis en application dans un cadre multi-résolutionnel, les pyramides de Riesz \cite{wadhwa_riesz_2014}, pour calculer la congruence de phases.
+Dans le but de synthétiser du contenu avec de la structure irrégulière, nous cherchons à avoir une approche locale. Pour cela nous utilisons le modèle du signal monogène~\cite{felsberg_monogenic_2001}, qui permet d'extraire l'énergie locale, en s'appuyant sur la transformée de Riesz. Ce SY procédé est ensuite mis en application dans un cadre multi-résolutionnel, en utilisant une pyramide de Riesz~\cite{wadhwa_riesz_2014} pour calculer la congruence de phases.
 
 \section{Signal monogène}
 
-Le signal monogène est un outil du domaine du traitement du signal, généralement utilisé pour des tâches d'analyse d'image ou de vision par ordinateur, comme la détection de caractéristiques. La revue de la méthode par Bridge \cite{bridge_introduction_2018} est une bonne introduction aux principes théoriques du signal monogène ; nous reprennons dans cette partie sa notation et son discours exposé dans son document afin de prodiguer une compréhension du modèle.
+Le signal monogène est un outil du domaine du traitement du signal, généralement utilisé pour des tâches d'analyse d'image ou de vision par ordinateur, comme la détection de caractéristiques. La revue de la méthode par Bridge~\cite{bridge_introduction_2018} est une bonne introduction aux principes théoriques du signal monogène ; nous reprennons dans cette partie sa notation et son discours exposé dans son document afin de prodiguer une compréhension du modèle.
 
 \subsection{Une dimension, signal analytique}
 
@@ -651,7 +651,7 @@ RE La méthode de pyramide d'image est une méthode de représentation multi-éc
 Il existe deux types principaux de pyramide, passe-bas et passe-bande. Pour créer une pyramide passe-bas, aussi dite de Gauss, on procède itérativement suivant les deux étapes qui suivent :
 
 \begin{itemize}
-    \item une étape de \textit{lissage} (ou filtrage) de l'image, qui consiste à appliquer un filtre passe-bas à l'image, afin de supprimer les hautes fréquences. On obtient ainsi une image lissée, où les détails fins ont été supprimés. Plusieurs types de noyaux de lissage ont été proposés, comme la famille des noyaux binomiaux que nous utilisons dans notre implémentation ;
+    \item une étape de \textit{lissage} (ou filtrage) de l'image, qui consiste à appliquer un filtre passe-bas à l'image, afin de supprimer les hautes fréquences. On obtient ainsi une image lissée, où les détails fins ont été supprimés ;
     \item une étape de \textit{sous-échantillonnage}, qui consiste à réduire la taille de l'image en gardant un pixel sur deux dans chaque direction. On obtient ainsi une image de moitié de la taille de l'image originale.
 \end{itemize}
 
@@ -688,7 +688,21 @@ On répète ces deux étapes sur l'étage nouvellement créé, et ce jusqu'à at
     \label{fig:gaussian-pyramid}
 \end{figure}
 
-Les pyramides gaussiennes sont notamment beaucoup utilisées dans la synthèse de texture, où elles permettent de former les mip-maps.
+Plusieurs noyaux de lissage différents ont été proposés dans la littérature, comme la famille des noyaux binomiaux que nous utilisons dans notre implémentation RE en suivant l'exemple de la bibliothèque de traitement d'images OpenCV. Notre noyau de convolution s'exprime à l'aide des coefficients binomiaux :
+
+\begin{equation}
+    k = \frac{1}{256}\left[
+        \begin{array}{ccccccc}
+            1 & 4 & 6 & 4 & 1 \\
+            4 & 16 & 24 & 16 & 4 \\
+            6 & 24 & 36 & 24 & 6 \\
+            4 & 16 & 24 & 16 & 4 \\
+            1 & 4 & 6 & 4 & 1
+        \end{array}
+    \right],
+\end{equation}
+
+Il est intéressant de constater que les pyramides gaussiennes sont notamment utilisées dans la synthèse de texture, où elles permettent de résoudre des problèmes d'échantillonnage. En effet les MIP maps employées pour remédier au sous-échantillonnage sont un pré-calcul des textures à différents niveaux de résolution ; ce sont des pyramides gaussiennes.
 
 \begin{figure}
     \centering
@@ -699,7 +713,45 @@ Les pyramides gaussiennes sont notamment beaucoup utilisées dans la synthèse d
 
 \subsection{Pyramide laplacienne}
 
-La pyramide laplacienne est une autre forme de pyramide, très proche de la pyramide gaussienne,
+La pyramide laplacienne est une autre forme de pyramide, et correspond à un type passe-bande. Comme l'expliquent Burt et Adelson~\cite{burt_laplacian_1983} RE L'intérêt de la pyramide laplacienne réside dans le fait que dans une image, les pixels voisins sont souvent hautement corrélés. Ainsi encoder une image en termes de valeur de pixels n'est pas le plus efficace, puisqu'on a de la redondance d'information. Pour encoder plus efficacement une image, on a besoin d'une représentation plus compacte, et qui décorelle les pixels voisins. La pyramide laplacienne est une méthode qui répond efficacement à ces deux problématiques.
+
+\subsubsection{Construction de la pyramide}
+
+Plutôt que d'encoder la valeur même de chaque pixel, on prédit la valeur que le pixel devrait avoir, et on encode l'erreur de prédiction. La valeur prédite de chaque pixel est obtenue en calculant une moyenne pondérée locale centrée autour du pixel. On crée donc dans un premier temps une image lissée en convoluant l'image avec un filtre correspondant au calcul de la moyenne pondérée. Cette image encode les corrélations locales de l'image, au niveau d'échelle correspondant au filtre choisi, et représente les éléments redondants que l'on cherche à réduire. Pour se faire, on soustrait cette image à l'originale, et on obtient une image exprimant l'erreur de prédiction pour chaque pixel. On a ainsi la relation :
+
+\begin{equation}
+    L = I - k * I,
+\end{equation}
+
+avec $I$ l'image originale, $L$ l'image d'erreur de prédiction, et $k$ le filtre de moyenne pondérée. Pour la compression d'image, l'intérêt se trouve dans cette ré-écriture, car les pixels de $L$ sont décorrélés et de faible valeur, donc encodables avec peu de bits, et $k*I$ est une image lissée, qui peut être sous-échantillonnée pour obtenir une image de moitié de taille. On n'encode alors que ces deux images, et on obtient ainsi une représentation plus compacte de l'image originale.
+
+On peut répéter ce processus itérativement, en appliquant à chaque fois le même filtre à l'image lissée de résolution inférieure. On enregistre alors seulement les images d'erreur, dont la taille est divisée par 4 à chaque fois, et la dernière image lissée, de taille $N/2^{2d}$, avec $N$ la taille de l'image initiale et $d$ la profondeur désirée. Encore une fois, on peut se représenter cette collection d'images comme une pyramide, en les superposant de la plus grande à la plus petite.
+
+Le filtre de lissage utilisé est un filtre passe-bas, qui moyenne localement l'image, c'est en fait le même genre que l'on utilise pour créer une pyramide gaussienne. En fait, pour construire une pyramide laplacienne, on utilise souvent la pyramide gaussienne de l'image, qui représente toutes les images lissées. On calcule la pyramide gaussienne, puis ensuite la pyramide laplacienne en soustrayant à chaque étage de la pyramide gaussienne l'étage de plus basse résolution, et on obtient ainsi les images d'erreur de prédiction. En se faisant, on fait une légère approximation des images lissées. En effet dans la pyramide gaussienne, il y a une légère perte d'informations entre les étages, puisque l'on supprime des pixels à chaque fois.
+
+Lorsque l'on veut soustraire une image lissée à son image de taille originale, il faut passer par une étape d'expansion. Une méthode communément utilisée pour l'expansion consiste à doubler la taille de l'image, en insérant des zéros entre chaque pixel, puis à appliquer un filtre passe-bas à l'image résultante. On obtient ainsi une image de taille double, qui est une approximation de l'image lissée. On peut alors soustraire cette image à l'image originale, et on obtient l'image d'erreur de prédiction.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=.75\textwidth]{contenu/resources/images/gauss_laplace_pyramid}
+    \caption[Relation entre pyramide gaussienne et laplacienne]{Processus de création de la pyramide laplacienne à partir de ma pyramide gaussienne. Image par Jebamalar et Sutha~\cite{jebamalar_design_2014}.}
+    \label{fig:gauss-laplace-pyramid}
+\end{figure}
+
+\subsubsection{Reconstruction de l'image}
+
+Une fois une image décomposée en pyramide laplacienne, on peut la stocker en enregistrant les images d'erreur de prédiction et l'image lissée de plus basse résolution. Pour reconstruire l'image originale, on procède itérativement. On additionne le résidu basse fréquences, l'image la plus lissée de la pyramide, à la dernière image d'erreur, pour former une image moins lissée. On répète alors le processus, en additionnant à chaque fois l'image lissée obtenue à l'image d'erreur suivante, jusqu'à obtenir l'image originale.
+
+Lorsque l'on utilise une pyramide gaussienne pour créer une pyramide laplacienne, il faut cependant faire attention à la taille des images, qui est divisée par 4 à chaque étage. Pour cela, on étend à chaque étape les images lissées, en utlisant la même opération d'expansion que celle utilisée pour la création de la pyramide. On s'assure ainsi d'opérer sur des images de même taille. Comme à la construction, la reconstruction des images lissées comporte une petite approximation. Puisque l'on travaille avec des images de taille différente, on a perdu de l'information entre les étages. Cependant, à cette étape on additionne les reconstructions d'images lissées, celles qui ont précédemment été soustraites pour la construction. Ainsi, les deux s'annulent, et on a une reconstruction parfaite de notre image originale.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=.85\textwidth]{contenu/resources/images/laplacian_pyramid_reconstruction}
+    \caption[Reconstruction d'une image à partir de sa pyramide laplacienne]{Reconstruction d'une image à partir de sa pyramide laplacienne. $f_i$ les images de la pyramide gaussienne, $h_i$ celles de la pyramide laplacienne, et $l_i$ les images lissées étendues. Image de \href{https://web.archive.org/web/20230203082428/http://sepwww.stanford.edu/data/media/public/sep/morgan/texturematch/paper_html/node3.html}{Stanford Exploration Project}.}
+    \label{fig:laplace-reconstruction}
+\end{figure}
+
+\subsection{Pyramide de Riesz}
 
 
 
