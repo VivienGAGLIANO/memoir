@@ -555,6 +555,20 @@ Il est aussi commun de se représenter le signal monogène comme un vecteur de d
     f_o(\mathbf{x}) = \sqrt{f_{o1}(\mathbf{x})^2 + f_{o2}(\mathbf{x})^2}.
 \end{equation}
 
+La transformée de Riesz peut s'exprimer directement dans le domaine spatial, mais comme la transformée de Hilbert, elle n'est représentable que par un objet mathématique compliqué, une intégrale singulière :
+
+\begin{equation}
+    R_if(x) = c_d \lim_{\epsilon \to 0}\int_{\mathbb{R}^d\textbackslash B_\epsilon(x)}\frac{(x_i-t_i)f(t)}{|x-t|^{d+1}}\,dt,
+    \label{eq:riesz-transform-spatial}
+\end{equation}
+
+pour $i\in\llbracket 0, d\rrbracket$ avec $d$ la dimension, et où $c_d$ est une constante de normalisation dimensionnelle :
+
+\begin{equation}
+    c_d = \frac1{\pi\omega_{d-1}} = \frac{\Gamma((d+1)/2)}{\pi^{(d+1)/2}},
+\end{equation}
+
+avec $\omega_{d-1}$ le volume de la $(d-1)$-sphère unité. Au vue de la complexité de calcul et de manipulation de cette expression, nous utiliserons plutôt la formulation fréquentielle dans la suite du travail.
 
 \subsubsection{Amplitude, phase et orientation locales}
 
@@ -638,7 +652,7 @@ Maintenant que le signal monogène, qui sera notre cadre de travail pour le rest
 
 % Pyramide d'image inventée par Burt et Adelson~\cite{burt_laplacian_1983} pour la compression d'image.
 L'idée d'utiliser une pyramide d'image est introduite par Simoncelli et al.~\cite{simoncelli_shiftable_1992}, {\color{red}REFOLMURER dans le but d'avoir une représentation possédant des bonnes propriétés d'études.}. C'est une méthode de représentation multi-échelle d'une image.
-% AVANTAGES de la pyramide d'image :
+% AVANTAGES de la pyramide d'image de Simoncelli, la complex steerable pyramid :
 % - steerable, invariance par rotation
 % - invariance par translation et mise à l'échelle
 % - avoids spatial aliasing
@@ -753,6 +767,10 @@ Lorsque l'on utilise une pyramide gaussienne pour créer une pyramide laplacienn
 
 \subsection{Pyramide de Riesz}
 
+La pyramide de Riesz est une extension de la pyramide laplacienne. C'est le cadre qui nous permet d'étudier le signal monogène d'une image à différents niveaux d'échelle. On la construit simplement en appliquant la transformée de Riesz à chaque étage de la pyramide laplacienne. On calcule alors les informations locales de chaque étage, que nous mettons ensuite en relation dans nos travaux afin d'extraire plus d'information de notre image.
 
+% IMAGE DE PYRAMIDE
+
+Pour des raisons de vitesse de calcul et de simplicité d'implémentation, nous n'utilisons cependant pas la vraie transformée de Riesz, qui nécessiterait une transformation de l'image dans le domaine de Fourier, ou le calcul d'une intégrale singulière (voir~\ref{eq:riesz-transform-spatial}). À la place, nous reprenons l'approximation utilisée par Wadhwa et al.~\cite{wadhwa_riesz_2014}, qui se calcule directement dans le domaine spatial en utilisant les deux filtres à réponse impulsionnelle finie $[-0.5 0 0.5]$ et $[-0.5 0 0.5]^T$
 
 \section{Congruence de phase}
