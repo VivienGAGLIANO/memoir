@@ -490,14 +490,14 @@ Pour générer les parties impaires du signal, on utilise une généralisation d
     F_{o1}(\mathbf{\omega}) &= \widehat{\mathcal{R}_1(f)}(\mathbf{\omega}) =
         \left\{
         \begin{array}{ll}
-            i\frac{\omega_x}{||\omega||}F(\omega), & \omega > 0 \\
+            -i\frac{\omega_x}{||\omega||}F(\omega), & \omega > 0 \\
             0, & \omega = 0,
         \end{array}
         \right. \\
     F_{o2}(\mathbf{\omega}) &= \widehat{\mathcal{R}_2(f)}(\mathbf{\omega}) =
         \left\{
         \begin{array}{ll}
-            i\frac{\omega_y}{||\omega||}F(\omega), & \omega > 0 \\
+            -i\frac{\omega_y}{||\omega||}F(\omega), & \omega > 0 \\
             0, & \omega = 0.
         \end{array}
         \right.
@@ -609,6 +609,20 @@ La figure~\ref{fig:monogenic-local-representation} montre un exemple de représe
     \label{fig:monogenic-local-representation}
 \end{figure}
 
+Le changement de représentation est réversible, et on peut retrouver le signal monogène à partir des informations locales :
+
+\begin{equation}
+    f_m(\mathbf{x}) = A(\mathbf{x})\left[
+        \begin{array}{c}
+        \cos(\phi(\mathbf{x})) \\
+        \sin(\phi(\mathbf{x}))\cos(\theta(\mathbf{x})) \\
+        \sin(\phi(\mathbf{x}))\sin(\theta(\mathbf{x}))
+        \end{array}
+    \right].
+\end{equation}
+
+L'image originale notamment s'exprime simplement par $f(\mathbb{x}) = A(\mathbf{x})\cos(\phi(\mathbf{x}))$. Nous utiliserons cette formule plus tard dans nos travaux pour reconstruire nos images après avoir modifié leurs informations locales.
+
 \bigskip
 
 Comme pour le signal analytique en 1D, il est intéressant d'utiliser des filtres pour sélectionner un niveau d'échelle à analyser, afin d'extraire de l'information sur certains niveaux de structure en particulier. Ici encore, on peut utiliser des filtres log-Gabor pour séléctionner les parties du signal qui nous intéressent.
@@ -644,9 +658,11 @@ Avec ces filtres, on calcule les parties paires et impaires du signal en sélect
     \label{fig:cameraman-monogenic}
 \end{figure}
 
-\bigskip
 
-Maintenant que le signal monogène, qui sera notre cadre de travail pour le restant du manuscript, a été plus formellement introduit, nous allons pouvoir nous intéresser à son utilisation pour l'analyse de textures. Avant cela, il nous faut cependant encore décrire le cadre que nous avons choisi pour travailler à différents niveaux de structure. Bridge présente dans son article~\cite{bridge_introduction_2018} un cadre de travail utilisant les filtres log-Gabor, qui possèdent une expression complexe dans le domaine temporel. Pour nos travaux, nous avons utilisé une autre méthode de représentation, la pyramide de Riesz, plus simple à calculer et manipuler, et qui nous permet de nous concentrer sur l'analyse de textures. Nous allons maintenant présenter cette pyramide de Riesz, et montrer comment elle peut être utilisée pour l'analyse de textures.
+
+\bigskip
+{color{red} SY cadre de travail}
+Maintenant que notre cadre de travail pour le restant du manuscript, le signal monogène, a été plus formellement introduit, nous allons pouvoir nous intéresser RE au cadre que nous avons choisi pour travailler à différents niveaux de structure. Bridge présente dans son article~\cite{bridge_introduction_2018} un cadre de travail utilisant les filtres log-Gabor, qui possèdent une expression complexe dans le domaine temporel. Pour nos travaux, nous avons utilisé une autre méthode de représentation, la pyramide de Riesz, plus simple à calculer et manipuler, et qui nous permet de nous concentrer sur l'analyse de textures. Nous allons maintenant présenter cette pyramide de Riesz, et montrer comment elle peut être utilisée pour l'analyse de textures.
 
 \section{Pyramide de Riesz}
 
@@ -769,8 +785,39 @@ Lorsque l'on utilise une pyramide gaussienne pour créer une pyramide laplacienn
 
 La pyramide de Riesz est une extension de la pyramide laplacienne. C'est le cadre qui nous permet d'étudier le signal monogène d'une image à différents niveaux d'échelle. On la construit simplement en appliquant la transformée de Riesz à chaque étage de la pyramide laplacienne. On calcule alors les informations locales de chaque étage, que nous mettons ensuite en relation dans nos travaux afin d'extraire plus d'information de notre image.
 
-% IMAGE DE PYRAMIDE
+\begin{figure}
+    \centering
+    \includegraphics[width=.65\textwidth]{contenu/resources/images/riesz_pyramid_cameraman}
+    \caption[Pyramide de Riesz]{Différents étages de notre pyramide de Riesz, calculée avec la transformée de Riesz approximée. En colonne, les différentes composantes : l'image originale de la pyramide laplacienne (gauche), puis les deux composantes de Riesz (milieu et droite). En ligne, les différents étages de la pyramide : étage 0 (haut), étage 2 (milieu) et étage 3, le dernier (bas).}
+    \label{fig:riesz-pyramid-cameraman}
+\end{figure}
 
-Pour des raisons de vitesse de calcul et de simplicité d'implémentation, nous n'utilisons cependant pas la vraie transformée de Riesz, qui nécessiterait une transformation de l'image dans le domaine de Fourier, ou le calcul d'une intégrale singulière (voir~\ref{eq:riesz-transform-spatial}). À la place, nous reprenons l'approximation utilisée par Wadhwa et al.~\cite{wadhwa_riesz_2014}, qui se calcule directement dans le domaine spatial en utilisant les deux filtres à réponse impulsionnelle finie $[-0.5 0 0.5]$ et $[-0.5 0 0.5]^T$
+Pour des raisons de vitesse de calcul et de simplicité d'implémentation, nous n'utilisons cependant pas la vraie transformée de Riesz, qui nécessiterait une transformation de l'image dans le domaine de Fourier, ou le calcul d'une intégrale singulière (voir~\ref{eq:riesz-transform-spatial}). À la place, nous reprenons l'approximation utilisée par Wadhwa et al.~\cite{wadhwa_riesz_2014}, qui se calcule directement dans le domaine spatial en utilisant les filtres à réponse impulsionnelle finie $[-0.5 0 0.5]$ et $[-0.5 0 0.5]^T$, dont les réponses en fréquence sont :
+
+\begin{equation}
+    -i\sin(\omega_x) \quad \text{et} \quad -i\sin(\omega_y).
+\end{equation}
+
+Cette approximation donne de bons résultats dans notre pyramide, car les filtres ont une réponse équivalente aux alentours de $\frac\pi2$, où se concentre la majorité de l'énergie de nos images dans la pyramide laplacienne~\cite{wadhwa_riesz_2014}. En $0$, la différence notable entre les filtres n'est pas très grave, puisque le contenu fréquentiel est très faible. On rappelle en effet que la pyramide laplacienne est formée en soustrayant à chaque étage une image lissée qui correspond au contenu basse fréquence. Wadhwa et al. proposent une méthode pour calculer une meilleure approximation de la transformée de Riesz à l'aide de filtres finis de plus haut ordre. Nous n'avons cependant pas implémenté cette méthode, car l'approximation basique nous donne déjà de bons résultats. Pour avoir de meilleurs résultats, nous aurions plutôt cherché à implémenter un calcul de la transformée de Riesz passant par le domaine fréquentiel et utilisant la transformée de Fourier.
+
+{\color{red}VOIR TRAVAUX LÉO}
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=.5\textwidth]{contenu/resources/images/riesz_approximation}
+    \caption[Approximation de la transformée de Riesz]{Comparaison de l'application de la transformée de Riesz (gauche) et de son approximation (droite) pour un niveau de pyramide. Les tranches horizontales en jaune sur les images (a) et (b) sont représentés dans le diagramme en (c).}
+    \label{fig:riesz-approximation}
+\end{figure}
+
+Après avoir fait la transformée de Riesz, on peut calculer pour chaque étage les images d'informations locales, amplitude, phase et orientation.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=.90\textwidth]{contenu/resources/images/riesz_pyramid_pasta}
+    \caption[Informations locales de la pyramide de Riesz]{Informations locales de la pyramide de Riesz. En colonne, les différentes composantes : en colonne, les différentes informations locales : amplitude (gauche), phase (milieu) et orientation (droite). En ligne les différentes étages de la pyramide, du premier (haut) au dernier (bas).}
+    \label{fig:riesz-pyramid-local}
+\end{figure}
+
 
 \section{Congruence de phase}
