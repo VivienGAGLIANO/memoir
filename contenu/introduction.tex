@@ -4,7 +4,7 @@ Depuis l'apparition de l'informatique, les univers virtuels n'ont cessé de gagn
 
 \begin{figure}[!h]
     \centering
-    \includegraphics[width=\textwidth]{contenu/resources/images/Horizon-Forbidden-West}
+    \includegraphics[width=.75\textwidth]{contenu/resources/images/Horizon-Forbidden-West}
     \caption{{\it Horizon Forbidden West} (2022), Guerilla Games}
     \label{fig:horizon}
 \end{figure}
@@ -30,7 +30,7 @@ Pour visualiser les scènes virtuelles, on utilise un moteur de rendu, un logici
 \begin{figure}[h!]
     \centering
     \includegraphics[width=\textwidth]{contenu/resources/images/zero_day_comparison}
-    \caption[{\it Zero-Day} (2015), BEEPLE]{{\it Zero-Day} (2015), BEEPLE. À gauche rendu original hors-ligne, à droite rendu temps-réel par SY tracé de chemins, NVIDIA \cite{ZeroDay}}
+    \caption[{\it Zero-Day} (2015), BEEPLE]{{\it Zero-Day} (2015), BEEPLE. À gauche rendu original hors-ligne, à droite rendu temps-réel par SY tracé de chemins, NVIDIA~\cite{ZeroDay}}
     \label{fig:zero-day}
 \end{figure}
 
@@ -69,8 +69,8 @@ Pour une même surface, il est courant d'utiliser plusieurs textures pour calcul
 
 \begin{figure}
     \centering
-    \includegraphics[width=\textwidth]{contenu/resources/images/mutli-material-object}
-    \caption[Rendu d'un objet comportant plusieurs matériaux]{Plusieurs matériaux différents sont utilisés pour le rendu de cet objet \cite{multi-material}}
+    \includegraphics[width=.65\textwidth]{contenu/resources/images/mutli-material-object}
+    \caption[Rendu d'un objet comportant plusieurs matériaux]{Plusieurs matériaux différents sont utilisés pour le rendu de cet objet~\cite{multi-material}}
     \label{fig:multi-material}
 \end{figure}
 
@@ -82,8 +82,8 @@ L'intérêt de la texture est donc d'augmenter la quantité de détails de notre
 
 \begin{figure}
     \centering
-    \includegraphics[width=\textwidth]{contenu/resources/images/uv_suzanne}
-    \caption[Coordonnées UV du modèle Suzanne]{Visualisation des coordonnées UV de Suzanne \cite{suzanne-uv}, modèle 3D de référence du logiciel Blender}
+    \includegraphics[width=.55\textwidth]{contenu/resources/images/uv_suzanne}
+    \caption[Coordonnées UV du modèle Suzanne]{Visualisation des coordonnées UV de Suzanne~\cite{suzanne-uv}, modèle 3D de référence du logiciel Blender}
     \label{fig:uv-suzanne}
 \end{figure}
 
@@ -104,7 +104,7 @@ Il faut alors employer des méthodes dites de filtrage pour corriger l'échantil
 
 \begin{itemize}
     \item \textbf{Sur-échantillonnage} : lorsque le fragment est plus petit que le texel, plusieurs fragments voisins ont la même valeur. Cela donne un aspect crénelé, avec les contours des objet en escalier. La solution idéale dans ce cas serait d'augmenter la résolution de la texture utilisée ; ce n'est cependant pas tout le temps possible. Comme alternative, au lieu d'attribuer au fragment la valeur du texel correspondant, on interpole la valeur des quatre texels voisins. On réduit l'aspect pixélisé, au prix d'un échantillonnage plus coûteux et d'un effet de flou sur l'image. 
-    \item \textbf{Sous-échantillonnage} : lorsqu'un fragment est plus grand qu'un texel \ref{fig:aliasing}, et qu'il en recouvre plusieurs, alors plusieurs fragments voisins peuvent être très espacés sur la texture, et on perd l'information des texels entre. De loin, on aperçoit un motif de moiré et l'image scintille lorsque l'on change légèrement l'angle de vue. La solution idéale serait alors de prendre en compte tous les texels touchés, et faire une intégrale de la valeur de la texture sur toute la surface couverte par le fragment, ce qui est très souvent irréalisable. L'alternative classique consiste à pré-calculer différentes échelles de la texture utilisée, appelées MIP maps, et de trouver l'échelle adéquate de telle sorte qu'un texel ait la même taille qu'un fragment. L'échantillonnage est plus lourd et on prend plus d'espace mémoire pour stocker les MIP maps, mais la texture est mieux rendue de loin.
+    \item \textbf{Sous-échantillonnage} : lorsqu'un fragment est plus grand qu'un texel~\ref{fig:aliasing}, et qu'il en recouvre plusieurs, alors plusieurs fragments voisins peuvent être très espacés sur la texture, et on perd l'information des texels entre. De loin, on aperçoit un motif de moiré et l'image scintille lorsque l'on change légèrement l'angle de vue. La solution idéale serait alors de prendre en compte tous les texels touchés, et faire une intégrale de la valeur de la texture sur toute la surface couverte par le fragment, ce qui est très souvent irréalisable. L'alternative classique consiste à pré-calculer différentes échelles de la texture utilisée, appelées MIP maps, et de trouver l'échelle adéquate de telle sorte qu'un texel ait la même taille qu'un fragment. L'échantillonnage est plus lourd et on prend plus d'espace mémoire pour stocker les MIP maps, mais la texture est mieux rendue de loin.
 \end{itemize}
 
 
@@ -128,7 +128,7 @@ De nombreuses méthodes de filtrage plus élaborées sont employées pour obteni
 
 \section{Synthèse de texture}
 
-Bien souvent, les surfaces que l'on souhaite couvrir sont de grande taille, par exemple des sols. Produire et stocker des textures de même taille que les surfaces n'est pas toujours envisageable, le coût en temps de création et en empreinte mémoire est trop élevé. Étirer les textures en utilisant les coordonnées UV est une solution, qui atteint cependant ses limites assez rapidement : on remarque très facilement qu'une texture de plus basse résolution est utilisée. En rendu intéractif, on résoud le problème en synthétisant directement une texture de taille adaptée à notre surface. On peut catégoriser les types de texture existants de plusieurs manières ; pour le présent manuscrit, nous les distinguerons selon le niveau d'organisation des éléments qui les compose \ref{fig:échelle-structure}.
+Bien souvent, les surfaces que l'on souhaite couvrir sont de grande taille, par exemple des sols. Produire et stocker des textures de même taille que les surfaces n'est pas toujours envisageable, le coût en temps de création et en empreinte mémoire est trop élevé. Étirer les textures en utilisant les coordonnées UV est une solution, qui atteint cependant ses limites assez rapidement : on remarque très facilement qu'une texture de plus basse résolution est utilisée. En rendu intéractif, on résoud le problème en synthétisant directement une texture de taille adaptée à notre surface. On peut catégoriser les types de texture existants de plusieurs manières ; pour le présent manuscrit, nous les distinguerons selon le niveau d'organisation des éléments qui les compose~\ref{fig:échelle-structure}.
 
 \subsection*{Algorithme de synthèse}
 
@@ -159,19 +159,19 @@ Le but d'une synthèse par ré-organisation est de reproduire un extrait de text
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{contenu/resources/images/periodic_tiling}
-    \caption[Artefacts d'alignement créés par le pavage périodique]{Artefacts d'alignement créés par le pavage périodique, \textit{Monster Hunter Rise} (2021), Capcom. Crédits à N. Lutz \cite{lutz_processus_2021} pour l'image}
+    \caption[Artefacts d'alignement créés par le pavage périodique]{Artefacts d'alignement créés par le pavage périodique, \textit{Monster Hunter Rise} (2021), Capcom. Crédits à N. Lutz~\cite{lutz_processus_2021} pour l'image}
     \label{fig:pavage_periodique}
 \end{figure}
 
-On préfère en général prendre des tuiles plus petites et mieux les mélanger \cite{heitz_high-performance_2018} afin de d'obtenir de la variété et d'éviter la répétition de motifs saillants. 
+On préfère en général prendre des tuiles plus petites et mieux les mélanger~\cite{heitz_high-performance_2018} afin de d'obtenir de la variété et d'éviter la répétition de motifs saillants. 
 
 
 \subsubsection{Synthèse par convolution}
 
-L'objectif d'une synthèse par convolution est de construire une texture en disposant des motifs, appelés noyaux, selon une distribution statitique. Le choix du noyau, de la distribution, ainsi que de la méthode de mélange, sont les paramètres à ajuster pour contrôler la synthèse. Une pratique habituelle de la synthèse par convolution est de choisir comme noyau une somme d'ondelettes (typiquement des cosinus) spatialement constraintes et à orientation aléatoire, et de contrôler les fréquences des ondelettes utilisées \cite{tricard_procedural_2019}. En sélectionnant les fréquences, on a un contrôle sur le contenu fréquentiel présent dans la texture produite, ce qui permet une bonne maîtrise de l'apparence générée \cite{gilet_local_2014}.
+L'objectif d'une synthèse par convolution est de construire une texture en disposant des motifs, appelés noyaux, selon une distribution statitique. Le choix du noyau, de la distribution, ainsi que de la méthode de mélange, sont les paramètres à ajuster pour contrôler la synthèse. Une pratique habituelle de la synthèse par convolution est de choisir comme noyau une somme d'ondelettes (typiquement des cosinus) spatialement constraintes et à orientation aléatoire, et de contrôler les fréquences des ondelettes utilisées~\cite{tricard_procedural_2019}. En sélectionnant les fréquences, on a un contrôle sur le contenu fréquentiel présent dans la texture produite, ce qui permet une bonne maîtrise de l'apparence générée~\cite{gilet_local_2014}.
 
 % DIRE QUE LA SYNTHESE DE MOTIFS OU DE STRUCTURE EST ENCORE TRES COMPLIQUEE
-Les méthodes existantes de synthèse ne fonctionnent cependant pas bien lorsque la cible contient des motifs organisés ou de la répétition. Quelques tentatives ont été faites \cite{lutz_cyclostationary-gaussian_2021} pour synthétiser des textures présentant une forme de structure et régularité, mais en dehors de configurations présentant des caractéristiques particulières, comme par exemple une certaine périodicité, la synthèse de structure irrégulière est compliquée.
+Les méthodes existantes de synthèse ne fonctionnent cependant pas bien lorsque la cible contient des motifs organisés ou de la répétition. Quelques tentatives ont été faites~\cite{lutz_cyclostationary-gaussian_2021} pour synthétiser des textures présentant une forme de structure et régularité, mais en dehors de configurations présentant des caractéristiques particulières, comme une certaine périodicité, la synthèse de structure irrégulière est compliquée.
 
 % \section{Génération procédurale} % Non-nécessaire ? De quoi on parle ici sinon ?
 
@@ -187,7 +187,7 @@ La structure d'une image désigne comment les différentes parties de l'image so
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=1\linewidth]{contenu/resources/images/structure_level}
+    \includegraphics[width=.85\linewidth]{contenu/resources/images/structure_level}
     \caption{Différents niveaux de structure au sein d'une image}
     \label{fig:structure_level}
 \end{figure}
@@ -198,12 +198,12 @@ Lorsque l'on veut préserver la structure d'une image, les éléments saillants 
 
 \bigskip
 
-Lorsqu'une image est décomposée dans le domaine de Fourier, on retrouve de nombreuses informations sur la structure dans la phase \cite{oppenheim_importance_1981}. En explorant le rôle de la phase, Kovesi a mis au point un outil de détection de d'éléments caractéristiques \cite{kovesi_image_1995} basé sur le modèle physiologiquement réaliste d'énergie locale de Morrone et al. \cite{morrone_feature_1987, concetta_morrone_feature_1997}. Ce modèle postule que les éléments caractéristiques sont présents dans une image là où les composants de Fourier sont maximalement en phase. La congruence de phase qui dérive du modèle d'énergie locale est une grandeur qui quantifie cet alignement. Elle donne lieu à un outil de détection plus robuste que ceux développés auparavant, qui sont souvent sensibles au niveau d'illumination et de grossissement, et nécessitent donc une connaissance a priori des images étudiées. C'est ce modèle de congruence de phase que nous avons repris et essayé d'adapter à la synthèse de texture.
+Lorsqu'une image est décomposée dans le domaine de Fourier, on retrouve de nombreuses informations sur la structure dans la phase~\cite{oppenheim_importance_1981}. En explorant le rôle de la phase, Kovesi a mis au point un outil de détection de d'éléments caractéristiques~\cite{kovesi_image_1995} basé sur le modèle physiologiquement réaliste d'énergie locale de Morrone et al.~\cite{morrone_feature_1987, concetta_morrone_feature_1997}. Ce modèle postule que les éléments caractéristiques sont présents dans une image là où les composants de Fourier sont maximalement en phase. La congruence de phase qui dérive du modèle d'énergie locale est une grandeur qui quantifie cet alignement. Elle donne lieu à un outil de détection plus robuste que ceux développés auparavant, qui sont souvent sensibles au niveau d'illumination et de grossissement, et nécessitent donc une connaissance a priori des images étudiées. C'est ce modèle de congruence de phase que nous avons repris et essayé d'adapter à la synthèse de texture.
 
 \begin{figure}[h]
     \centering
     \includegraphics[width=.35\linewidth]{contenu/resources/images/pc_1d_kovesi}
-    \caption[Congruence de phase pour un signal 1D]{Congruence de phase pour un signal 1D, Kovesi (1995) \cite{kovesi_image_1995}}
+    \caption[Congruence de phase pour un signal 1D]{Congruence de phase pour un signal 1D, Kovesi (1995)~\cite{kovesi_image_1995}}
     \label{fig:pc_1d_kovesi}
 \end{figure}
 
