@@ -140,7 +140,7 @@ où $F_h(\omega)$ est la « version impaire » du signal $F(\omega)$ :
 que l'on peut reformuler à l'aide de la fonction signe :
 
 \begin{equation}
-    F_h(\omega) = \sgn(\omega)\cdotF(\omega).
+    F_h(\omega) = \sgn(\omega)\cdot F(\omega).
     \label{eq:2.5}
 \end{equation}
 
@@ -330,6 +330,7 @@ Cette représentation introduit le concept d'\textit{amplitude locale} et de \te
 \end{figure}
 
 \subsubsection{Notion d'échelle}
+\label{subsubsec:echelle}
 
 L'exemple donné avec la figure~\ref{fig:local-pha-amp} fonctionne bien car le signal est simple, l'interprétation de l'amplitude et la phase locale est claire et visuelle. Pour un signal plus complexe, plus représentatif des signaux que l'on doit souvent étudier, ce n'est pas si facile. La figure~\ref{fig:complex-local-pha-amp} affiche les informations locales du signal de la figure~\ref{fig:analytic-representation}, une somme de trois sinusoïdes de fréquences différentes ; il est moins évident de comprendre ce que les informations locales représentent dans ce cas.
 
@@ -558,7 +559,7 @@ Il est aussi commun de se représenter le signal monogène comme un vecteur de d
 La transformée de Riesz peut s'exprimer directement dans le domaine spatial, mais comme la transformée de Hilbert, elle n'est représentable que par un objet mathématique compliqué, une intégrale singulière :
 
 \begin{equation}
-    R_if(x) = c_d \lim_{\epsilon \to 0}\int_{\mathbb{R}^d\textbackslash B_\epsilon(x)}\frac{(x_i-t_i)f(t)}{|x-t|^{d+1}}\,dt,
+    R_if(x) = c_d \lim_{\epsilon \to 0}\int_{\mathbb{R}^d\setminus B_\epsilon(x)}\frac{(x_i-t_i)f(t)}{|x-t|^{d+1}}\,dt,
     \label{eq:riesz-transform-spatial}
 \end{equation}
 
@@ -661,7 +662,7 @@ Avec ces filtres, on calcule les parties paires et impaires du signal en sélect
 
 
 \bigskip
-{color{red} SY cadre de travail}
+{#color{red} SY cadre de travail}
 Maintenant que notre cadre de travail pour le restant du manuscript, le signal monogène, a été plus formellement introduit, nous allons pouvoir nous intéresser RE au cadre que nous avons choisi pour travailler à différents niveaux de structure. Bridge présente dans son article~\cite{bridge_introduction_2018} un cadre de travail utilisant les filtres log-Gabor, qui possèdent une expression complexe dans le domaine temporel. Pour nos travaux, nous avons utilisé une autre méthode de représentation, la pyramide de Riesz, plus simple à calculer et manipuler, et qui nous permet de nous concentrer sur l'analyse de textures. Nous allons maintenant présenter cette pyramide de Riesz, et montrer comment elle peut être utilisée pour l'analyse de textures.
 
 \section{Pyramide de Riesz}
@@ -812,7 +813,7 @@ Cette approximation donne de bons résultats dans notre pyramide, car les filtre
 
 Après avoir fait la transformée de Riesz, on peut calculer pour chaque étage les images d'informations locales, amplitude, phase et orientation.
 
-\begin{figure}
+\begin{figure}[h]
     \centering
     \includegraphics[width=.90\textwidth]{contenu/resources/images/riesz_pyramid_pasta}
     \caption[Informations locales de la pyramide de Riesz]{Informations locales de la pyramide de Riesz. En colonne, les différentes composantes : en colonne, les différentes informations locales : amplitude (gauche), phase (milieu) et orientation (droite). En ligne les différentes étages de la pyramide, du premier (haut) au dernier (bas).}
@@ -823,4 +824,80 @@ Avec cette implémentation de la pyramide de Riesz, nous avons défini notre cad
 
 \section{Congruence de phase}
 
-Le modèle de la congruence de phase est un modèle de détection de caractéristiques saillantes dans une image. Introduit par Morrone et Burr~\cite{concetta_morrone_feature_1997}
+Le modèle de l'énergie locale est un modèle de détection de caractéristiques saillantes dans une image. Introduit par Morrone et al~\cite{morrone_mach_1986, morrone_feature_1987},il explique la présence de points saillants, tels que des bords et des coins, par l'alignement des phases locales de l'image. Il est basé sur l'observation que les bords et les coins sont des structures résultant de la superposition de sinusoïdes en phase les unes avec les autres. Contrairement aux autres méthodes de détection de caractéristiques, comme celles de Sobel ou Canny, ce modèle est insensible aux variations de luminosité et de grossissement. Les méthodes par gradient utilisent en effet un seuillage pour déterminer les bords, qui dépend de la luminosité et du niveau de zoom de l'image. À l'inverse, le modèle de l'énergie locale permet le calcul de la congruence de phase, une grandeur à valeurs dans $[0, 1]$ mesurant uniformément la présence de caractéristiques dans une image et, de façon intéressante, la \textit{proximité} à un élément caractéristique. C'est cette grandeur à laquelle nous nous intéressons dans la partie qui suit.
+
+La formulation initiale de la congruence de phase utilise les coefficients de la série de Fourier du signal. Cependant, cette formulation comporte trois problèmes : elle est difficile à calculer et manipuler, elle ne permet pas une bonne localisation de l'information (le même problème qui nous pousse à utiliser un cadre de travail multi-résolutionnel pour l'étude du signal monogène), et RE elle ne prend pas en compte la répartition des fréquences en phase. La solution à ces problèmes se fait par différents moyens, dans un premier temps en 1D, puis en 2D.
+
+\subsubsection{Énergie locale}
+
+Tout d'abord, Venkatesh et Owens~\cite{venkatesh_energy_1989} montrent qu'il existe une relation directe entre la congruence de phase et l'énergie locale. Ils mettent ainsi en lumière une expression simplifiée de la congruence de phase :
+
+\begin{equation}
+    PC(x) = \frac{E(x)}{\sum_{n=0}^{+\infty} D_n},
+\end{equation}
+
+avec $E(x) = \sqrt{f^2(x) + f_h^2(x)}$ l'énergie locale et $D_n$ les coefficients d'amplitude de la série de Fourier du signal :
+
+\begin{equation}
+    f(x) = \sum_{n=0}^{+\infty} D_n\cos(n\omega x + \phi_n).
+    \label{eq:phase-congruence-energy}
+\end{equation}
+
+
+\subsubsection{Contexte multi-résolutionnel}
+
+Pour obtenir de l'information localisée en termes de fréquence, Kovesi des ondelettes, sous forme de banque de filtres passe-bande, pour sélectionner successivement différents niveaux d'échelle. Il utilise pour cela des filtres de Gabor, très similaires à ceux présentés dans la section introduisant le signal monogène~\ref{subsubsec:echelle}. En faisant la convolution du signal par ces filtres, il obtient de l'information localisée à la fois spatialement et fréquentiellement :
+
+\begin{equation}
+    A_n(x) = \sqrt{(f(x)*M^e_n)^2 + (f(x)*M^o_n)^2},
+    \label{eq:local-scale-amplitude}
+\end{equation}
+
+et
+
+\begin{equation}
+    \phi_n(x) = \arctan\left(\frac{f(x)*M^o_n}{f(x)*M^e_n}\right),
+\end{equation}
+
+avec $M^e_n$ et $M^o_n$ les filtres passe-bande, paire et impaire, au niveau d'échelle $n$. {\color{red}COMMENT FORMULER ÇA?} À noter que le $n$ dans l'équation~\ref{eq:local-scale-amplitude} désigne le niveau d'échelle fréquentiel, et n'est pas le même que celui dans l'équation de la série de Fourier~\ref{eq:phase-congruence-energy} qui, lui, représente les différentes sinusoïdes qui forment le signal. En regardant le scalogramme représenté à la figure~\ref{} qui représente l'analyse du signal par la banque de filtres, on voit l'intérêt de la congruence de phase : les points saillants sont ceux où la phase est alignée à travers tous les niveaux d'échelle.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=.75\textwidth]{contenu/resources/images/phase_congruence_scalogram}
+    \label{fig:phase-congruence-scalogram}
+    \caption[Scalogramme d'un signal présentant des points caractéristiques]{Signal 1D et ses scalogrammes de phase et d'amplitude. L'abscisse des scalogrammes sont les mêmes que celui du signal, et les ordonnées représentent à la fréquence en échelle logarithmique (valeurs croissantes de bas en haut). Les astérisques marquent les transitions abruptes dans le signal, et correspondent aux instants où la phase est alignée à travers tous les niveaux d'échelle ; ce sont des points où la congruence de phase est élevée. Image par Kovesi~\cite{kovesi_image_1995}.}
+\end{figure}
+
+Avec les composantes filtrées à différents niveaux d'échelle du signal, on obtient une nouvelle expression de la congruence de phase, qui prend en compte la localisation fréquentielle :
+
+\begin{equation}
+    PC(x) = \frac{E(x)}{\sum_{n=0}^{+\infty} A_n(x)} = \frac{\sqrt{F^2(x)+F_H^2(x)}}{\epsilon + \sum_{n=0}^{+\infty}},
+\end{equation}
+
+avec $F$ et $F_H$ une reconstruction du signal et de sa transformée de Hilbert respectivement, à partir des composantes filtrées :
+
+\begin{align}
+    F(x) &= \sum_{n=0}^{+\infty} f(x)*M_n^e, \,\text{et}\\
+    F_H(x) &= \sum_{n=0}^{+\infty} f(x)*M{_n^o},
+\end{align}
+
+et $\sum_{n=0}^{+\infty} A_n(x)$ la somme des amplitudes locales à tous les niveaux d'échelle :
+
+\begin{equation}
+    \sum_{n=0}^{+\infty} A_n(x) = \sum_{n=0}^{+\infty} \sqrt{(f(x)*M^e_n)^2 + (f(x)*M^o_n)^2}
+\end{equation}
+
+et $\epsilon$ une petite constante positive qui assure la stabilité numérique de l'expression quand la somme des amplitudes est très petite. Dans notre implémentation, on utilise $\epsilon = 0.01$.
+
+La reconstruction du signal et de sa transformée de Hilbert est possible lorsque l'on choisit avec soin les filtres de la transformée par ondelettes, de telle sorte que leur fonction de transfert se superposent lorsqu'additionnées et recouvrent l'entièreté du spectre du signal, comme montré dans la figure~\ref{fig:wavelet-spectrum-coverage}.
+
+\begin{figure}
+           \centering
+           \includegraphics[width=.65\textwidth]{contenu/resources/images/wavelet_spectrum_coverage}
+           \caption[Choix des ondelettes pour recouvrir le spectre et permettre la reconstruction du signal]{Banque d'ondelettes choisie de sorte à recouvrir une large couverture du spectre. On voit les ondelettes (haut) et leur fonction de transfert (milieu), et la fonction de transfert de la somme des ondelettes (bas). Image par Kovesi~\cite{kovesi_image_1995}.}
+           \label{fig:wavelet-spectrum-coverage}
+\end{figure}
+
+\subsubsection{Répartition des fréquences}
+
+\subsubsection{Extension à deux dimensions}
