@@ -805,7 +805,7 @@ Cette approximation donne de bons résultats dans notre pyramide, car les filtre
 
 \begin{figure}
     \centering
-    \includegraphics[width=.5\textwidth]{contenu/resources/images/riesz_approximation}
+    \includegraphics[width=.65\textwidth]{contenu/resources/images/riesz_approximation}
     \caption[Approximation de la transformée de Riesz]{Comparaison de l'application de la transformée de Riesz (gauche) et de son approximation (droite) pour un niveau de pyramide. Les tranches horizontales en jaune sur les images (a) et (b) sont représentés dans le diagramme en (c).}
     \label{fig:riesz-approximation}
 \end{figure}
@@ -819,5 +819,6 @@ Après avoir fait la transformée de Riesz, on peut calculer pour chaque étage 
     \label{fig:riesz-pyramid-local}
 \end{figure}
 
+Avec cette implémentation de la pyramide de Riesz, nous avons défini notre cadre d'étude multi-résolutionnel local. Nous allons voir dans la prochaine partie comment nous l'utilisons afin d'extraire de l'information sur nos textures.
 
 \section{Congruence de phase}
