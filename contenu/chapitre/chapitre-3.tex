@@ -793,7 +793,7 @@ La pyramide de Riesz est une extension de la pyramide laplacienne. C'est le cadr
     \label{fig:riesz-pyramid-cameraman}
 \end{figure}
 
-Pour des raisons de vitesse de calcul et de simplicité d'implémentation, nous n'utilisons cependant pas la vraie transformée de Riesz, qui nécessiterait une transformation de l'image dans le domaine de Fourier, ou le calcul d'une intégrale singulière (voir~\ref{eq:riesz-transform-spatial}). À la place, nous reprenons l'approximation utilisée par Wadhwa et al.~\cite{wadhwa_riesz_2014}, qui se calcule directement dans le domaine spatial en utilisant les filtres à réponse impulsionnelle finie $[-0.5 0 0.5]$ et $[-0.5 0 0.5]^T$, dont les réponses en fréquence sont :
+Pour des raisons de vitesse de calcul et de simplicité d'implémentation, nous n'utilisons cependant pas la vraie transformée de Riesz, qui nécessiterait une transformation de l'image dans le domaine de Fourier, ou le calcul d'une intégrale singulière (voir~\ref{eq:riesz-transform-spatial}). À la place, nous reprenons l'approximation utilisée par Wadhwa et al.~\cite{wadhwa_riesz_2014}, qui se calcule directement dans le domaine spatial en utilisant les filtres à réponse impulsionnelle finie $[-0.5, 0, 0.5]$ et $[-0.5, 0, 0.5]^T$, dont les réponses en fréquence sont :
 
 \begin{equation}
     -i\sin(\omega_x) \quad \text{et} \quad -i\sin(\omega_y).
@@ -941,7 +941,7 @@ Pour remédier à ce problème, on construit une fonction de pondération qui di
 où $A_{max}(x)$ la plus grande amplitude parmi ces niveaux et $\epsilon$ est encore une petite constante positive qui assure la stabilité numérique de l'expression. On otient ainsi une mesure de la répartition de la réponse en fréquence à valeurs entre 0 et 1, qui nous permet de construire notre fonction de pondération avec la fonction sigmoïde :
 
 \begin{equation}
-    W(x) = \frac{1}{1 + \exp\left(g(c-s(x))\right)},
+    W(x) = \frac{1}{1 + \exp^{g(c-s(x))}},
 \end{equation}
 
 avec $c$ la valeur de coupure en-dessous de laquelle on considère que la réponse en fréquence est restreinte, et $g$ un paramètre de gain qui contrôle la précision de la coupure. Dans la pratique, on choisit les valeurs $c = 0.4$ et $g = 10$, qui donne des résultats satisfaisants.
