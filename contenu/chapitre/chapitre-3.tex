@@ -859,11 +859,11 @@ et
     \phi_n(x) = \arctan\left(\frac{f(x)*M^o_n}{f(x)*M^e_n}\right),
 \end{equation}
 
-avec $M^e_n$ et $M^o_n$ les filtres passe-bande, paire et impaire, au niveau d'échelle $n$. {\color{red}COMMENT FORMULER ÇA?} À noter que le $n$ dans l'équation~\ref{eq:local-scale-amplitude} désigne le niveau d'échelle fréquentiel, et n'est pas le même que celui dans l'équation de la série de Fourier~\ref{eq:phase-congruence-energy} qui, lui, représente les différentes sinusoïdes qui forment le signal. En regardant le scalogramme représenté à la figure~\ref{fig:phase-congruence-scalogram} qui représente l'analyse du signal par la banque de filtres, on voit l'intérêt de la congruence de phase : les points saillants sont ceux où la phase est alignée à travers tous les niveaux d'échelle.
+avec $M^e_n$ et $M^o_n$ les filtres passe-bande, paire et impaire, au niveau d'échelle $n$. {\color{red}COMMENT FORMULER ÇA?} À noter que le $n$ dans l'équation~\ref{eq:local-scale-amplitude}, entre 1 et $N$ le nombre de nivaux d'échelle considéré, désigne le niveau d'échelle fréquentiel. Ce n'est pas le même que celui dans l'équation de la série de Fourier~\ref{eq:phase-congruence-energy} qui, lui, représente les différentes sinusoïdes qui forment le signal. En regardant le scalogramme représenté à la figure~\ref{fig:phase-congruence-scalogram} qui représente l'analyse du signal par la banque de filtres, on voit l'intérêt de la congruence de phase : les points saillants sont ceux où la phase est alignée à travers tous les niveaux d'échelle.
 
 \begin{figure}
     \centering
-    \includegraphics[width=.75\textwidth]{contenu/resources/images/phase_congruence_scalogram}
+    \includegraphics[width=.85\textwidth]{contenu/resources/images/phase_congruence_scalogram}
     \label{fig:phase-congruence-scalogram}
     \caption[Scalogramme d'un signal présentant des points caractéristiques]{Signal 1D et ses scalogrammes de phase et d'amplitude. L'abscisse des scalogrammes sont les mêmes que celui du signal, et les ordonnées représentent à la fréquence en échelle logarithmique (valeurs croissantes de bas en haut). Les astérisques marquent les transitions abruptes dans le signal, et correspondent aux instants où la phase est alignée à travers tous les niveaux d'échelle ; ce sont des points où la congruence de phase est élevée. Image par Kovesi~\cite{kovesi_image_1995}.}
 \end{figure}
@@ -871,20 +871,20 @@ avec $M^e_n$ et $M^o_n$ les filtres passe-bande, paire et impaire, au niveau d'�
 Avec les composantes filtrées à différents niveaux d'échelle du signal, on obtient une nouvelle expression de la congruence de phase, qui prend en compte la localisation fréquentielle :
 
 \begin{equation}
-    PC(x) = \frac{E(x)}{\sum_{n=0}^{+\infty} A_n(x)} = \frac{\sqrt{F^2(x)+F_H^2(x)}}{\epsilon + \sum_{n=0}^{+\infty}},
+    PC(x) = \frac{E(x)}{\sum_{n=1}^{N} A_n(x)} = \frac{\sqrt{F^2(x)+F_H^2(x)}}{\epsilon + \sum_{n=1}^{N}},
 \end{equation}
 
 avec $F$ et $F_H$ une reconstruction du signal et de sa transformée de Hilbert respectivement, à partir des composantes filtrées :
 
 \begin{align}
-    F(x) &= \sum_{n=0}^{+\infty} f(x)*M_n^e, \,\text{et}\\
-    F_H(x) &= \sum_{n=0}^{+\infty} f(x)*M{_n^o},
+    F(x) &= \sum_{n=1}^{N} f(x)*M_n^e, \,\text{et}\\
+    F_H(x) &= \sum_{n=1}^{N} f(x)*M{_n^o},
 \end{align}
 
-et $\sum_{n=0}^{+\infty} A_n(x)$ la somme des amplitudes locales à tous les niveaux d'échelle :
+et $\sum_{n=1}^{N} A_n(x)$ la somme des amplitudes locales à tous les niveaux d'échelle :
 
 \begin{equation}
-    \sum_{n=0}^{+\infty} A_n(x) = \sum_{n=0}^{+\infty} \sqrt{(f(x)*M^e_n)^2 + (f(x)*M^o_n)^2}
+    \sum_{n=1}^{N} A_n(x) = \sum_{n=1}^{N} \sqrt{(f(x)*M^e_n)^2 + (f(x)*M^o_n)^2}
 \end{equation}
 
 et $\epsilon$ une petite constante positive qui assure la stabilité numérique de l'expression quand la somme des amplitudes est très petite. Dans notre implémentation, on utilise $\epsilon = 0.01$.
@@ -893,19 +893,113 @@ La reconstruction du signal et de sa transformée de Hilbert est possible lorsqu
 
 \begin{figure}
            \centering
-           \includegraphics[width=.65\textwidth]{contenu/resources/images/wavelet_spectrum_coverage}
+           \includegraphics[width=.60\textwidth]{contenu/resources/images/wavelet_spectrum_coverage}
            \caption[Choix des ondelettes pour recouvrir le spectre et permettre la reconstruction du signal]{Banque d'ondelettes choisie de sorte à recouvrir une large couverture du spectre. On voit les ondelettes (haut) et leur fonction de transfert (milieu), et la fonction de transfert de la somme des ondelettes (bas). Image par Kovesi~\cite{kovesi_image_1995}.}
            \label{fig:wavelet-spectrum-coverage}
 \end{figure}
 
-\subsubsection{Extension à deux dimensions}
+\subsubsection{Répartition des fréquences}
 
-Pour étendre la méthode en deux dimensions, Kovesi utilise une banque de filtres de Gabor 2D auxquels il applique une fonction d'étalement, perpendiculairement à la direction du filtre. En variant l'orientation des filtres, il s'assure de recouvrir totalement le spectre de l'image. L'expression de la congruence de phase s'étend pour prendre en compte toutes les orientations :
+La congruence de phase mesure l'alignement des phases à différents niveaux de fréquence, il est donc important qu'une large bande de fréquences soit couverte, afin d'avoir un indicateur significatif. Ceci n'est pas le cas lorsque le signal a une réponse en fréquence restreinte, dans le cas d'un signal simple ou lissé par exemple. La congruence de phase prend alors des valeurs trop grandes sur des plages trop larges du signal, comme montré dans la figure~\ref{fig:phase-congruency-spread}.
+
+\begin{figure}
+    \centering
+    \begin{subfigure}{.22\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{contenu/resources/images/disk}
+        \caption{Image originale\\}
+    \end{subfigure}
+%    \hfill
+    \begin{subfigure}{.22\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{contenu/resources/images/disk_blur}
+        \caption{Image lissée}
+    \end{subfigure}
+    \\
+    \begin{subfigure}{.22\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{contenu/resources/images/pc_blur_nospread}
+        \caption{Congruence de phase sans pondération}
+    \end{subfigure}
+%    \hfill
+    \begin{subfigure}{.22\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{contenu/resources/images/pc_blur_spread}
+        \caption{Congruence de phase avec pondération}
+    \end{subfigure}
+
+    \caption{Comparaison de la congruence de phase pour une image lissée par un noyau gaussien, avec et sans pondération par la répartition de la réponse en fréquence.}
+    \label{fig:phase-congruency-spread}
+\end{figure}
+
+Pour remédier à ce problème, on construit une fonction de pondération qui diminue l'importance des points où la réponse en fréquence est restreinte. On mesure la répartition de la réponse en fréquence en comparant la plus grande amplitude locale à celles des autres niveaux d'échelle :
 
 \begin{equation}
-    PC(\mathbf{x}) = \frac{\sum_{o\in \mathcal{O}} E_o(\mathbf{x})}{\epsilon + \sum_{o \in \mathcal{O}}\sum_{n=0}^{+\infty} A_{no}(\mathbf{x})}
+    s(x) = \frac1N\left(\frac{\sum_{n=1}^{N}A_n(x)}{\epsilon + A_{max}(x)}\right),
+\end{equation}
+
+où $A_{max}(x)$ la plus grande amplitude parmi ces niveaux et $\epsilon$ est encore une petite constante positive qui assure la stabilité numérique de l'expression. On otient ainsi une mesure de la répartition de la réponse en fréquence à valeurs entre 0 et 1, qui nous permet de construire notre fonction de pondération avec la fonction sigmoïde :
+
+\begin{equation}
+    W(x) = \frac{1}{1 + \exp\left(g(c-s(x))\right)},
+\end{equation}
+
+avec $c$ la valeur de coupure en-dessous de laquelle on considère que la réponse en fréquence est restreinte, et $g$ un paramètre de gain qui contrôle la précision de la coupure. Dans la pratique, on choisit les valeurs $c = 0.4$ et $g = 10$, qui donne des résultats satisfaisants.
+
+On obtient ainsi une fonction de pondération qui vaut 1 lorsque la réponse en fréquence est uniformément répartie, et qui décroit lorsque la réponse en fréquence est restreinte. On peut alors ré-écrire la congruence de phase en prenant en compte cette fonction de pondération :
+
+\begin{equation}
+    PC(x) = \frac{W(x)E(x)}{\epsilon + \sum_{n=1}^{N} A_n(x)}.
+\end{equation}
+
+\subsubsection{Extension à deux dimensions}
+
+Pour étendre la méthode en deux dimensions, Kovesi utilise une banque de filtres de Gabor 2D auxquels il applique une fonction d'étalement gaussienne, perpendiculairement à la direction du filtre. En variant l'orientation des filtres, il s'assure de recouvrir totalement le spectre de l'image. L'expression de la congruence de phase s'étend pour prendre en compte toutes les orientations :
+
+\begin{equation}
+    PC(\mathbf{x}) = \frac{\sum_{o\in \mathcal{O}} W_o(x)E_o(\mathbf{x})}{\epsilon + \sum_{o \in \mathcal{O}}\sum_{n=1}^{N} A_{no}(\mathbf{x})}
 \end{equation},
 
-où $\mathcal{O}$ est l'ensemble des orientations utilisées dans la banque de filtres.
+où $\mathcal{O}$ est l'ensemble des orientations utilisées dans la banque de filtres. Le calcul de la répartition des fréquences $W_o(x)$ doit aussi se faire pour chaque orientation.
 
-\subsubsection{Répartition des fréquences}
+\subsubsection{Utilisation du cadre multi-résolutionnel local de Riesz}
+
+Nous souhaitons appliquer le modèle de la congruence de phase pour synthétiser des textures présentant de la structure irrégulière. Cependant, le cadre multi-résolutionnel local de Riesz présenté précédemment nous semble plus intéressant que les banques d'ondelettes de Gabor présentée par Kovesi~\cite{kovesi_image_1995}, car il est plus compacte, plus simple à implémenter, et donne plus d'informations. SY Notamment, il donne accès à l'orientation locale en chaque pixel de l'image, information pertinente pour l'analyse de nos textures. On adapte donc le modèle de la congruence de phase à notre cadre de travail, avec une pyramide de Riesz :
+
+\begin{equation}
+    PC(\mathbf{x}) = \frac{W(x)E(\mathbf{x})}{\epsilon + \sum_{n=0}^{d} A_{n}(\mathbf{x})} = \frac{W_(x)\sqrt{F^2(\mathbf{x})+R_1^2(\mathbf{x})+R_2^2(\mathbf{x})}}{\epsilon + \sum_{n=0}^{d} \sqrt{f_n^2(\mathbf{x}) + r_{1n}^2(\mathbf{x}) + r_{2n}^2(\mathbf{x})}},
+\end{equation}
+
+avec $d$ la profondeur de la pyramide, $f_i, r_{1i}\, \text{et}\, r_{2i}$ les composantes de Riesz de l'étage $i$, et $F, R_1$ et $R_2$ les reconstructions de l'image originale, et des composantes de sa transformée de Riesz, qui se calculent avec les différents étages de la pyramide :
+
+\begin{equation}
+    F(\mathbf{x}) = \sum_{n=0}^{d} f_n(\mathbf{x}) \quad \text{et} \quad R_i(\mathbf{x}) = \sum_{n=0}^{d} r_{in}(\mathbf{x})\, \text{pour}\, i \in \{1, 2\}.
+\end{equation}
+
+\begin{figure}
+    \centering
+    \begin{subfigure}{.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{contenu/resources/images/geometry_shapes}
+        \caption{Image originale}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{contenu/resources/images/geometric_shapes_pc_kovesi}
+        \caption{Congruence de phase de Kovesi}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{contenu/resources/images/geometric_shapes_pc_riesz}
+        \caption{Congruence de phase de Riesz}
+    \end{subfigure}
+
+    \caption{Comparaison de la congruence de phase de Kovesi et de Riesz pour une image de test de formes géométriques.}
+    \label{fig:phase-congruency-riesz}
+\end{figure}
+
+\bigskip
+
+Avec cette formulation de la congruence de phase, nous avons défini un cadre de travail d'analyse d'image. Nous allons voir dans la partie suivante comment nous l'appliquons à la synthèse de texture.
