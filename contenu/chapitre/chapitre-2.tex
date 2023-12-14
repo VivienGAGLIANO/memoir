@@ -1,13 +1,19 @@
 \chapter{Implémentation et sélection de niveaux de fréquences}
 \label{chap:chapitre2}
 
-Notre recherche est une étude exploratoire du modèle multi-résolutionnel local, en particulier de la congruence de phase, issu du traitement d'image, appliqué dans le contexte de la synthèse de texture. Nous allons maintenant voir comment nous avons mis en application les concepts exposés à la partie précédente, ainsi que les résultats obtenus.
+Notre recherche est une étude exploratoire du modèle multi-résolutionnel local, en particulier de la congruence de phase, issu du traitement d'images, appliqué dans le contexte de la synthèse de texture. Nous allons maintenant voir comment nous avons mis en application les concepts exposés à la partie précédente, ainsi que les résultats obtenus.
 
 \section{Mise en application}
 
+Les concepts d'énergie locale et de signal monogène ne sont pas des notions communément utilisées dans le traitement d'images, aucune librairie standard ne les implémentent à notre connaissance. Nous avons donc dû implémenter nous-même les algorithmes pour mettre en place le modèle multi-résolutionnel local. Nous avons commencé par mettre au point un logiciel utilisant C++ avec la librairie OpenCV, standard dans le domaine du traitement d'images, pour avoir une première visualisation de la transformée de Riesz, des pyramides d'images et de la congruence de phases. Nous avons fait quelques expérimentations avec la congruence de phases, puis nous avons décidé, pour plusieurs raisons, de transitionner vers un autre logiciel : Godot. Godot est un logiciel libre, moteur de jeu 2D et 3D, qui permet de faire du rendu temps-réel et donc SY d'addresser les problématiques de la synthèse de texture, ce que ne permettait pas OpenCV. Nous avons donc travaillé à développer \textit{TexSyn}, une librairie de traitement d'images et de synthèse de texture dans Godot. Nous avons alors ré-implémenté les algorithmes de traitement d'images dans Godot, et avons travaillé à
+
 \subsection{OpenCV}
 
+Ici on ne traite que des images, pas de question de projection sur des surfaces. Pas de filtrage non plus. 
+
 \subsection{Godot}
+
+Godot est un moteur de jeu libre et open-source, qui permet de faire des jeux 2D et 3D. Il est écrit en C++, mais permet de faire des jeux en utilisant un langage de script, le GDScript, qui est un langage de programmation de haut niveau, proche du Python. Il est donc plus facile de faire des prototypes avec Godot qu'avec OpenCV, et il permet de faire des rendus en temps réel, ce qui est un avantage pour la synthèse de texture. Nous avons donc implémenté les algorithmes de traitement d'images dans Godot, et nous avons fait des expérimentations avec la congruence de phase et la synthèse de texture.
 
 \subsection{Détails d'implémentation}
 - choix du filtre pour la pyramide de Gauss / Laplace

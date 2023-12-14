@@ -669,17 +669,17 @@ Maintenant que notre cadre de travail pour le restant du manuscript, le signal m
 
 \section{Pyramide de Riesz}
 
-% Pyramide d'image inventée par Burt et Adelson~\cite{burt_laplacian_1983} pour la compression d'image.
-L'idée d'utiliser une pyramide d'image est introduite par Simoncelli et al.~\cite{simoncelli_shiftable_1992}, {\color{red}REFOLMURER dans le but d'avoir une représentation possédant des bonnes propriétés d'études.}. C'est une méthode de représentation multi-échelle d'une image.
-% AVANTAGES de la pyramide d'image de Simoncelli, la complex steerable pyramid :
+% Pyramide d'images inventée par Burt et Adelson~\cite{burt_laplacian_1983} pour la compression d'images.
+L'idée d'utiliser une pyramide d'images est introduite par Simoncelli et al.~\cite{simoncelli_shiftable_1992}, {\color{red}REFOLMURER dans le but d'avoir une représentation possédant des bonnes propriétés d'études.}. C'est une méthode de représentation multi-échelle d'une image.
+% AVANTAGES de la pyramide d'images de Simoncelli, la complex steerable pyramid :
 % - steerable, invariance par rotation
 % - invariance par translation et mise à l'échelle
 % - avoids spatial aliasing
-SY Conceptuellement, une pyramide d'image remplit la même fonction qu'une banque de filtres, comme les filtres log-Gabor utlisés par Bridge : on décompose une image en s'intéressant successivement à différentes bandes de fréquences, afin d'extraire de l'information localisée en fréquence. La pyramide que nous utilisons, inspirée de Wadhwa et al.~\cite{wadhwa_phase_based_2013}, est construite en formant dans un premier temps la pyramide de Gauss, puis de Laplace de l'image, qui elle nous sert à avoir une méthode de reconstruction de notre image. On applique ensuite la transformée de Riesz à tous les étages de la pyramide, pour obtenir le signal monogène de chaque niveau. De là, on extrait les informations locales à tous les niveaux de structure, informations qui seront ultérieurement utilisées pour l'analyse et la synthèse de nos textures.
+SY Conceptuellement, une pyramide d'images remplit la même fonction qu'une banque de filtres, comme les filtres log-Gabor utlisés par Bridge : on décompose une image en s'intéressant successivement à différentes bandes de fréquences, afin d'extraire de l'information localisée en fréquence. La pyramide que nous utilisons, inspirée de Wadhwa et al.~\cite{wadhwa_phase_based_2013}, est construite en formant dans un premier temps la pyramide de Gauss, puis de Laplace de l'image, qui elle nous sert à avoir une méthode de reconstruction de notre image. On applique ensuite la transformée de Riesz à tous les étages de la pyramide, pour obtenir le signal monogène de chaque niveau. De là, on extrait les informations locales à tous les niveaux de structure, informations qui seront ultérieurement utilisées pour l'analyse et la synthèse de nos textures.
 
 \subsection{Pyramide gaussienne}
 
-RE La méthode de pyramide d'image est une méthode de représentation multi-échelle d'une image, répandue dans les domaines de la vision par ordinateur et du traitement d'image. Initialement introduite par Burt et Adelson~\cite{burt_laplacian_1983} pour la compression d'image, elle permet d'étudier une image à différents niveaux de résolution, afin de faciliter la détection de motifs en sélectionnant le niveau d'échelle correspondant au motif recherché. Elle est ensuite étendue par Simoncelli et al.~\cite{simoncelli_shiftable_1992} pour RE avoir une représentation possédant des bonnes propriétés d'études. 
+RE La méthode de pyramide d'images est une méthode de représentation multi-échelle d'une image, répandue dans les domaines de la vision par ordinateur et du traitement d'images. Initialement introduite par Burt et Adelson~\cite{burt_laplacian_1983} pour la compression d'images, elle permet d'étudier une image à différents niveaux de résolution, afin de faciliter la détection de motifs en sélectionnant le niveau d'échelle correspondant au motif recherché. Elle est ensuite étendue par Simoncelli et al.~\cite{simoncelli_shiftable_1992} pour RE avoir une représentation possédant des bonnes propriétés d'études.
 
 Il existe deux types principaux de pyramide, passe-bas et passe-bande. Pour créer une pyramide passe-bas, aussi dite de Gauss, on procède itérativement suivant les deux étapes qui suivent :
 
@@ -756,7 +756,7 @@ Plutôt que d'encoder la valeur même de chaque pixel, on prédit la valeur que 
     L = I - k * I,
 \end{equation}
 
-avec $I$ l'image originale, $L$ l'image d'erreur de prédiction, et $k$ le filtre de moyenne pondérée. Pour la compression d'image, l'intérêt se trouve dans cette ré-écriture, car les pixels de $L$ sont décorrélés et de faible valeur, donc encodables avec peu de bits, et $k*I$ est une image lissée, qui peut être sous-échantillonnée pour obtenir une image de moitié de taille. On n'encode alors que ces deux images, et on obtient ainsi une représentation plus compacte de l'image originale.
+avec $I$ l'image originale, $L$ l'image d'erreur de prédiction, et $k$ le filtre de moyenne pondérée. Pour la compression d'images, l'intérêt se trouve dans cette ré-écriture, car les pixels de $L$ sont décorrélés et de faible valeur, donc encodables avec peu de bits, et $k*I$ est une image lissée, qui peut être sous-échantillonnée pour obtenir une image de moitié de taille. On n'encode alors que ces deux images, et on obtient ainsi une représentation plus compacte de l'image originale.
 
 On peut répéter ce processus itérativement, en appliquant à chaque fois le même filtre à l'image lissée de résolution inférieure. On enregistre alors seulement les images d'erreur, dont la taille est divisée par 4 à chaque fois, et la dernière image lissée, de taille $N/2^{2d}$, avec $N$ la taille de l'image initiale et $d$ la profondeur désirée. Encore une fois, on peut se représenter cette collection d'images comme une pyramide, en les superposant de la plus grande à la plus petite.
 
@@ -815,7 +815,7 @@ Cette approximation donne de bons résultats dans notre pyramide, car les filtre
 
 Après avoir fait la transformée de Riesz, on peut calculer pour chaque étage les images d'informations locales, amplitude, phase et orientation.
 
-\begin{figure}[h]
+\begin{figure}[hp]
     \centering
     \includegraphics[width=.90\textwidth]{contenu/resources/images/riesz_pyramid_pasta}
     \caption[Informations locales de la pyramide de Riesz]{Informations locales de la pyramide de Riesz. En colonne, les différentes composantes : en colonne, les différentes informations locales : amplitude (gauche), phase (milieu) et orientation (droite). En ligne les différentes étages de la pyramide, du premier (haut) au dernier (bas).}
