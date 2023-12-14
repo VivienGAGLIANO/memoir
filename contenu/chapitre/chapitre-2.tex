@@ -1,18 +1,27 @@
-\chapter{État de l'art}
-% \label{chap:chapitre2}
+\chapter{Implémentation et sélection de niveaux de fréquences}
+\label{chap:chapitre2}
 
-\section{Texture stationnaire}
+Notre recherche est une étude exploratoire du modèle multi-résolutionnel local, en particulier de la congruence de phase, issu du traitement d'image, appliqué dans le contexte de la synthèse de texture. Nous allons maintenant voir comment nous avons mis en application les concepts exposés à la partie précédente, ainsi que les résultats obtenus.
 
-Réalisations de processus stochastiques gaussiens stationaires
+\section{Mise en application}
 
-\section{Texture périodique}
+\subsection{OpenCV}
 
-Processus non-stationaire, contenu structuré (ex cyclo-stationaire)
+\subsection{Godot}
 
-\section{Texture apériodique}
+\subsection{Détails d'implémentation}
+- choix du filtre pour la pyramide de Gauss / Laplace
+- approximation de la transformée de Riesz par le gradient
+- son of a gun de filtrage compliqué avec la reconstruction en temps réel de la pyramide (voir projet godot, scène riesz\_reconstruction.tscn)
 
-Processus vraiment non-stationaire, contenu varié. Différents niveaux de structure, tailles inégales, etc...
+\section{Sélection de niveaux de fréquences et applications}
 
-\section{Analyse multi-résolutionnelle locale}
+\subsection{Application à l'échange de contenu de PC variable}
 
-% Pyramide de Riesz & co
+\subsection{Filtrage de bande de basse fréquence}
+
+\section{Synthèse de texture préservant la congruence de phase}
+
+\subsection{Synthèse par ré-organisation}
+
+\subsection{Échantillonneur préservant la congruence de phase}
