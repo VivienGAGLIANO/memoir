@@ -1,24 +1,42 @@
-\chapter{Implémentation et sélection de niveaux de fréquences}
+\chapter{Implémentations et sélection de niveaux de fréquences}
 \label{chap:chapitre2}
 
 Notre recherche est une étude exploratoire du modèle multi-résolutionnel local, en particulier de la congruence de phase, issu du traitement d'images, appliqué dans le contexte de la synthèse de texture. Nous allons maintenant voir comment nous avons mis en application les concepts exposés à la partie précédente, ainsi que les résultats obtenus.
 
 \section{Mise en application}
 
-Les concepts d'énergie locale et de signal monogène ne sont pas des notions communément utilisées dans le traitement d'images, aucune librairie standard ne les implémentent à notre connaissance. Nous avons donc dû implémenter nous-même les algorithmes pour mettre en place le modèle multi-résolutionnel local. Nous avons commencé par mettre au point un logiciel utilisant C++ avec la librairie OpenCV~\cite{opencv_library}, standard dans le domaine du traitement d'images, pour avoir une première visualisation de la transformée de Riesz, des pyramides d'images et de la congruence de phases. Nous avons fait quelques expérimentations avec la congruence de phases, puis nous avons décidé, pour plusieurs raisons expliquées plus loin, de faire la transition vers le logiciel Godot~\cite{godot_game_engine}. Godot est un logiciel libre et gratuit, moteur de jeu 2D et 3D, qui permet de faire du rendu temps-réel et donc de s'intéresser aux problématiques de la synthèse de texture, ce que ne permettait pas OpenCV. En collaboration avec Nicolas Lutz, post-doctorant dans le laboratoire, nous avons travaillé à développer \textit{TexSyn}, une librairie de traitement d'images et de synthèse de texture dans Godot. Nous y avons ré-implémenté les algorithmes de traitement d'images pour créer nos pyramides et calculer des congruences de phases, pour après mettre au point une méthode de synthèse de texture pouvant traiter des textures à structure irrégulière.
+Les concepts d'énergie locale et de signal monogène ne sont pas des notions communément utilisées dans le traitement d'images, aucune librairie standard ne les implémentent à notre connaissance. Nous avons donc dû implémenter nous-même les algorithmes pour mettre en place le modèle multi-résolutionnel local. Le choix du logiciel pour faire ces implémentations a été une question importante.
 
-\subsection{OpenCV}
 
-Ici on ne traite que des images, pas de question de projection sur des surfaces. Pas de filtrage non plus.
+%\subsection{OpenCV}
+\paragraph{OpenCV}
 
-\subsection{Godot}
+Malgré notre but final de travailler sur de la synthèse de texture, nous avons commencé par développer un petit logiciel pour pouvoir itérer rapidement et expérimenter avec les concepts de base du modèle multi-résolutionnel local sur des images, sans se poser de question sur les problématiques de la synthèse. Pour cela, nous mis au point un logiciel utilisant \cpp avec la librairie OpenCV~\cite{opencv_library}. OpenCV est une librairie standard de traitement d'images en temps réel et de vision par ordinateur, disponible pour les langages de programmation \cpp, Python et Java. Les images sont représentées comme des matrices, et les opérations bas niveau courantes de traitement d'images y sont implémentées, comme la lecture, l'écriture, l'affichage, le filtrage, la convolution, et d'autres.  Notre logiciel permet à un utilisateur de créer, visualiser, et modifier les pyramides d'une image sélectionnée en entrée, ainsi que de calculer et visualiser la congruence de phase. Avec ces fonctionnalités, nous avons fait de petites expérimentations pour voir l'effet de différentes modifications et reconstructions de la pyramide de Riesz d'une image.
 
-Godot est un moteur de jeu libre et open-source, qui permet de faire des jeux 2D et 3D. Il est écrit en C++, mais permet de faire des jeux en utilisant un langage de script, le GDScript, qui est un langage de programmation de haut niveau, proche du Python. Il est donc plus facile de faire des prototypes avec Godot qu'avec OpenCV, et il permet de faire des rendus en temps réel, ce qui est un avantage pour la synthèse de texture. Nous avons donc implémenté les algorithmes de traitement d'images dans Godot, et nous avons fait des expérimentations avec la congruence de phase et la synthèse de texture.
 
-\subsection{Détails d'implémentation}
-- choix du filtre pour la pyramide de Gauss / Laplace
-- approximation de la transformée de Riesz par le gradient
-- son of a gun de filtrage compliqué avec la reconstruction en temps réel de la pyramide (voir projet godot, scène riesz\_reconstruction.tscn)
+\bigskip
+
+Plusieurs raisons ont ensuite motivé notre choix de changer d'implémentation. Après avoir pu expérimenter avec la congruence de phases sur des images, nous voulions travailler avec des textures, c'est à dire faire de la synthèse dans le cadre du pipeline graphique traditionnel. On ne veut plus simplement reconstruire une image, mais plutôt synthétiser une texture que l'on projète sur une surface, potentiellement infinie, dans le but de la recouvrir. Dans ce contexte, plusieurs problématiques surviennent. La synthèse de texture doit pouvoir se faire dans le fragment shader, depuis le GPU, pour être mise en place dans le pipeline graphique. Cela veut dire avoir une méthode de reconstruction parallélisable, ce qui n'est pas le cas de la méthode que nous utilisions jusque là. Se posent aussi des questions de projection et de filtrage, que n'avions pas eu à traiter, nécessaires à considérer lorsque l'on fait de la synthèse de textures.
+
+Parallèlement, notre laboratoire de recherche a accueilli de nouveaux membres, qui allaient travailler sur des problématiques similaires aux nôtres. Nous avons alors cherché à mettre en place un logiciel qui servirait de base de travail commune pour toutes les personnes voulant faire de la synthèse de textures dans le laboratoire. Nous avons considéré plusieurs options, notamment développer un moteur de rendu personnalisé et adapté à nos besoins, ou encore utiliser un moteur de jeu existant, Unity3D~\cite{unity_engine} ou Unreal Engine~\cite{unreal_engine}. Le problème du moteur personnalisé est qu'il nous aurait fallu tout réimplémenter nous-même, ce qui aurait été long et redondant. Les moteurs Unity3D et Unreal Engine, eux, avaient le désavantage de ne pas offrir de flexibilité pour manipuler les textures tel que nous souhaitions le faire. Nous avons donc choisi une autre option, le moteur de jeu Godot~\cite{godot_game_engine}.
+
+\paragraph{Godot}
+
+Godot est un logiciel libre et gratuit, moteur de jeu 2D et 3D, qui permet de faire du rendu temps-réel et donc de s'intéresser aux problématiques de la synthèse de texture, ce que ne permettait pas OpenCV. Bien qu'encore moins populaire que Unity et Unreal Engine, Godot est une solution qui croit en popularité, surtout dans le monde de la recherche en informatique graphique, car il est léger et très flexible, et permet facilement d'écrire des modules personnalisés ou de modifier le code source du moteur pour l'adapter aux besoins de l'utilisateur. C'est ce que nous avons fait avec Nicolas Lutz, post-doctorant dans le laboratoire. Nous avons travaillé à développer \textit{TexSyn}, une librairie \cpp de traitement d'images et de synthèse de texture pour Godot. Nous y avons ré-implémenté les algorithmes de traitement d'images pour créer nos pyramides et calculer des congruences de phases, pour ensuite mettre au point une méthode de synthèse de texture pouvant traiter des textures à structure irrégulière.
+
+Godot a une classe qui gère les textures, mais la manipuler est compliqué et peu efficace pour des opérations d'accès directs dont nous avons besoin pour nos synthèses. Notre librairie \textit{TexSyn} définit donc une classe d'image plus pratique à utiliser, avec toutes les opérations dont nous avons besoin, qui est ensuite interfacée avec la classe d'image de Godot pour pouvoir être utilisée depuis l'éditeur. On construit SY avec cela nos pyramides en pré-calcul sur le CPU, que l'on stocke dans des atlas de textures, qui sont ensuite chargés sur le GPU. On fait alors la reconstruction depuis nos shaders, en temps réel, en utilisant les pyramides stockées dans les atlas. Cette reconstruction a cependant des problèmes de filtrage, car nous ne pouvons pas appliquer le filtre binomial normalement utilisé pour lisser lors de la reconstruction. Nous travaillons ensuite à développer une méthode de synthèse en mettant au point un échantillonneur préservant la congruence de phases, détaillé plus loin dans ce chapitre.
+
+% Parler des pistes pour résoudre le pbl de filtrage, ou garder ça pour la discussion ?
+
+% TODO image de rec CPU vs GPU
+% TODO image des atlas
+
+Réalisations
+- implémentation de technique classique de synthèse de texture, le HPN + phasor noise
+- PC preserving sampler
+    -> quantization
+    -> stochasrtic mean
+    -> image partition
 
 \section{Sélection de niveaux de fréquences et applications}
 
