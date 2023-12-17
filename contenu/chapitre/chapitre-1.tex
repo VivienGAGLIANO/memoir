@@ -969,7 +969,7 @@ où $\mathcal{O}$ est l'ensemble des orientations utilisées dans la banque de f
 Nous souhaitons appliquer le modèle de la congruence de phase pour synthétiser des textures présentant de la structure irrégulière. Cependant, le cadre multi-résolutionnel local de Riesz présenté précédemment nous semble plus intéressant que les banques d'ondelettes de Gabor présentée par Kovesi~\cite{kovesi_image_1995}, car il est plus compacte, plus simple à implémenter, et donne plus d'informations. SY Notamment, il donne accès à l'orientation locale en chaque pixel de l'image, information pertinente pour l'analyse de nos textures. On adapte donc le modèle de la congruence de phase à notre cadre de travail, avec une pyramide de Riesz :
 
 \begin{equation}
-    PC(\mathbf{x}) = \frac{W(x)E(\mathbf{x})}{\epsilon + \sum_{n=0}^{d} A_{n}(\mathbf{x})} = \frac{W_(x)\sqrt{F^2(\mathbf{x})+R_1^2(\mathbf{x})+R_2^2(\mathbf{x})}}{\epsilon + \sum_{n=0}^{d} \sqrt{f_n^2(\mathbf{x}) + r_{1n}^2(\mathbf{x}) + r_{2n}^2(\mathbf{x})}},
+    PC(\mathbf{x}) = \frac{W(x)E(\mathbf{x})}{\epsilon + \sum_{n=0}^{d} A_{n}(\mathbf{x})} = \frac{W(x)\sqrt{F^2(\mathbf{x})+R_1^2(\mathbf{x})+R_2^2(\mathbf{x})}}{\epsilon + \sum_{n=0}^{d} \sqrt{f_n^2(\mathbf{x}) + r_{1n}^2(\mathbf{x}) + r_{2n}^2(\mathbf{x})}},
 \end{equation}
 
 avec $d$ la profondeur de la pyramide, $f_i, r_{1i}\, \text{et}\, r_{2i}$ les composantes de Riesz de l'étage $i$, et $F, R_1$ et $R_2$ les reconstructions de l'image originale, et des composantes de sa transformée de Riesz, qui se calculent avec les différents étages de la pyramide :
