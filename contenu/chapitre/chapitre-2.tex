@@ -1,9 +1,9 @@
-\chapter{Implémentations et sélection de niveaux de fréquences}
+\chapter{Implémentations et synthèse de texture}
 \label{chap:chapitre2}
 
 Notre recherche est une étude exploratoire du modèle multi-résolutionnel local, en particulier de la congruence de phase, issu du traitement d'images, appliquée dans le contexte de la synthèse de texture. Nous allons maintenant voir la mise en application des concepts exposés à la partie précédente, ainsi que les résultats obtenus.
 
-\section{Mise en application}
+\section{Implémentation}
 
 Les concepts d'énergie locale et de signal monogène ne sont pas des notions communément utilisées dans le traitement d'images, aucune librairie standard ne les implémente à notre connaissance. Nous avons donc dû implémenter nous-même les algorithmes pour mettre en place le modèle multi-résolutionnel local. Le choix du logiciel pour faire ces implémentations a été une question importante.
 
@@ -34,7 +34,7 @@ Godot a une classe qui gère les textures, mais la manipuler est compliqué et p
 \end{figure}
 
 
-\section{Sélection de niveaux de fréquences et applications}
+\section{Sélection de niveaux de fréquences}
 
 La mise au point de la congruence de phases et l'utilisation d'un contexte multi-résolutionnel nous ont permis de visualiser explicitement que les différents niveaux de structure que l'on trouve dans une image sont liés à différents niveaux de d'échelle. Nous avons émis l'hypothèse que chaque niveau de structure que l'on distingue dans une image peut s'exprimer comme la congruence en phases d'un sous-ensemble fréquentiel. Autrement dit, chaque échelle de structure est créée par un sous-ensemble de niveaux de la pyramide d'image. Pour vérifier cela, nous avons regardé quel était le résultat de sélectionner seulement certains sous-ensembles de niveaux de la pyramide et de calculer la congruence de phases sur ces niveaux.
 
@@ -64,23 +64,46 @@ où $\mathcal{S}$ est un sous-ensemble de niveaux de la pyramide. En pratique, n
         \caption{Niveaux 2 à $d-1$}
     \end{subfigure}
 
-    \caption[Congruence de phases sur différents niveaux d'échelle]{Congruence de phases sur différents niveaux d'échelle. Conformément à notre intuition, on observe que sur les premiers niveaux (milieu), qui correspondent aux hautes fréquences, les détails fins ressortent, tandis que sur les derniers niveaux (droite), qui correspondent aux plus basses fréquences, c'est la structure globale qui apparait.}
+    \caption[Congruence de phases sur différents niveaux d'échelle]{Congruence de phases sur différents niveaux d'échelle. Conformément à notre intuition, on observe que sur les premiers niveaux (milieu), qui correspondent aux hautes fréquences, les détails fins ressortent, tandis que sur les derniers niveaux (droite), qui correspondent aux plus basses fréquences, c'est la structure globale, le contour de l'empreinte, qui apparait.}
     \label{fig:pc-selection-niveaux}
 \end{figure}
 
+Suite à cette observation, nous avons mis en place une méthode de sélection de niveaux de fréquences, pour pouvoir supprimer certains niveaux de la pyramide et observer l'effet sur la reconstruction. L'objectif était de pouvoir cibler les niveaux de structure qui nous intéressent et les extraire de l'image. Nous avons mis cela en application en faisant du filtrage de bandes de basses fréquences sur des textures de matériaux divers (voir figure~\ref{fig:filter-low-freq}), ce qui nous permet de \og gommer \fg{} les tâches présentes sur les images.
 
-\subsection{Filtrage de bande de basse fréquence}
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{.25\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{contenu/resources/images/lattice}
+    \end{subfigure}
+    \hspace{1em}
+    \begin{subfigure}[b]{.25\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{contenu/resources/images/lattice_filtered}
+    \end{subfigure}
+    \\
+    \vspace{1em}
+    \begin{subfigure}[b]{.25\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{contenu/resources/images/lattice2}
+    \end{subfigure}
+    \hspace{1em}
+    \begin{subfigure}[b]{.25\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{contenu/resources/images/lattice2_filtered}
+    \end{subfigure}
 
-Suite à cette observation, nous avons mis en place une méthode de sélection de niveaux de fréquences, pour pouvoir supprimer certains niveaux de la pyramide et observer l'effet sur la reconstruction.
-
-\subsection{Application à l'échange de contenu de PC variable}
+    \caption[Filtrage de bandes de basses fréquences]{Filtrages de bandes de basses fréquences. Cette opération permet de supprimer les tâches présentes sur les textures, tout en conservant la structure globale et les détails. On voit les images originales (gauche) et les images reconstruites sans certains niveaux de la pyramide (droite). On garde typiquement les deux premiers niveaux, ainsi que le dernier, le résidu basse fréquence. Images tirées de la base de textures Brodatz~\cite{abdelmounaime_new_2013}.}
+    \label{fig:filter-low-freq}
+\end{figure}
 
 \section{Synthèse de texture préservant la congruence de phase}
 
-\subsection{Synthèse par ré-organisation}
+L'intérêt principal de notre cadre de travail est néanmoins l'utilisation de la congruence de phases, notamment en tant qu'indicatrice de la \textit{proximité} à un bord. La congruence de phases se comporte en effet comme un gradient dans la direction perpendiculaire au bord, et nous permet donc de savoir ponctuellement si un pixel se situe proche d'un bord.  Nous avons fait quelques expériences pour exploiter ce principe, puis nous avons mis au point une méthode de synthèse de textures pour traiter les textures à structure irrégulière.
 
-- implémentation de technique classique de synthèse de texture, le HPN + phasor noise
+Nous nous sommes inspirés de Lutz et al.~\cite{lutz_preserving_2023}, qui font le constat que les méthodes de synthèse par pavage apériodique, une sorte de synthèse par réorganisation reposant sur un échantillonnage uniforme de l'exemple d'entrée, échouent à préserver la fonction d'autocovariance de l'exemple. Des corrélations qui contribuent à préserver l'apparence de l'entrée sont ainsi mal reproduites, ce qui donne un air trop aléatoire au résultat. Pour remédier à cela, ils améliorent l'étape d'échantillonnage en utilisant le principe d' \og échantillonnage par importance \fg{}, qui consiste à influer l'échantillonnage en fonction d'une \og fonction de densité de probabilité \fg{}. En utilisant la fonction d'autocovariance comme densité de probabilité, ils montrent que l'on préserve mieux cette statistique et que l'on améliore la qualité de la synthèse.
 
+Nous avons pensé appliquer ce principe à la congruence de phases.
 
 \subsection{Échantillonneur préservant la congruence de phase}
 

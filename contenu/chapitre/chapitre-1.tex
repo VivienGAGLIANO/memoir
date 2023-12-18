@@ -1,8 +1,6 @@
 \chapter[Modèle de Riesz]{Étude théorique du modèle de Riesz} % signal monogénique ?
 \label{chap:chapitre1}
 
-{\color{red} TODO : utiliser \\paragraph where needed}
-
 Dans le but de synthétiser du contenu avec de la structure irrégulière, nous cherchons à avoir une approche locale. Pour cela nous utilisons le modèle du signal monogène~\cite{felsberg_monogenic_2001}, qui permet d'extraire l'énergie locale, en s'appuyant sur la transformée de Riesz. Ce SY procédé est ensuite mis en application dans un cadre multi-résolutionnel, en utilisant une pyramide de Riesz~\cite{wadhwa_riesz_2014} pour calculer la congruence de phases.
 
 \section{Signal monogène}
@@ -608,7 +606,7 @@ La figure~\ref{fig:monogenic-local-representation} montre un exemple de représe
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{contenu/resources/images/local_information_monogenic}
-    \caption[Représentation locale du signal monogène]{Représentation locale du signal monogène pour une image, avec l'amplitude (gauche), la phase (milieu) et l'orientation (droite) locales. Image par Bridge~\ref{bridge_introduction_2018}.}
+    \caption[Représentation locale du signal monogène]{Représentation locale du signal monogène pour une image, avec l'amplitude (gauche), la phase (milieu) et l'orientation (droite) locales. Image par Bridge~\cite{bridge_introduction_2018}.}
     \label{fig:monogenic-local-representation}
 \end{figure}
 
@@ -664,7 +662,7 @@ Avec ces filtres, on calcule les parties paires et impaires du signal en sélect
 
 
 \bigskip
-{#color{red} SY cadre de travail}
+{\color{red} SY cadre de travail}
 Maintenant que notre cadre de travail pour le restant du manuscript, le signal monogène, a été plus formellement introduit, nous allons pouvoir nous intéresser RE au cadre que nous avons choisi pour travailler à différents niveaux de structure. Bridge présente dans son article~\cite{bridge_introduction_2018} un cadre de travail utilisant les filtres log-Gabor, qui possèdent une expression complexe dans le domaine temporel. Pour nos travaux, nous avons utilisé une autre méthode de représentation, la pyramide de Riesz, plus simple à calculer et manipuler, et qui nous permet de nous concentrer sur l'analyse de textures. Nous allons maintenant présenter cette pyramide de Riesz, et montrer comment elle peut être utilisée pour l'analyse de textures.
 
 \section{Pyramide de Riesz}
@@ -866,8 +864,8 @@ avec $M^e_n$ et $M^o_n$ les filtres passe-bande, paire et impaire, au niveau d'�
 \begin{figure}
     \centering
     \includegraphics[width=.85\textwidth]{contenu/resources/images/phase_congruence_scalogram}
-    \label{fig:phase-congruence-scalogram}
     \caption[Scalogramme d'un signal présentant des points caractéristiques]{Signal 1D et ses scalogrammes de phase et d'amplitude. L'abscisse des scalogrammes sont les mêmes que celui du signal, et les ordonnées représentent à la fréquence en échelle logarithmique (valeurs croissantes de bas en haut). Les astérisques marquent les transitions abruptes dans le signal, et correspondent aux instants où la phase est alignée à travers tous les niveaux d'échelle ; ce sont des points où la congruence de phase est élevée. Image par Kovesi~\cite{kovesi_image_1995}.}
+    \label{fig:phase-congruence-scalogram}
 \end{figure}
 
 Avec les composantes filtrées à différents niveaux d'échelle du signal, on obtient une nouvelle expression de la congruence de phase, qui prend en compte la localisation fréquentielle :

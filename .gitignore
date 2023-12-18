@@ -304,3 +304,8 @@ TSWLatexianTemp*
 .idea/
 
 out/
+
+# TikZ externalization
+*.pdf
+*.glo-abr
+*.ist
