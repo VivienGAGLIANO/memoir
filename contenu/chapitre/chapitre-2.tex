@@ -101,13 +101,62 @@ Suite à cette observation, nous avons mis en place une méthode de sélection d
 
 L'intérêt principal de notre cadre de travail est néanmoins l'utilisation de la congruence de phases, notamment en tant qu'indicatrice de la \textit{proximité} à un bord. La congruence de phases se comporte en effet comme un gradient dans la direction perpendiculaire au bord, et nous permet donc de savoir ponctuellement si un pixel se situe proche d'un bord.  Nous avons fait quelques expériences pour exploiter ce principe, puis nous avons mis au point une méthode de synthèse de textures pour traiter les textures à structure irrégulière.
 
-Nous nous sommes inspirés de Lutz et al.~\cite{lutz_preserving_2023}, qui font le constat que les méthodes de synthèse par pavage apériodique, une sorte de synthèse par réorganisation reposant sur un échantillonnage uniforme de l'exemple d'entrée, échouent à préserver la fonction d'autocovariance de l'exemple. Des corrélations qui contribuent à préserver l'apparence de l'entrée sont ainsi mal reproduites, ce qui donne un air trop aléatoire au résultat. Pour remédier à cela, ils améliorent l'étape d'échantillonnage en utilisant le principe d' \og échantillonnage par importance \fg{}, qui consiste à influer l'échantillonnage en fonction d'une \og fonction de densité de probabilité \fg{}. En utilisant la fonction d'autocovariance comme densité de probabilité, ils montrent que l'on préserve mieux cette statistique et que l'on améliore la qualité de la synthèse.
+Nous nous sommes inspirés de Lutz et al.~\cite{lutz_preserving_2023}, qui font le constat que les méthodes de synthèse par pavage apériodique, une sorte de synthèse par réorganisation reposant sur un échantillonnage uniforme de l'exemple d'entrée, échouent à préserver la fonction d'autocovariance de l'exemple. Des corrélations qui contribuent à préserver l'apparence de l'entrée sont ainsi mal reproduites, ce qui donne un air trop aléatoire au résultat. Pour remédier à cela, ils améliorent l'étape d'échantillonnage en utilisant le principe d' \og échantillonnage préférentiel \fg{}, qui consiste à influer l'échantillonnage en fonction d'une \og fonction de densité de probabilité \fg{}. En utilisant la fonction d'autocovariance comme densité de probabilité, ils montrent que l'on préserve mieux cette statistique et que l'on améliore la qualité de la synthèse.
 
-Nous avons pensé appliquer ce principe à la congruence de phases.
+Nous avons pensé appliquer cette idée à la congruence de phases. Le principe de la synthèse que nous proposons est d'adapter notre échantillonnage en fonction de l'endroit où l'on se situe dans la texture, afin de préserver la congruence de phase de l'exemple et ainsi conserver les contours et la structure de l'exemple. Pour créer du contenu inédit, nous remplaçons le contenu de la texture par du contenu qui possède propriétés similaires, notamment la congruence de phases, sous l'hypothèse que du contenu avec une congruence de phases similaire aura une apparence similaire. Pour notre application, nous avons choisi de travailler directement au niveau du pixel.
 
 \subsection{Échantillonneur préservant la congruence de phase}
 
-- PC preserving sampler
--> quantization
--> stochasrtic mean
--> image partition
+Pour mettre en place notre échantillonneur, on reprend la stratégie proposée par Pharr et al. dans leur livre~\cite{pharr_physically_2023}, qui utilise la méthode de la transformée inverse. Cette méthode d'échantillonnage repose sur le fait que pour échantillonner une variable aléatoire de loi donnée, il suffit d'échantillonner une variable aléatoire uniforme et d'appliquer la fonction de répartition inverse de la loi. Pour appliquer cette méthode, on commence par définir l'échantillonnage d'une fonction constante par morceaux 1D. Pour une fonction $f$ constante par morceaux :
+
+
+\begin{equation}
+    f(x) = \left\{
+        \begin{array}{ll}
+            v_0 & \mbox{si } x \in [x_0, x_1] \\
+            v_1 & \mbox{si } x \in [x_1, x_2] \\
+            \vdots & \vdots \\
+            v_{N-1} & \mbox{si } x \in [x_{N-1}, x_N]
+        \end{array}
+    \right.
+\end{equation}
+
+d'intégrale $I$ :
+
+\begin{equation}
+    I = \int_{0}^{1} f(x) dx = \sum_{i=0}^{N-1} \frac{v_i}N,
+\end{equation}
+
+si on considère (sans perte de généralité) que $f$ est définie entre 0 et 1, et que les $x_i$ sont disposés de manière régulière $x_i = i / N$. La fonction de densité de probabilité associée à $f$ est alors simplement $p(x) = f(x) / I$. La fonction de répartition $F$ est alors linéaire par morceaux, définie aux $x_i$ :
+
+\begin{equation}
+    F(x_i) = \int_{0}^{x_i} p(t) dt = \sum_{j=0}^{x_i} \frac{v_j}{NI} = F(x_i-1) + \frac{v_i-1}{NI},
+\end{equation}
+
+et de coefficient directeur $v_i/I$ entre $x_i$ et $x_{i+1}$. On peut alors échantillonner $f$ en échantillonnant une variable aléatoire uniforme $u$ et en calculant $F^{-1}(u)$.
+
+% TODO : figure pour la méthode d'inversion sur fonction constante par morceaux 1D
+
+Il suffit ensuite de constater que nos textures sont des tableaux, donc des fonctions constantes par morceaux 2D, et que leur loi de probabilité conditionnelle et marginale sont des fonctions constantes par morceaux 1D. La stratégie est ainsi d'échantillonner la probabilité marginale pour avoir la première coordonnée, puis d'échantillonner la probabilité conditionnelle en utilisant la première valeur trouvée pour déterminer la deuxième coordonnée.
+
+On va maintenant utiliser ce principe d'échantillonnage préférentiel pour préserver la fonction de congruence de phases. Pour cela, on veut pour chaque pixel tirer un nouveau pixel, avec une congruence de phases similaire. On voudrait avoir une fonction de densité de probabilité adaptée pour chaque valeur de congruence de phase, qui privilégie l'échantillonnage des valeurs autour de $x$ pour tout $x$ dans l'espace des valeurs de la PC, $[0, 1]$. Cependant la PC est à valeurs continues, il serait trop compliqué de stocker une fonction de densité pour chaque valeur. Pour résoudre ce problème, la PC est quantifiée en $N$ intervalles de taille constante $1/N$ de telle sorte que l'intervalle $i$ soit juste les valeurs de la PC entre $[i/N, (i+1)/N[$. Ce sont ces intervalles qui nous servent de densité de probabilité pour l'échantillonnage préférentiel. En pratique, on utilise $N=10$ et on partitionne en fait entre les valeurs minimum et maximum de la PC calculée, plutôt qu'entre 0 et 1, qui sont les extremums théoriques. Au moment de tirer du nouveau contenu, on regarde la valeur de PC du pixel que l'on cherche à remplacer, et on échantillonne avec la densité de probabilité correspondant à l'intervalle de PC dans lequel il se trouve.
+
+% TODO : image des tranches de PC ?
+
+- Les différentes classes, parler de nos textures typiques qui sont des tiles et un background
+
+- le pré-calcul de la réalisation du sampler pour pouvoir faire l'échantillonnage depuis le shader. pose la question de quel offset utiliser.
+
+- calcul de la spatially varying mean, utile plus tard pour le T\&B (besoin de parler de ça ??)
+
+- résultats, montrer les réalisations du sampler (p-e ?)
+
+% TODO mettre des subsubsection au dessus pour chaque partie du sampler ?
+
+\subsection{Synthèse avec l'échantillonneur préférentiel}
+
+Choix de la structure avec laquelle utiliser le sampler
+
+- résultats (caca)
+
+Pour ce faire, on procède en deux temps. Pour savoir quel contenu remplacer, et quelle est sa congruence de phase, pour aller chercher le nouveau contenu, il faut savoir où l'on se situe dans la texture, et quel est le contenu qui est attendu à cet endroit. On peut ici utiliser différentes techniques
