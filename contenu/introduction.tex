@@ -2,6 +2,7 @@
 
 Depuis l'apparition de l'informatique, les univers virtuels n'ont cessé de gagner en popularité, jusqu'à faire aujourd'hui partie intégrante de la société. Le domaine du divertissement a notamment beaucoup été impacté, conséquence de la grande liberté d'expression créative qu'offrent ces univers. Un des défis qui se dresse encore de nos jours est celui du remplissage de ces environnements. Ces derniers étant en constante expansion, les méthodes de création de contenu traditionnelles, par le travail manuel des artistes, atteignent leurs limites, et appellent à la mise au point de nouveaux moyens plus automatisés pour permettre une création plus rapide et moins coûteuse. 
 
+% TODO remplacer par une image de Control / DS3 / Warframe
 \begin{figure}[!h]
     \centering
     \includegraphics[width=.75\textwidth]{contenu/resources/images/Horizon-Forbidden-West}
@@ -207,7 +208,6 @@ Lorsqu'une image est décomposée dans le domaine de Fourier, on retrouve de nom
     \label{fig:pc_1d_kovesi}
 \end{figure}
 
-% TODO Transformée de Riesz
 Pour détecter un alignement de phase, il est nécessaire d'avoir un modèle donnant des informations locales sur notre image. Kovesi utilise pour cela une banque de filtres à orientation variable. Nous utilisons à la place le modèle mathématique de la transformée de Riesz, qui permet de décomposer une image dans un espace différent, similairement à la transformée de Fourier mais avec des informations locales, au niveau du texel (on rappelle que la transformation de Fourier fournit des informations fréquentiellement locales, mais spatialement globales). Utiliser cette transformée nous permet ainsi d'étudier la présence et préservation de relations dans un autre espace que le domaine spatial, et donc de mieux comprendre et caractériser nos images.
 
 \subsection*{Analyse multi-échelle}
