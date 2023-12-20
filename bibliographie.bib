@@ -1471,3 +1471,28 @@ month = may,
 year = {2023},
 pages = {1--11},
 }
+
+@inproceedings{guehl_semi-procedural_2020,
+title = {Semi-{Procedural} {Textures} {Using} {Point} {Process} {Texture} {Basis} {Functions}},
+abstract = {We introduce a novel semi-procedural approach that avoids drawbacks of procedural textures and leverages advantages of data-driven texture synthesis. We split synthesis in two parts: 1) structure synthesis, based on a procedural parametric model and 2) color details synthesis, being data-driven. The procedural model consists of a generic Point Process Texture Basis Function (PPTBF), which extends sparse convolution noises by defining rich convolution kernels. They consist of a window function multiplied with a statistical mixture of Gabor functions, both designed to encapsulate a large span of spatial stochastic structures, including cells, cracks, grains, scratches, spots, stains, and waves. Parameters can be prescribed automatically by supplying binary structure exemplars. As for noise-based Gaussian textures, the PPTBF is used as stand-alone function, avoiding classification tasks that occur when handling multiple procedural assets. Because the PPTBF is based on a single set of parameters it allows for continuous transitions between different visual structures and an easy control over its visual characteristics. Color is consistently synthesized from the exemplar using a novel multiscale parallel texture synthesis by numbers, constrained by the PPTBF. The generated procedural noises are parametric, infinite, continuous, and they avoid repetition. The synthesis of the data-driven part is automatic and guarantees strong visual resemblance with inputs.},
+author = {Guehl, Pascal and Allègre, Rémi and Dischler, Jean-Michel and Benes, Bedrich and Galin, Eric},
+month = jun,
+year = {2020},
+}
+
+@article{baldi_differentiable_2023,
+title = {Differentiable point process texture basis functions for inverse procedural modeling of cellular stochastic structures},
+volume = {112},
+issn = {0097-8493},
+url = {https://www.sciencedirect.com/science/article/pii/S0097849323000419},
+doi = {10.1016/j.cag.2023.04.004},
+abstract = {To meet the growing demand of rich 3D content, the Computer Graphics industry needs tools to automatically create procedural textures and materials from image exemplars. In this paper, we focus on the inverse procedural modeling of cellular stochastic structures, i.e., spatial distributions of repetitive, possibly blending similar shapes over a planar surface, resulting from stochastic processes. Such structures are very frequent in natural textures and materials, that exhibit random spatial variations. We represent cellular stochastic structures procedurally using thresholded Point Process Texture Basis Functions (PPTBFs). Previous approaches that learn PPTBF representations of structures maps solely rely on sampled data obtained by uniformly sampling the PPTBF parameter space, and parameter prediction based on these representations fails when the exemplars are visually too far from the training datasets. For the specific class of cellular stochastic structures, we propose to overcome this limitation by introducing a Cellular PPTBF, or C-PPTBF, defined with differentiable window and feature functions. Based on this procedural model, we present a fully differentiable pipeline and optimization procedure to automatically estimate the parameters of a C-PPTBF. We show that our method is efficient (between 2 and 5 min per exemplar) and yields more robust parameter prediction than the state-of-the-art DiffProxy approach.},
+urldate = {2023-12-20},
+journal = {Computers \& Graphics},
+author = {Baldi, Guillaume and Allègre, Rémi and Dischler, Jean-Michel},
+month = may,
+year = {2023},
+keywords = {Cellular stochastic structures, Inverse procedural modeling, Texture and material synthesis, Texture basis function},
+pages = {116--131},
+file = {ScienceDirect Snapshot:/home/local/USHERBROOKE/gagv3303/Zotero/storage/ZD53K55Y/S0097849323000419.html:text/html},
+}

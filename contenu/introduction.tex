@@ -1,6 +1,8 @@
 \Introduction
 
-Depuis l'apparition de l'informatique, les univers virtuels n'ont cessé de gagner en popularité, jusqu'à faire aujourd'hui partie intégrante de la société. Le domaine du divertissement a notamment beaucoup été impacté, conséquence de la grande liberté d'expression créative qu'offrent ces univers. Un des défis qui se dresse encore de nos jours est celui du remplissage de ces environnements. Ces derniers étant en constante expansion, les méthodes de création de contenu traditionnelles, par le travail manuel des artistes, atteignent leurs limites, et appellent à la mise au point de nouveaux moyens plus automatisés pour permettre une création plus rapide et moins coûteuse. 
+Depuis l'apparition de l'informatique, les univers virtuels n'ont cessé de gagner en popularité, jusqu'à faire aujourd'hui partie intégrante de la société. Le domaine du divertissement a notamment beaucoup été impacté, conséquence de la grande liberté d'expression créative qu'offrent ces univers. Un des défis qui se dresse encore de nos jours est celui du remplissage de ces environnements. Ces derniers étant en constante expansion, les méthodes de création de contenu traditionnelles, par le travail manuel des artistes, atteignent leurs limites, et appellent à la mise au point de nouveaux moyens plus automatisés pour permettre une création plus rapide et moins coûteuse.
+
+\bigskip
 
 % TODO remplacer par une image de Control / DS3 / Warframe
 \begin{figure}[!h]
@@ -28,7 +30,9 @@ Un monde virtuel est une méthode de représentation de scènes, réelles ou ima
 
 Pour visualiser les scènes virtuelles, on utilise un moteur de rendu, un logiciel utilisant différents algorithmes permettant de traiter une scène en différentes étapes dans le but de synthétiser une image ; ce que l'on appelle le rendu de la scène. Il existe plusieurs méthodes de rendu, et plusieurs moteurs différents qui implémentent ces méthodes en fonction du niveau de réalisme attendu, des effets visuels présents dans la scène, mais surtout en fonction du type d'application désiré. Pour exécuter leurs calculs, les logiciels de rendu s'appuient sur les capacités des cartes graphiques ({\it Graphics Processing Unit} ou GPU en Anglais), des processeurs hautement parallèles et spécialisés pour des calculs graphiques. On distingue deux grands types de rendus, dont les contextes et enjeux diffèrent sensiblement :
 
-\begin{figure}[h!]
+\bigskip
+
+\begin{figure}[h]
     \centering
     \includegraphics[width=\textwidth]{contenu/resources/images/zero_day_comparison}
     \caption[{\it Zero-Day} (2015), BEEPLE]{{\it Zero-Day} (2015), BEEPLE. À gauche rendu original hors-ligne, à droite rendu temps-réel par SY tracé de chemins, NVIDIA~\cite{ZeroDay}}
@@ -66,7 +70,9 @@ Le maillage seul ne suffit cependant pas à représenter parfaitement la géomet
 
 \bigskip
 
-Pour une même surface, il est courant d'utiliser plusieurs textures pour calculer l'éclairage et la couleur. Les textures en question dépendent du modèle d'éclairage utilisé. Le format de rendu physique réaliste ({\it Physically Based Rendering} ou PBR en Anglais), standard de l'industrie, nécessite typiquement cinq cartes de texture : l'albedo (ou couleur), mais aussi la normale, la hauteur, la rugosité et l'occlusion ambiante. 
+Pour une même surface, il est courant d'utiliser plusieurs textures pour calculer l'éclairage et la couleur. Les textures en question dépendent du modèle d'éclairage utilisé. Le format de rendu physique réaliste ({\it Physically Based Rendering} ou PBR en Anglais), standard de l'industrie, nécessite typiquement cinq cartes de texture : l'albedo (ou couleur), mais aussi la normale, la hauteur, la rugosité et l'occlusion ambiante.
+
+\bigskip
 
 \begin{figure}
     \centering
@@ -81,6 +87,8 @@ La méthode de travail usuelle en industrie consiste à regrouper ces différent
 
 L'intérêt de la texture est donc d'augmenter la quantité de détails de notre rendu à faible coût, puisque la géometrie sous-jacente reste plus grossière, et que la résolution de cette dernière est un des facteurs majeurs de ralentissement du rendu d'une scène. Pour plaquer des textures, qui souvent sont des images carrées, sur une surface quelconque, on utilise un système de coordonnées, dites UV, qui permet d'aligner les deux comme souhaité. Les coordonnées UV, un vecteur entre $(0, 0)$ et $(1, 1)$, sont définies pour tous les sommets au moment de la création du maillage. On peut alors utiliser ces coordonnées comme argument de la texture, dont l'espace de coordonnées de départ est aussi entre 0 et 1.
 
+\bigskip
+
 \begin{figure}
     \centering
     \includegraphics[width=.55\textwidth]{contenu/resources/images/uv_suzanne}
@@ -94,6 +102,8 @@ Cette étape dite d'échantillonnage s'effectue au moment du rendu. Dans la pipe
 
 Cette méthode pose cependant des problèmes dûs à l'encodage discret des textures en image. En effet les fragments rastérisés et les texels de texture échantillonnés représentent tous les deux des surfaces de petite taille, caractérisés par des coordonnées uniques. Il se peut cependant que les surfaces couvertes par les deux ne soient pas les mêmes, mêmes si les coordonnées UV sont identiques ; c'est particulièrement le cas lorsque la taille du fragment et celle du texel sont différentes. 
 
+\bigskip
+
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{contenu/resources/images/schema_filtrage}
@@ -101,11 +111,11 @@ Cette méthode pose cependant des problèmes dûs à l'encodage discret des text
     \label{fig:aliasing}
 \end{figure}
 
-Il faut alors employer des méthodes dites de filtrage pour corriger l'échantillonnage, car la différence de taille entre les fragments et les texels cause des artefacts visuels appelés repliement de spectre (\textit{aliasing} en Anglais). Pour des textures standards, il existe différentes méthodes de filtrages utilisées couramment.
+Il faut alors employer des méthodes dites de filtrage pour corriger l'échantillonnage, car la différence de taille entre les fragments et les texels cause des artefacts visuels appelés repliement de spectre (\textit{aliasing} en Anglais). Pour des textures standards, il existe différentes méthodes de filtrages utilisées couramment :
 
 \begin{itemize}
-    \item \textbf{Sur-échantillonnage} : lorsque le fragment est plus petit que le texel, plusieurs fragments voisins ont la même valeur. Cela donne un aspect crénelé, avec les contours des objet en escalier. La solution idéale dans ce cas serait d'augmenter la résolution de la texture utilisée ; ce n'est cependant pas tout le temps possible. Comme alternative, au lieu d'attribuer au fragment la valeur du texel correspondant, on interpole la valeur des quatre texels voisins. On réduit l'aspect pixélisé, au prix d'un échantillonnage plus coûteux et d'un effet de flou sur l'image. 
-    \item \textbf{Sous-échantillonnage} : lorsqu'un fragment est plus grand qu'un texel~\ref{fig:aliasing}, et qu'il en recouvre plusieurs, alors plusieurs fragments voisins peuvent être très espacés sur la texture, et on perd l'information des texels entre. De loin, on aperçoit un motif de moiré et l'image scintille lorsque l'on change légèrement l'angle de vue. La solution idéale serait alors de prendre en compte tous les texels touchés, et faire une intégrale de la valeur de la texture sur toute la surface couverte par le fragment, ce qui est très souvent irréalisable. L'alternative classique consiste à pré-calculer différentes échelles de la texture utilisée, appelées MIP maps, et de trouver l'échelle adéquate de telle sorte qu'un texel ait la même taille qu'un fragment. L'échantillonnage est plus lourd et on prend plus d'espace mémoire pour stocker les MIP maps, mais la texture est mieux rendue de loin.
+    \item \textbf{Sur-échantillonnage} : lorsque le fragment est plus petit que le texel, plusieurs fragments voisins ont la même valeur. Cela donne un aspect crénelé, avec les contours des objets en escalier. La solution idéale dans ce cas serait d'augmenter la résolution de la texture utilisée ; ce n'est cependant pas tout le temps possible. Comme alternative, au lieu d'attribuer au fragment la valeur du texel correspondant, on interpole la valeur des quatre texels voisins. On réduit l'aspect pixélisé, au prix d'un échantillonnage plus coûteux et d'un effet de flou sur l'image.
+    \item \textbf{Sous-échantillonnage} : lorsqu'un fragment est plus grand qu'un texel~\ref{fig:aliasing}, et qu'il en recouvre plusieurs, alors plusieurs fragments voisins peuvent être très espacés sur la texture, et on perd l'information des texels entre. De loin, on aperçoit un motif de moiré et l'image scintille lorsque l'on change légèrement l'angle de vue. La solution idéale serait ainsi de prendre en compte tous les texels touchés et faire une intégrale de la valeur de la texture sur toute la surface couverte par le fragment, ce qui est très souvent irréalisable. L'alternative classique consiste à pré-calculer différentes échelles de la texture utilisée, appelées MIP maps, et de trouver l'échelle adéquate de telle sorte qu'un texel ait la même taille qu'un fragment. L'échantillonnage est plus lourd et on prend plus d'espace mémoire pour stocker les MIP maps, mais la texture est mieux rendue de loin.
 \end{itemize}
 
 
@@ -125,17 +135,19 @@ Il faut alors employer des méthodes dites de filtrage pour corriger l'échantil
 \end{figure}
 
 {\color{red}Pertinence de ce paragraphe ?}
-De nombreuses méthodes de filtrage plus élaborées sont employées pour obtenir des résultats de meilleur qualité, ou pour filtrer des textures plus compliquées. Par exemple quand les textures ne sont plus des images pré-déterminées à l'avance, mais qu'elles sont générées au moment du rendu.
+De nombreuses méthodes de filtrage plus élaborées sont employées pour obtenir des résultats de meilleur qualité, ou pour filtrer des textures plus compliquées. Par exemple quand les textures ne sont plus des images prédéterminées à l'avance, mais qu'elles sont générées au moment du rendu.
 
 \section{Synthèse de texture}
 
-Bien souvent, les surfaces que l'on souhaite couvrir sont de grande taille, par exemple des sols. Produire et stocker des textures de même taille que les surfaces n'est pas toujours envisageable, le coût en temps de création et en empreinte mémoire est trop élevé. Étirer les textures en utilisant les coordonnées UV est une solution, qui atteint cependant ses limites assez rapidement : on remarque très facilement qu'une texture de plus basse résolution est utilisée. En rendu intéractif, on résoud le problème en synthétisant directement une texture de taille adaptée à notre surface. On peut catégoriser les types de texture existants de plusieurs manières ; pour le présent manuscrit, nous les distinguerons selon le niveau d'organisation des éléments qui les compose~\ref{fig:échelle-structure}.
+Bien souvent, les surfaces que l'on souhaite couvrir sont de grande taille, par exemple des sols. Produire et stocker des textures de même taille que les surfaces n'est pas toujours envisageable, le coût en temps de création et en empreinte mémoire est trop élevé. Étirer les textures en utilisant les coordonnées UV est une solution, qui atteint cependant ses limites assez rapidement : on remarque très facilement qu'une texture de plus basse résolution est utilisée. En rendu intéractif, on résout le problème en synthétisant directement une texture de taille adaptée à notre surface. On peut catégoriser les types de texture existants de plusieurs manières ; pour le présent manuscrit, nous les distinguerons selon le niveau d'organisation des éléments qui les compose~\ref{fig:échelle-structure}.
 
 \subsection*{Algorithme de synthèse}
 
-On appelle synthèse de texture un procédé qui permet de produire une texture de taille arbitraire, pouvant prendre en argument des paramètres de différente nature. Par extension, on qualifie aussi de synthèse le résultat d'un algorithme de synthèse. Les avantages à utiliser un procédé de synthèse sont multiples. La texture générée est infinie, il est donc facile de l'appliquer à des surfaces de taille quelconque, avec la résolution désirée. De plus, il n'est pas nécessaire de stocker la texture d'avance en mémoire puisqu'on l'évalue au vol, on réduit donc l'empreinte mémoire.
+On appelle synthèse de texture un procédé qui permet de produire une texture de taille arbitraire, pouvant prendre en argument des paramètres de différente nature. Par extension, on qualifie aussi de synthèse le résultat d'un algorithme de synthèse. Les avantages à utiliser un procédé de synthèse sont multiples. La texture générée est infinie, il est donc facile de l'appliquer à des surfaces de taille quelconque, avec la résolution désirée. De plus, il n'est pas nécessaire de stocker la texture d'avance en mémoire puisqu'on l'évalue au vol, on réduit ainsi l'empreinte mémoire.
 
 % Enfin, on a un grand degré de contrôle sur l'apparence de nos objets, même au sein d'une scène intéractive.
+
+\bigskip
 
 \begin{figure}[H]
     \centering
@@ -157,6 +169,9 @@ Sous ces contraintes d'efficacité et de rapidité, de nombreux algorithmes subs
 Le but d'une synthèse par ré-organisation est de reproduire un extrait de texture donné en entrée en réutilisant et réagençant des morceaux dits « tuiles », de l'exemple. Plusieurs paramètres commme la taille, découpe, forme, et disposition des tuiles peuvent être modifiés pour faire varier la synthèse. L'exemple le plus simple de synthèse par réorganisation est le pavage périodique : on répète simplement la texture d'entrée, qui doit être périodique, jusqu'à couvrir la surface désirée. Cette méthode, bien que très rapide, est de faible qualité. Des artefacts visuels sont facilement visibles car les motifs sont simplement répétés, il n'y a pas de variation au sein de la texture générée.
 
 {\color{red}TODO include image pavage periodique (warframe ? outer wilds alpha giants deep)}
+
+\bigskip
+
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{contenu/resources/images/periodic_tiling}
@@ -170,6 +185,8 @@ On préfère en général prendre des tuiles plus petites et mieux les mélanger
 \subsubsection{Synthèse par convolution}
 
 L'objectif d'une synthèse par convolution est de construire une texture en disposant des motifs, appelés noyaux, selon une distribution statitique. Le choix du noyau, de la distribution, ainsi que de la méthode de mélange, sont les paramètres à ajuster pour contrôler la synthèse. Une pratique habituelle de la synthèse par convolution est de choisir comme noyau une somme d'ondelettes (typiquement des cosinus) spatialement constraintes et à orientation aléatoire, et de contrôler les fréquences des ondelettes utilisées~\cite{tricard_procedural_2019}. En sélectionnant les fréquences, on a un contrôle sur le contenu fréquentiel présent dans la texture produite, ce qui permet une bonne maîtrise de l'apparence générée~\cite{gilet_local_2014}.
+
+\bigskip
 
 % DIRE QUE LA SYNTHESE DE MOTIFS OU DE STRUCTURE EST ENCORE TRES COMPLIQUEE
 Les méthodes existantes de synthèse ne fonctionnent cependant pas bien lorsque la cible contient des motifs organisés ou de la répétition. Quelques tentatives ont été faites~\cite{lutz_cyclostationary-gaussian_2021} pour synthétiser des textures présentant une forme de structure et régularité, mais en dehors de configurations présentant des caractéristiques particulières, comme une certaine périodicité, la synthèse de structure irrégulière est compliquée.
@@ -200,6 +217,8 @@ Lorsque l'on veut préserver la structure d'une image, les éléments saillants 
 \bigskip
 
 Lorsqu'une image est décomposée dans le domaine de Fourier, on retrouve de nombreuses informations sur la structure dans la phase~\cite{oppenheim_importance_1981}. En explorant le rôle de la phase, Kovesi a mis au point un outil de détection de d'éléments caractéristiques~\cite{kovesi_image_1995} basé sur le modèle physiologiquement réaliste d'énergie locale de Morrone et al.~\cite{morrone_feature_1987, morrone_feature_1988}. Ce modèle postule que les éléments caractéristiques sont présents dans une image là où les composants de Fourier sont maximalement en phase. La congruence de phase qui dérive du modèle d'énergie locale est une grandeur qui quantifie cet alignement. Elle donne lieu à un outil de détection plus robuste que ceux développés auparavant, qui sont souvent sensibles au niveau d'illumination et de grossissement, et nécessitent donc une connaissance a priori des images étudiées. C'est ce modèle de congruence de phase que nous avons repris et essayé d'adapter à la synthèse de texture.
+
+\bigskip
 
 \begin{figure}[h]
     \centering
