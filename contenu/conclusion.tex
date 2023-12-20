@@ -1,21 +1,20 @@
 % DEBUT DE LA CONCLUSION
 \Conclusion \label{chap:conclusion}
 
+Le travail dont ce mémoire fait l'objet est une étude exploratoire du cadre de travail multi-résolutionnel local mis au point en utilisant la transformée de Riesz. D'habitude utilisés dans le domaine du traitement du signal, ces outils sont ici examinés pour faire l'analyse de textures présentant des structures irrégulières, textures qui sont encore aujourd'hui en enjeu non résolu du domaine de la synthèse de texture procédurale~\cite{guehl_semi-procedural_2020}. Le but de cette étude est de voir si de tels outils peuvent aider à résoudre, au moins partiellement, le problème de la synthèse de texture procédurale de textures à structure irrégulière.
 
+\bigskip
 
-\section{Discussion et perspectives}
+Une mise en contexte et exposition au domaine et à la problématique de la synthèse de textures à structure irrégulière est faite dans notre introduction~\ref{chap:introduction}. Quelques approches existantes y sont présentées et des notions nécessaires à la compréhension du problème sont abordées. Un aperçu plus approfondi des méthodes employées dans ce travail est donné dans un second temps~\ref{chap:chapitre1}. La théorie du signal monogène utilisant la transformée de Riesz est présentée, en mettant l'accent sur le concept d'information locale à extraire d'une image et la signification qui peut lui être attribuée. La description de l'outil d'analyse multi-résolutionnel local des pyramides d'images de Riesz est ensuite faite, en détaillant les différentes étapes de construction et choix d'implémentation. Enfin la fonction de congruence de phases issue du modèle d'énergie locale de Morrone et al.~\cite{morrone_mach_1986, morrone_feature_1987} et son importance pour l'analyse de la structure d'une image sont discutées. Une méthode de calcul adaptée au cadre de travail choisi est aussi proposée. Dans un dernier temps, les différentes applications de ces outils sont présentées~\ref{chap:chapitre2}. La décomposition en pyramide d'images permet la mise en place d'une méthode de sélection fréquentielle du contenu d'une image, utilisée pour faire du gommage de contenu indésirable dans des textures. Un échantillonneur préférentiel préservant la congruence de phases, inspiré de Pharr et al.~\cite{pharr_physically_2023}, est ensuite dérivé et mis en application dans une méthode de synthèse de texture, pour tenter de synthétiser du contenu à structure irrégulière. Les résultats obtenus et les limites de notre approche sont discutés à la suite de cela.
 
-- résolution des problèmes de filtrage lors de la reconstruction en temps réel dans les shader (changement de méthode de stockage ? faire du filtrage sur les atlas de textures ?)
+\bigskip
+
+Finalement, quelques perspectives de travaux futurs et pistes d'améliorations, relevées lors de cette étude, sont ici proposées.
+
 - meilleure structure pour l'échantillonneur PC preserving (periodic tiling c'est lame)
-- meilleure quantification de la PC ? Ici, on ne fait que séparer en intervalle de taille constante, p-e devrions nous utiliser les quantiles et la fonction de répartition à la place ?
 - informations de riesz : orientation serait à utiliser (voir papier sur l'estimation de l'orientation en multi-didmension avec Riesz)
-- meilleure approximation de Riesz (travaux LÉO)
-- automatiser et améliorer la sélection de structure par sélection de niveaux de la pyramide
 - juste préserver la PC n'est pas assez, ce n'est pas une bonne mesure toute seule. Peut-être qu'utiliser une mesure d'orientation pourrait déjà aller mieux
+- automatiser et améliorer la sélection de structure par sélection de niveaux de la pyramide
 - il faut travailler au niveau d'un patch, et pas par pixel. Ou envisager un blending
 
-
-
-
-\section{Conclusion}
-% FIN DE LA CONCLUSION
+- meilleure approximation de Riesz (travaux LÉO) %TODO à mettre quelque part dans le texte
