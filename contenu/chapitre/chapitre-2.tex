@@ -5,12 +5,13 @@ Notre recherche est une étude exploratoire du modèle multi-résolutionnel loca
 
 \section{Implémentation}
 
+% todo formu négative a eviter
 Les concepts d'énergie locale et de signal monogène ne sont pas des notions communément utilisées dans le traitement d'image, aucune librairie standard ne les implémente à notre connaissance. Nous avons donc dû implémenter nous-même les algorithmes pour mettre en place le modèle multi-résolutionnel local. Le choix du logiciel pour faire ces implémentations a été une question importante.
 
 
 \paragraph{OpenCV}
 
-Malgré notre but final de travailler sur de la synthèse de texture, nous avons commencé par développer un petit logiciel pour pouvoir itérer rapidement et expérimenter avec les concepts de base du modèle multi-résolutionnel local sur des images, sans prendre en compte les problématiques de la synthèse. Pour cela, nous mis au point un logiciel utilisant \cpp avec la librairie OpenCV~\cite{opencv_library}. OpenCV est une librairie standard de traitement d'image en temps réel et de vision par ordinateur, disponible pour les langages de programmation \cpp, Python et Java. Les images y sont représentées comme des matrices, et les opérations de bas niveau courantes du traitement d'image y sont implémentées, comme la lecture, l'écriture, l'affichage, le filtrage, la convolution, et autres.  Notre logiciel permet à un utilisateur de créer, visualiser, et modifier les pyramides d'une image d'entrée, ainsi que de calculer et visualiser la PC. Avec ces fonctionnalités, nous avons fait des expérimentations pour voir l'effet de différentes modifications et reconstructions de la pyramide de Riesz d'une image.
+Malgré notre but final de travailler sur de la synthèse de texture, nous avons commencé par développer un petit logiciel pour pouvoir itérer rapidement et expérimenter avec les concepts de base du modèle multi-résolutionnel local sur des images, sans prendre en compte les problématiques de la synthèse. Pour cela, nous mis au point un logiciel utilisant \cpp avec la librairie OpenCV~\cite{opencv_library}. OpenCV est une librairie standard de traitement d'image en temps réel et de vision par ordinateur, disponible pour les langages de programmation \cpp, Python et Java. Les images y sont représentées comme des matrices, et les opérations de bas niveau courantes du traitement d'image y sont implémentées, comme la lecture, l'écriture, l'affichage, le filtrage, la convolution, et autres. Notre logiciel permet à un utilisateur de créer, visualiser, et modifier les pyramides d'une image d'entrée, ainsi que de calculer et visualiser la PC. Avec ces fonctionnalités, nous avons fait des expérimentations pour voir l'effet de différentes modifications et reconstructions de la pyramide de Riesz d'une image.
 
 \bigskip
 
@@ -23,6 +24,7 @@ Parallèlement, notre laboratoire de recherche a accueilli de nouveaux membres, 
 \paragraph{Godot}
 
 Godot est un logiciel libre et gratuit, moteur de jeu 2D et 3D, qui permet de faire du rendu temps-réel et donc de s'intéresser aux problématiques de la synthèse de texture, ce que ne permettait pas OpenCV. Bien que pour l'instant moins populaire que Unity et Unreal Engine, Godot est une solution qui croit en notoriété, surtout dans la recherche en informatique graphique, car il est léger et flexible, et permet facilement d'écrire des modules personnalisés ou de modifier du code source pour s'adapter aux besoins des utilisateurs. C'est ce que nous avons fait avec Nicolas Lutz, postdoctorant du laboratoire. Nous avons travaillé conjointement à développer \textit{TexSyn}, une librairie \cpp de traitement d'image et de synthèse de texture pour Godot.
+%TODO justifier un peu plus godot
 
 \bigskip
 
@@ -104,6 +106,7 @@ Suite à cette observation, nous avons mis en place une méthode de sélection d
 \section{Synthèse de texture préservant la congruence de phases}
 
 L'intérêt principal de notre cadre de travail est néanmoins l'utilisation de la PC, notamment en tant qu'indicatrice de la proximité à un bord. La PC se comporte en effet comme un gradient dans la direction perpendiculaire au bord, et nous permet donc de savoir ponctuellement si un pixel se situe proche d'un bord. Nous avons fait quelques expériences pour exploiter ce principe, puis nous avons mis au point une méthode de synthèse de texture pour traiter les textures à structure irrégulière. Nous nous sommes intéressés à un type de textures en particulier, qui présentent des caractéristiques communes. Les textures auxquelles nous nous sommes intéressées, dont quelques exemples sont montrés en figure~\ref{fig:typical-textures}, sont caractérisées par la présence de pavés de toute sorte, entre lesquels se trouve un matériau unique que l'on appelle \og arrière-plan \fg. Ces textures représentent souvent des sols.
+% TODO "nous permet de savoir si un pixel se situe proche d'un bord" -> souligner utile pour synthèse en parallèle
 
 \bigskip
 
@@ -130,6 +133,8 @@ L'intérêt principal de notre cadre de travail est néanmoins l'utilisation de 
 
 
 Nous nous sommes inspirés de Lutz et al.~\cite{lutz_preserving_2023}, qui font le constat que les méthodes de synthèse par pavage apériodique, une sorte de synthèse par réorganisation reposant sur un échantillonnage uniforme de l'exemple d'entrée, échouent à préserver la fonction d'autocovariance de l'exemple. Des corrélations qui contribuent à préserver l'apparence de l'entrée sont ainsi mal reproduites, ce qui donne un air trop aléatoire au résultat. Pour remédier à cela, ils améliorent l'étape d'échantillonnage en utilisant le principe d' \og échantillonnage préférentiel \fg{}, qui consiste à influer l'échantillonnage en fonction d'une \og fonction de densité de probabilité \fg{}. En utilisant la fonction d'autocovariance comme densité de probabilité, ils montrent que l'on préserve mieux cette statistique et que l'on améliore la qualité de la synthèse.
+%todo cad mal reproduite
+% source échantillonnage pref
 
 \bigskip
 
@@ -201,7 +206,7 @@ et de coefficient directeur $v_i/I$ entre $x_i$ et $x_{i+1}$. On peut échantill
 %
 %\end{tikzpicture}
 
-
+% TODO Il suffit
 Il suffit ensuite de constater que nos textures sont des tableaux, donc des fonctions constantes par morceaux 2D, et que leur loi de probabilité conditionnelle et marginale sont des fonctions constantes par morceaux 1D. La stratégie est ainsi d'échantillonner la probabilité marginale pour avoir la première coordonnée, puis d'échantillonner la probabilité conditionnelle en utilisant la première valeur trouvée pour déterminer la deuxième coordonnée.
 
 \subsection{Synthèse avec l'échantillonneur préférentiel}
@@ -214,7 +219,7 @@ Pour préserver la cohérence dans l'image, on fait aussi attention à ne pas m�
 
 \bigskip
 
-Pour utiliser efficacement notre échantillonneur dans la synthèse en temps-réel, on a d'abord une première étape de pré-calcule hors-ligne, où l'on calcule plusieurs réalisations de l'échantillonneur, pour chaque composante et pour chaque intervalle de PC, afin d'augmenter la variabilité de l'échantillonneur. Ces réalisations sont des vecteurs de translations $(u, v)$, que l'on stocke dans une carte de texture pour les charger sur le GPU. Cette texture est un jeu de données à trois dimensions : une pour les subdivisions de la PC, une pour les différentes composantes et la dernière pour les différentes réalisations de l'échantillonneur. Un schéma explicatif est montré à la figure~\ref{fig:sampler-realization}.
+Pour utiliser efficacement notre échantillonneur dans la synthèse en temps-réel, on a d'abord une première étape de pré-calcule hors-ligne, où l'on calcule plusieurs réalisations de l'échantillonneur, pour chaque composante et pour chaque intervalle de PC, afin d'augmenter la variété de l'échantillonneur. Ces réalisations sont des vecteurs de translations $(u, v)$, que l'on stocke dans une carte de texture pour les charger sur le GPU. Cette texture est un jeu de données à trois dimensions : une pour les subdivisions de la PC, une pour les différentes composantes et la dernière pour les différentes réalisations de l'échantillonneur. Un schéma explicatif est montré à la figure~\ref{fig:sampler-realization}.
 
 \begin{figure}
     \centering
@@ -266,12 +271,12 @@ Dans ce chapitre, nous avons présenté plusieurs applications de la PC d'une im
 
 \paragraph{Sélection de niveaux de fréquences}
 
-La sélection de niveaux de fréquences par l'élimination de niveaux de la pyramide d'image est une méthode qui permet visualiser différentes échelles de structure présentes dans l'image. Les différents niveaux de structure que l'on distingue dans une image sont liés à certaines fréquences dans le domaine spectral, et donc à différents niveaux de la pyramide d'image. Cela permet de mieux comprendre la structure de l'image, ce que nous avons mis à profit en faisant du filtrage de bandes de basses fréquences pour effacer des \og tâches \fg présentes sur des textures comme présenté en figure~\ref{fig:filter-low-freq}. Une méthode similaire a d'ailleurs été publiée~\cite{zhang_pyramid_2023} indépendamment de nous, au cours des derniers mois de ce travail. Nous n'avons pas fait la comparaison des deux méthodes, car ce n'était pas le but de cette recherche.
+La sélection de niveaux de fréquences par l'élimination de niveaux de la pyramide d'image est une méthode qui permet de visualiser différentes échelles de structure présentes dans l'image. Les différents niveaux de structure que l'on distingue dans une image sont liés à certaines fréquences dans le domaine spectral, et donc à différents niveaux de la pyramide d'image. Étudier et sélectionner différents niveaux de la pyramide permet de mieux comprendre la structure de l'image. Nous avons mis à profit la sélection de niveaux en faisant du filtrage de bandes de basses fréquences pour effacer des \og tâches \fg présentes sur des textures comme présenté en figure~\ref{fig:filter-low-freq}. Une méthode similaire a d'ailleurs été publiée~\cite{zhang_pyramid_2023} indépendamment de nous, au cours des derniers mois de ce travail. Nous n'avons pas fait la comparaison des deux méthodes, car ce n'était pas le but de cette recherche.
 
 \bigskip
 
 Le processus présente cependant des désavantages. D'abord, il relève d'un travail manuel, où l'utilisateur doit lui-même observer les congruences de phases partielles, qui ne comportent pas tous les étages de la pyramide, et décider lesquels supprimer ou garder. La tâche peut être fastidieuse et manque de métrique de décision pour automatiser et homogénéiser la démarche. De plus, la méthode souffre du problème que les bandes de fréquences parasites sont parfois corrélées à du contenu que l'il serait souhaitable de préserver de mêmes fréquences. Il est alors impossible avec cette méthode d'ôter précisément le contenu indésirable, sans affecter le reste de la texture.
-
+% TODO que l'il whack
 \paragraph{Synthèse de texture préservant la congruence de phases}
 \label{par:discussion-synthesis}
 
@@ -279,7 +284,9 @@ La synthèse de texture préservant la PC est la deuxième application de la PC 
 
 \bigskip
 
+% TODO il est clair
 Tout d'abord, il est clair au vu des résultats montrés en figure~\ref{fig:pc-preserving-synthesis} que la PC seule ne suffit pas à capturer la similarité entre deux contenus. On remarque sur la figure que la couleur des pavés reconstruits tend vers un marron qui semble être la moyenne des couleurs des pavés de l'image. En effet, cette méthode d'échantillonnage ne prend pas en compte la couleur de chaque pavé et échantillonne sans distinction dans des pavés de couleurs différentes. Même si la PC est préservée, la couleur est mélangée et on perd en variété.
+% TODO partie sur la moyenne, mieux epliquer / justifier
 
 \bigskip
 
@@ -323,4 +330,4 @@ Le mélange des couleurs que l'on observe est aussi dû à notre choix de travai
 
 \bigskip
 
-Enfin une dernière observation est que la synthèse gagnerait en variabilité si une disposition des pixels autre qu'un pavage périodique était utilisée. Ce choix a été fait pour des questions de simplicité, car le sujet de l'étude était l'échantillonneur plus que la disposition. L'utilisation de l'échantillonneur permet d'atténuer les artefacts visuels dûs à la répétition du pavage périodique, mais ces derniers sont encore visibles quand on regarde de loin, comme à la figure~\ref{fig:pc-preserving-synthesis}. La recherche de méthode d'organisation de contenu pour générer des nouvelles dispositions (par exemple des pavés de forme similaire, mais différente à tous les autres pavés de l'exemple) en temps réel est cependant un sujet difficile et est encore ouvert aujourd'hui~\cite{guehl_semi-procedural_2020, baldi_differentiable_2023}.
+Enfin une dernière observation est que la synthèse gagnerait en variété si une disposition des pixels autre qu'un pavage périodique était utilisée. Ce choix a été fait pour des questions de simplicité, car le sujet de l'étude était l'échantillonneur plus que la disposition. L'utilisation de l'échantillonneur permet d'atténuer les artefacts visuels dûs à la répétition du pavage périodique, mais ces derniers sont encore visibles quand on regarde de loin, comme à la figure~\ref{fig:pc-preserving-synthesis}. La recherche de méthode d'organisation de contenu pour générer des nouvelles dispositions (par exemple des pavés de forme similaire, mais différente à tous les autres pavés de l'exemple) en temps réel est cependant un sujet difficile et est encore ouvert aujourd'hui~\cite{guehl_semi-procedural_2020, baldi_differentiable_2023}.

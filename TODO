@@ -11,6 +11,8 @@ v homogénéiser les -s à la fin des termes * d'image(s) ou * de texture(s) ou 
 - homogénéiser on vs nous
 - commentaires marie SOURCE
 - commentaires guillaume + nico
+- vérifier que les \ref dans le texte sont bien explicitement utilisées (comme montré en figure~\ref{} plutot que juste machin machin~\ref{})
+- refaire titre
 - résumé et remerciements
 v orthographe, grammaire, coquilles, etc.
 - vérifier pas de failed latex command
