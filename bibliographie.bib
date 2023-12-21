@@ -1213,6 +1213,7 @@ year = {2021}
 	institution = {Videre},
 	author = {Kovesi, Peter},
 	year = {1995},
+    month = mar
 }
 
 @inproceedings{efros_image_2001,
@@ -1273,16 +1274,17 @@ year = {2021}
 }
 
 @article{bridge_introduction_2018,
-	title = {An {Introduction} {To} {The} {Monogenic} {Signal}},
-	volume = {abs/1703.09199},
-	url = {http://arxiv.org/abs/1703.09199},
-	language = {en},
-	urldate = {2021-11-29},
-	journal = {Computing Research Repository},
-	author = {Bridge, Christopher P},
-	month = aug,
-	year = {2018},
-	note = {arXiv: 1703.09199},
+author       = {Christopher P. Bridge},
+title        = {Introduction To The Monogenic Signal},
+journal      = {CoRR},
+volume       = {abs/1703.09199},
+year         = {2017},
+url          = {http://arxiv.org/abs/1703.09199},
+eprinttype    = {arXiv},
+eprint       = {1703.09199},
+timestamp    = {Mon, 13 Aug 2018 16:48:18 +0200},
+biburl       = {https://dblp.org/rec/journals/corr/Bridge17.bib},
+bibsource    = {dblp computer science bibliography, https://dblp.org}
 }
 
 @article{simoncelli_shiftable_1992,
@@ -1409,7 +1411,7 @@ author={Abdelmounaime, Safia and Dong-Chen, He},
 journal={International Scholarly Research Notices},
 volume={2013},
 year={2013},
-publisher={Hindawi}
+publisher={Hindawi Publishing Corporation}
 }
 
 @article{lutz_preserving_2023,
@@ -1450,7 +1452,7 @@ year={2023},
 publisher={MIT Press}
 }
 
-@inproceedings{wei_state_2009,
+@article{wei_state_2009,
 title = {State of the {Art} in {Example}-based {Texture} {Synthesis}},
 url = {https://inria.hal.science/inria-00606853},
 language = {en},
@@ -1472,13 +1474,20 @@ year = {2023},
 pages = {1--11},
 }
 
-@inproceedings{guehl_semi-procedural_2020,
-title = {Semi-{Procedural} {Textures} {Using} {Point} {Process} {Texture} {Basis} {Functions}},
-abstract = {We introduce a novel semi-procedural approach that avoids drawbacks of procedural textures and leverages advantages of data-driven texture synthesis. We split synthesis in two parts: 1) structure synthesis, based on a procedural parametric model and 2) color details synthesis, being data-driven. The procedural model consists of a generic Point Process Texture Basis Function (PPTBF), which extends sparse convolution noises by defining rich convolution kernels. They consist of a window function multiplied with a statistical mixture of Gabor functions, both designed to encapsulate a large span of spatial stochastic structures, including cells, cracks, grains, scratches, spots, stains, and waves. Parameters can be prescribed automatically by supplying binary structure exemplars. As for noise-based Gaussian textures, the PPTBF is used as stand-alone function, avoiding classification tasks that occur when handling multiple procedural assets. Because the PPTBF is based on a single set of parameters it allows for continuous transitions between different visual structures and an easy control over its visual characteristics. Color is consistently synthesized from the exemplar using a novel multiscale parallel texture synthesis by numbers, constrained by the PPTBF. The generated procedural noises are parametric, infinite, continuous, and they avoid repetition. The synthesis of the data-driven part is automatic and guarantees strong visual resemblance with inputs.},
+@article{guehl_semi-procedural_2020,
 author = {Guehl, Pascal and Allègre, Rémi and Dischler, Jean-Michel and Benes, Bedrich and Galin, Eric},
-month = jun,
-year = {2020},
+title = {Semi-Procedural Textures Using Point Process Texture Basis Functions},
+journal = {Computer Graphics Forum},
+volume = {39},
+number = {4},
+pages = {159-171},
+doi = {https://doi.org/10.1111/cgf.14061},
+url = {https://onlinelibrary.wiley.com/doi/abs/10.1111/cgf.14061},
+eprint = {https://onlinelibrary.wiley.com/doi/pdf/10.1111/cgf.14061},
+abstract = {Abstract We introduce a novel semi-procedural approach that avoids drawbacks of procedural textures and leverages advantages of data-driven texture synthesis. We split synthesis in two parts: 1) structure synthesis, based on a procedural parametric model and 2) color details synthesis, being data-driven. The procedural model consists of a generic Point Process Texture Basis Function (PPTBF), which extends sparse convolution noises by defining rich convolution kernels. They consist of a window function multiplied with a correlated statistical mixture of Gabor functions, both designed to encapsulate a large span of common spatial stochastic structures, including cells, cracks, grains, scratches, spots, stains, and waves. Parameters can be prescribed automatically by supplying binary structure exemplars. As for noise-based Gaussian textures, the PPTBF is used as stand-alone function, avoiding classification tasks that occur when handling multiple procedural assets. Because the PPTBF is based on a single set of parameters it allows for continuous transitions between different visual structures and an easy control over its visual characteristics. Color is consistently synthesized from the exemplar using a multiscale parallel texture synthesis by numbers, constrained by the PPTBF. The generated textures are parametric, infinite and avoid repetition. The data-driven part is automatic and guarantees strong visual resemblance with inputs.},
+year = {2020}
 }
+
 
 @article{baldi_differentiable_2023,
 title = {Differentiable point process texture basis functions for inverse procedural modeling of cellular stochastic structures},
@@ -1495,4 +1504,34 @@ year = {2023},
 keywords = {Cellular stochastic structures, Inverse procedural modeling, Texture and material synthesis, Texture basis function},
 pages = {116--131},
 file = {ScienceDirect Snapshot:/home/local/USHERBROOKE/gagv3303/Zotero/storage/ZD53K55Y/S0097849323000419.html:text/html},
+}
+
+@article{reinhardt_multi-scale_2022,
+title = {Multi-scale orientation estimation using higher order {Riesz} transforms},
+volume = {20},
+issn = {0219-6913},
+url = {https://www.worldscientific.com/doi/abs/10.1142/S021969132040007X},
+doi = {10.1142/S021969132040007X},
+number = {03},
+urldate = {2023-12-21},
+journal = {International Journal of Wavelets, Multiresolution and Information Processing},
+author = {Reinhardt, Martin and Bernstein, Swanhild and Heise, Bettina},
+month = may,
+year = {2022},
+note = {Publisher: World Scientific Publishing Co.},
+pages = {2040007},
+}
+
+@article{cavalier_local_2019,
+title = {Local spot noise for procedural surface details synthesis},
+volume = {85},
+issn = {0097-8493},
+url = {https://www.sciencedirect.com/science/article/pii/S0097849319301608},
+doi = {10.1016/j.cag.2019.10.003},
+urldate = {2023-12-21},
+journal = {Computers \& Graphics},
+author = {Cavalier, Arthur and Gilet, Guillaume and Ghazanfarpour, Djamchid},
+month = dec,
+year = {2019},
+pages = {92--99},
 }

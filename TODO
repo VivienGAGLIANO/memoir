@@ -1,15 +1,16 @@
-- checker les mots en italique vs entre guillemets, les mots en anglais, termes scientifiques, etc.
-- vérifier la biblio, dates, auteurs, etc.
-- vérifier pas de failed latex command
-- SY / RE
-- homogénéiser les -s à la fin des termes * d'image(s) ou * de texture(s) ou * de phase(s)
-- checker nom des figures dans lof
-- orthographe, grammaire, coquilles, etc.
-- espace entre les paragraphes des sous-sections ?
+v checker nom des figures dans lof
+v checker les mots en italique vs entre guillemets, les mots en anglais, termes scientifiques, etc.
+v homogénéiser les guillemets, espace avant et après chaque symbole de guillemet
+v vérifier la biblio, dates, auteurs, etc.
+v quand utiliser les acronymes (PC typiquement) ?
+v homogénéiser les -s à la fin des termes * d'image(s) ou * de texture(s) ou * de phase(s)
+- SY / RE --> à finir
+
+- TODO les TODO
 - éviter le narratif ?
-- homogénéiser subsection vs subsection*
-- quand utiliser les acronymes (PC typiquement) ?
-- homogénéiser les guillemets, espace avant et après chaque symbole de guillemet
 - homogénéiser on vs nous
 - commentaires marie SOURCE
+- commentaires guillaume + nico
 - résumé et remerciements
+v orthographe, grammaire, coquilles, etc.
+- vérifier pas de failed latex command
