@@ -8,11 +8,11 @@ L'informatique graphique, branche du domaine de l'informatique, est l'étude de 
 \begin{figure}[!h]
     \centering
     \includegraphics[width=.85\textwidth]{contenu/resources/images/hades}
-    \caption{{\it Hades} (2018), Supergiant Games}
+    \caption{{\it Hades} (2018), Supergiant Games~\cite{supergiant_hades_2018}}
     \label{fig:hades}
 \end{figure}
 
-Dans ce contexte de méthodes automatisées, la génération procédurale est un procédé utilisé pour produire toutes sortes de ressources numériques~\cite{smelik_survey_2014}. La génération procédurale est en particulier utilisée pour synthétiser l'apparence visuelle des différents composants des scènes virtuelles~\cite{alessio_procedural_2021}. En combinant des méthodes algorithmiques avec de l'aléatoire, il est possible de générer des cartes de texture qui servent à habiller les mondes virtuels. Une carte de texture désigne une image qui est appliquée sur une surface pour lui donner un aspect visuel dans le but d'accentuer l'immersion des utilisateurs. Différentes textures nécessitent différentes méthodes de synthèse pour être générées. Certains genres de textures sont encore difficilement réalisables avec les méthodes existantes~\cite{lutz_cyclostationary-gaussian_2021}. C'est dans cette perspective que s'inscrit ce travail de recherche, qui a pour but d'approfondir notre compréhension des éléments qui constituent la structure d'une image. Ce travail explore l'analyse multi-résolutionnelle locale et son application à la synthèse de texture procédurale. L'analyse multi-résolutionnelle locale est un outil du domaine du traitement du signal et est détaillée dans la suite de ce manuscrit~\ref{chap:chapitre1}.
+Dans ce contexte de méthodes automatisées, la génération procédurale est un procédé utilisé pour produire toutes sortes de ressources numériques~\cite{smelik_survey_2014}. La génération procédurale est en particulier utilisée pour synthétiser l'apparence visuelle des différents composants des scènes virtuelles~\cite{alessio_procedural_2021}. En combinant des méthodes algorithmiques avec de l'aléatoire, il est possible de générer des cartes de texture qui servent à habiller les mondes virtuels. Une carte de texture désigne une image qui est appliquée sur une surface pour lui donner un aspect visuel dans le but d'accentuer l'immersion des utilisateurs. Différentes textures nécessitent différentes méthodes de synthèse pour être générées. Certains genres de textures sont encore difficilement réalisables avec les méthodes existantes~\cite{lutz_cyclostationary-gaussian_2021}. C'est dans cette perspective que s'inscrit ce travail de recherche, qui a pour but d'approfondir notre compréhension des éléments qui constituent la structure d'une image. Ce travail explore l'analyse multi-résolutionnelle locale et son application à la synthèse de texture procédurale. L'analyse multi-résolutionnelle locale est un outil du domaine du traitement du signal et est détaillée dans la suite de ce manuscrit au chapitre~\ref{chap:chapitre1}.
 
 \section{Monde virtuel}
 
@@ -54,13 +54,8 @@ Une méthode de rendu en temps-réel doit répondre à certaines contraintes due
 
 \subsection*{Maillage}
 
-% TODO intro avec source de ce qu'est un maillage
-% TODO terme de représentation à définir un peu plus, qu'est ce qu'une représe
-% source source source
+Pour manipuler une scène virtuelle, il est nécessaire d'avoir une représentation des éléments qui la composent. Une représentation est une manière technique de décrire et stocker les données d'une scène. Il y a deux façons de représenter une géométrie dans un monde virtuel. Les représentations continues, comme les surfaces implicites, se rapprochent au mieux des formes des objets du monde réel, mais sont difficiles à créer. Les représentations discrètes, comme les maillages, approximent les représentations continues par des ensembles de polygones~\cite{coons_surfaces_1967}, souvent des triangles. Les polygones qui forment un maillage sont définis explicitement par des données géométriques, notamment les positions des sommets et les sommets des faces. Dans ce travail, seuls les maillages seront utilisés. Les maillages sont des structures habituelles dans les mondes virtuels.
 
-Idéalement, on aimerait représenter les objets des scènes virtuelles de manière continue et exacte, mais une telle représentation est difficilement accessible. Comme solution pratique, on choisit d'utiliser des \og maillages \fg, des grilles de polygones (souvent des triangles) qui sont une approximation de notre géométrie, approximation dont la complexité et la densité peuvent varier selon les besoins. Les maillages étant stockés comme des tableaux de points et de faces, il se pose en effet des questions de coût en espace mémoire et de temps d'exécution des calculs qui sont effectués sur ces maillages par la suite, surtout dans le cas du rendu temps réel.
-% TODO réécrire en style scientifique (voir propal nico)
-% question du cout memoire + temps execution p-e pas nécessaire vu que non utile dans travail
 
 \begin{figure}[h!]
     \centering
@@ -75,6 +70,10 @@ Idéalement, on aimerait représenter les objets des scènes virtuelles de mani�
 
 %TODO positionnement par rapport aux micro mesh ?
 % TODO "trop" de details -> eclaircir
+
+Le maillage utilisé pour représenter une géométrie est une approximation. Pour afiner la géométrie, ou lui attribuer une apparence, il est possible d'utiliser des \og textures \fg. Une texture est IWASHERE
+
+
 Le maillage seul ne suffit cependant pas à représenter parfaitement la géométrie, qui a trop de détails pour la résolution des maillages RE tractables avec la technologie actuelle. Pour remédier à ce problème, on utilise des \og textures \fg, qui ajoutent les détails manquants à une géométrie simplifiée. De manière générale, on appelle texture une fonction d'un espace de coordonnées, habituellement deux ou trois dimensions, vers un espace de valeurs numériques à une ou plusieurs dimensions. Les dimensions de l'espace d'arrivée sont appelées \og canaux \fg de la texture. Ils représentent généralement une couleur (RGB ou RGBA), mais peuvent aussi correspondre à d'autres grandeurs (scalaires par exemple) qui encodent des valeurs physiques utiles au rendu de la scène, comme une profondeur, une hauteur ou un vecteur normal par exemple. La majorité du temps, les textures sont stockées en mémoire comme des images, des tableaux multi-dimensionnels finis de données, que l'on appelle alors des \og cartes \fg.
 %TODO opposer ici discret vs continu procédural
 % TODO conseil nico pour mieux reformuler
