@@ -28,7 +28,7 @@ Dans le cadre de l'informatique graphique, un monde virtuel est une méthode de 
 
 \subsection*{Types de rendu}
 
-La visualisation de scènes virtuelles s'opérationnalise au travers d'un logiciel dit \og moteur de rendu \fg utilisant divers algorithmes pour fonctionner~\cite{sherman_chapter_2003}. Un moteur de rendu traite une scène en différentes étapes dans le but de créer une visualisation de cette scène, appelée \og rendu de la scène \fg. Il existe plusieurs méthodes de rendu qui implémentent différents algorithmes pour produire différentes visualisations d'une scène. Pour exécuter leurs calculs, les logiciels de rendu s'appuient sur les capacités des cartes graphiques ({\it Graphics Processing Unit} ou GPU). Les GPUs sont des processeurs hautement parallèles et spécialisés dès leur fabrication pour des calculs graphiques~\cite{das_history_2016}.
+La visualisation de scènes virtuelles s'opérationnalise au travers d'un logiciel dit \og moteur de rendu \fg utilisant divers algorithmes pour fonctionner~\cite{sherman_chapter_2003}. Un moteur de rendu traite une scène en différentes étapes dans le but de créer une visualisation de cette scène, appelée \og rendu de la scène \fg~\cite{pharr_physically_2023}. Il existe plusieurs méthodes de rendu qui implémentent différents algorithmes pour produire différentes visualisations d'une scène. Pour exécuter leurs calculs, les logiciels de rendu s'appuient sur les capacités des cartes graphiques ({\it Graphics Processing Unit} ou GPU). Les GPUs sont des processeurs hautement parallèles et spécialisés dès leur fabrication pour des calculs graphiques~\cite{das_history_2016}.
 
 \bigskip
 
@@ -54,8 +54,7 @@ Une méthode de rendu en temps-réel doit répondre à certaines contraintes due
 
 \subsection*{Maillage}
 
-Pour manipuler une scène virtuelle, il est nécessaire d'avoir une représentation des éléments qui la composent. Une représentation est une manière technique de décrire et stocker les données d'une scène. Il y a deux façons de représenter une géométrie dans un monde virtuel. Les représentations continues, comme les surfaces implicites, se rapprochent au mieux des formes des objets du monde réel, mais sont difficiles à créer. Les représentations discrètes, comme les maillages, approximent les représentations continues par des ensembles de polygones~\cite{coons_surfaces_1967}, souvent des triangles. Les polygones qui forment un maillage sont définis explicitement par des données géométriques, notamment les positions des sommets et les sommets des faces. Dans ce travail, seuls les maillages seront utilisés. Les maillages sont des structures habituelles dans les mondes virtuels.
-
+Pour manipuler une scène virtuelle, il est nécessaire d'avoir une représentation des éléments qui la composent. Une représentation est une manière technique de décrire et stocker les données d'une scène. Il y a deux façons de représenter une géométrie dans un monde virtuel. Les représentations continues, comme les surfaces implicites, se rapprochent au mieux des formes des objets du monde réel, mais sont difficiles à créer. Les représentations discrètes, comme les maillages, approximent les représentations continues par des ensembles de polygones~\cite{coons_surfaces_1967}, souvent des triangles. Les polygones qui forment un maillage sont définis explicitement par des données géométriques, notamment les positions des sommets et les sommets des faces. La figure~\ref{fig:procedural-mesh} montre les polygones qui composent un modèle de terrain. Dans ce travail, seuls les maillages seront utilisés. Les maillages sont des structures habituelles dans les mondes virtuels.
 
 \begin{figure}[h!]
     \centering
@@ -68,39 +67,48 @@ Pour manipuler une scène virtuelle, il est nécessaire d'avoir une représentat
 
 \subsection*{Plaquage de texture}
 
-%TODO positionnement par rapport aux micro mesh ?
-% TODO "trop" de details -> eclaircir
-
-Le maillage utilisé pour représenter une géométrie est une approximation. Pour afiner la géométrie, ou lui attribuer une apparence, il est possible d'utiliser des \og textures \fg. Une texture est IWASHERE
-
-
-Le maillage seul ne suffit cependant pas à représenter parfaitement la géométrie, qui a trop de détails pour la résolution des maillages RE tractables avec la technologie actuelle. Pour remédier à ce problème, on utilise des \og textures \fg, qui ajoutent les détails manquants à une géométrie simplifiée. De manière générale, on appelle texture une fonction d'un espace de coordonnées, habituellement deux ou trois dimensions, vers un espace de valeurs numériques à une ou plusieurs dimensions. Les dimensions de l'espace d'arrivée sont appelées \og canaux \fg de la texture. Ils représentent généralement une couleur (RGB ou RGBA), mais peuvent aussi correspondre à d'autres grandeurs (scalaires par exemple) qui encodent des valeurs physiques utiles au rendu de la scène, comme une profondeur, une hauteur ou un vecteur normal par exemple. La majorité du temps, les textures sont stockées en mémoire comme des images, des tableaux multi-dimensionnels finis de données, que l'on appelle alors des \og cartes \fg.
-%TODO opposer ici discret vs continu procédural
-% TODO conseil nico pour mieux reformuler
-% TODO source pour la méthode de plaquage de texture ?
-
-\bigskip
-
-Pour une même surface, il est courant d'utiliser plusieurs textures pour calculer l'éclairage et la couleur. Les textures en question dépendent du modèle d'éclairage utilisé. Le format de rendu physique réaliste ({\it Physically Based Rendering} ou PBR), standard de l'industrie, nécessite typiquement cinq cartes de texture : l'albedo (ou couleur), mais aussi la normale, la hauteur, la rugosité et l'occlusion ambiante.
-% source pbr standard industrie
+Le maillage utilisé pour représenter une géométrie est une approximation. Pour afiner la géométrie, ou lui attribuer une apparence, il est possible d'utiliser des \og textures \fg. Une texture est une fonction d'un espace de coordonnées, habituellement à deux ou trois dimensions, à valeurs dans un espace quelconque qui représente les différents attributs possibles de la texture. Les dimensions de l'espace d'arrivée sont appelées \og canaux \fg de la texture. Les textures représentent souvent la couleur d'une surface, ou d'autres grandeurs physiques comme la profondeur ou l'élévation, qui servent au rendu de la géométrie à laquelle est associée la texture. En fonction du modèle de rendu choisi pour la scène, différentes textures sont nécessaires. Le format de rendu physique réaliste ({\it Physically Based Rendering} ou PBR), standard de l'industrie, nécessite typiquement cinq cartes de texture~\cite{pharr_physically_2023} : l'albedo (ou couleur), mais aussi la normale, la hauteur, la rugosité et l'occlusion ambiante.
+% TODO source pbr standard industrie
 
 \bigskip
 
 \begin{figure}
     \centering
     \includegraphics[width=.65\textwidth]{contenu/resources/images/mutli-material-object}
-    \caption[Rendu d'un objet comportant plusieurs matériaux]{Plusieurs matériaux différents sont utilisés pour le rendu de cet objet~\cite{multi-material}}
+    \caption[Rendu d'un objet comportant plusieurs matériaux]{Plusieurs matériaux différents sont utilisés pour le rendu de cet objet~\cite{fig:multi-material}}
     \label{fig:multi-material}
 \end{figure}
 
-La méthode de travail usuelle en industrie consiste à regrouper ces différentes textures, ainsi que le modèle d'éclairage, dans un \og matériau \fg. Les objets d'une scène sont ainsi composés de plusieurs matériaux, qui présentent chacun des propriétés physiques différentes. Une chaise peut par exemple avoir une armature en bois, un recouvrement en cuir et des clous en métal. Pour créer leurs scènes, les artistes façonnent ainsi leurs objets en commençant par la géométrie, avant de créer (ou réutiliser) les différents matériaux pour habiller leurs objets.
-% todo source source source
+La méthode de travail usuelle en industrie consiste à regrouper ces différentes textures, ainsi que le modèle d'éclairage, dans une ressource dite \og matériau \fg. Les objets d'une scène sont composés de plusieurs matériaux, qui présentent chacun des propriétés physiques différentes. Dans la figure~\ref{multi-material} par exemple, la lunette a un harnais en cuir, un objectif en métal et des lentilles en verre. Pour créer leurs scènes, les artistes façonnent leurs objets en commençant par la géométrie, avant de créer (ou réutiliser) différents matériaux pour habiller leurs objets.
+
+\bigskip
+
+Il existe deux méthodes classiques de stockage pour une texture : procédurale ou discrète. Une texture procédurale est représenté sous une forme fonctionnelle, à l'aide d'équations ou de procédures. Une texture discrète, quant à elle, est stockée comme une image numérique, c'est à dire un tableau discret et fini de données. La représentation procédurale, dont un exemple est donné à la figure~\ref{fig:perlin-noise}, présente plusieurs avantages par rapport à la représentation discrète :
+
+\begin{itemize}
+    \item la compacité : pour stocker une texture procédurale, il suffit de stocker les fonctions ou chaines d'instructions qui la définissent. Une texture procédurale n'occupe donc que très peu d'espace en mémoire.
+    \item la taille : une texture procédurale est définie comme une fonction sur un espace de paramètre. Une texture procédurale est donc intrinsiquement infinie.
+    \item la résolution : une texture pricédurale est une fonction continue au sens mathématique. Il est possible de connaître la valeur exacte d'une texture procédurale en n'importe quel point de l'espace de coordonnées en l'évaluant en ce point.
+\end{itemize}
+
+Les textures procédurales ont cependant des désavantages. Certaines apparences souhaitées sont difficilement exprimables de manière fonctionnelle. Une expression fonctionnelle peut aussi être difficile à manipuler pour des artistes, puisqu'il faut ajuster des paramètres et modifier l'apparence de manière indirecte. De plus, l'expression d'une texture procédurale est parfois complexe et peut être un enjeu pour la synthèse en temps-réel. Il arrive que la fonction ou suite d'instructions qui définissent une texture procédurale sont si longs à exécuter que le budget de temps pour le rendu de l'image est dépassé. Une texture qui fait dépasser le budget temps du rendu n'est pas viable.
+
+\bigskip
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=.5\textwidth]{contenu/resources/images/perlin-noise}
+    \caption[Bruit de Perlin]{La notion de texture procédurale est introduite par Ken Perlin en 1985 avec son bruit de Perlin~\cite{perlin_image_1985}}
+    \caption{fig:perlin-noise}
+\end{figure}
+%TODO trouver image + vérifier si c'est bien Perlin qui a introduit la notion de T proc.
+
+Résoudre les problématiques des textures procédurales est un enjeu de l'informatique graphique. Obtenir de nouvelles apparences, avoir un meilleur contrôle par les artistes et une évaluation plus rapide sont des sujets constamment explorés dans le domaine~\cite{heitz_high-performance_2018, tricard_procedural_2019, lutz_cyclostationary-gaussian_2021, baldi_differentiable_2023}. Le sujet présenté dans ce manuscrit s'inscrit dans la problématique de l'agrandissement du champs des apparences représentables par texture procédurale.
 
 \subsection*{Échantillonnage}
 
-% TODO première phrase p-e cheloue voir nico
-L'intérêt de la texture est donc d'augmenter la quantité de détails de notre rendu à faible coût, puisque la géométrie sous-jacente reste plus grossière, et que la résolution de cette dernière est un des facteurs majeurs de ralentissement du rendu d'une scène. Pour plaquer des textures, qui souvent sont des images carrées, sur une surface quelconque, on utilise un système de coordonnées, dites UV, qui permet d'aligner les deux comme souhaité. Les coordonnées UV, un vecteur entre $(0, 0)$ et $(1, 1)$, sont définies pour tous les sommets au moment de la création du maillage. On peut alors utiliser ces coordonnées comme argument de la texture, dont l'espace de coordonnées de départ est aussi entre 0 et 1.
-% TODO : "aligner les deux comme souhaité" = immprécis
+Le processus utilisé traditionnellement pour le rendu en temps-réel est appelé le \og \textit{pipeline} graphique de rastérisation \fg. Dans ce \textit{pipeline}, la scène rendue est projetée sur le plan image, qui est une représentation virtuelle de l'écran. La géométrie est ensuite divisée en petits éléments de surface appelés \og fragments \fg, durant l'étape éponyme de \og rastérisation \fg. Les fragments sont les éléments atomiques du \textit{pipeline} de rastérisation : ce sont les plus petits éléments indivisibles manipulés. Au terme du processus de rendu, un fragment est soit défaussé car non visible dans l'image finale, soit donné une couleur et affiché. Un fragment affiché à l'écran est appelé un \og pixel \fg (mot-valise de \textit{Picture Element}). L'ensemble des pixels forme l'image rendue.
+% TODO image de rasterisation
 
 \bigskip
 
@@ -111,40 +119,33 @@ L'intérêt de la texture est donc d'augmenter la quantité de détails de notre
     \label{fig:uv-suzanne}
 \end{figure}
 
-Cette étape dite d' \og échantillonnage \fg s'effectue au moment du rendu. Dans le \textit{pipeline graphique} de rastérisation, utilisé classiquement pour faire du rendu interactif, la scène est projetée sur le plan image, puis découpée en \og fragments \fg de taille inférieure aux polygones formant le maillage des objets de la scène. Les fragments ont une valeur de coordonnée de texture, souvent notée \og coordonnée UV \fg, interpolée entre les valeurs des sommets voisins et peut donc aller interroger les textures pour récupérer les valeurs aux bons endroits.
-% TODO paragraphe/explication à retravailler, confusant
-% TODO voir nico pour aide reformulation
-% Faire le lien entre fragments et pixels
+Pour appliquer une texture à une géométrie, un système de coordonnées, dites \og coordonnées UV \fg, est utilisé. Les coordonnées UV sont des vecteurs 2D, entre $(0, 0)$ et $(1, 1)$. Les sommets des maillages des objets de la scène ont chacun des coordonnée UV, qui leurs sont associées à la création de l'objet. Les coordonnées UV sont ensuite interpolées entre les sommets lors de la rastérisation. Les fragments ont ainsi chacun des coordonnées UV. Un exemple de rendu exhibant les coordonnées UV d'un modèle 3D est montré à la figure~\ref{fig:suzanne}. Les coordonnées UV indiquent quelles parties de la texture correspondent à chaque fragment de la géométrie. L'action d'évaluer une texture en utilisant les coordonnées UV des fragments est appellée \og échantillonnage \fg de la texture. Ce processus d'échantillonnage s'effectue en général au moment du rendu.
 
 \subsection*{Filtrage}
-%TODO pertinence de la section ? ext ce que j'utilise ça dans mon travail ?
+\label{subsec:filtering}
 
-La rastérisation pose cependant des problèmes dûs à l'encodage discret des textures en image. Les fragments rastérisés et les texels de texture échantillonnés représentent tous les deux des surfaces de petite taille, caractérisés par des coordonnées uniques. Il se peut néanmoins que les surfaces couvertes par les deux ne soient pas les mêmes, même si les coordonnées UV sont identiques ; c'est particulièrement le cas lorsque la taille du fragment et celle du texel sont différentes.
-% TODO revoir le paragraphe (voir annotations guillaume)
-% TODO voir nico pour reformulation et lien entre P et e(P)
-% utiliser et citer la figure, souligner la correspondance P et e(P)
-% TODO def texel
+L'étape d'échantillonnage comporte un problème inhérent, dû au fonctionnement d'un écran et à la nature discrète du système de pixels. Comme expliqué, la géométrie de la scène est projetée, puis découpée en fragments. Le fragment représente donc une partie de surface continue. Mais un fragment est un élément discret, il ne prend qu'une seule valeur. Le schéma en figure~\ref{fig:aliasing} illustre cette problématique. Avec les notations de la figure, un fragment $P$ représente la surface projetée $e(P)$ avec une seule valeur. La valeur que devrait prendre le fragment est l'intégrale de la texture sur l'empreinte $e(P)$. Cette valeur est cependant difficile à calculer dans la majorité des cas. Dans le cas de textures discrètes, une considération supplémentaire doit être faite. L'empreinte du fragment sur la surface texturée est souvent de taille différente que le texel (mot-valise de \textit{Texture Element}) de la texture.
 
 \bigskip
 
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{contenu/resources/images/schema_filtrage}
-    \caption[Visualisation du problème d'échantillonnage lors du rendu par rastérisation]{À cette distance de l'écran, l'empreinte du fragment $e(P)$ couvre plusieurs texels. Les coordonnées $(u, v)$ ne sont pas suffisantes pour capturer toute l'information.}
+    \caption[Visualisation du problème d'échantillonnage lors du rendu par rastérisation]{À cette distance de l'écran, l'empreinte $e(P)$ du fragment sur la surface texturée couvre plusieurs texels. Les coordonnées $(u, v)$ ne sont pas suffisantes pour capturer toute l'information de la texture.}
     \label{fig:aliasing}
 \end{figure}
 
-Il faut alors employer des méthodes dites de \og filtrage \fg pour corriger l'échantillonnage, car la différence de taille entre les fragments et les texels cause des artefacts visuels appelés \og aliassage \fg. Pour des textures standards, il existe différentes méthodes de filtrages utilisées couramment :
-% TODO def artefacts visuels
+Les comportements indésirables causés lors des étapes de rendu et observables sur l'image finale sont appelés \og artefacts de visualisation \fg. Dans le cas de l'échantillonnage, les artefacts causés par la différence de taille entre un fragment et son empreinte sur une surface texturée sont appelés artefacts d' \og aliassage \fg. Pour résoudre les problèmes d'aliassage, plusieurs méthodes dites de \og filtrage \fg sont utilisées, dépendamment du problème d'aliassage rencontré :
 
 \begin{itemize}
-    \item \textbf{Sur-échantillonnage} : lorsque le fragment est plus petit que le texel, plusieurs fragments voisins peuvent prendre la même valeur. Cela donne un aspect crénelé, avec les contours des objets en escalier. La solution idéale dans ce cas serait d'augmenter la résolution de la texture utilisée ; ce n'est cependant pas tout le temps possible. Comme alternative, au lieu d'attribuer au fragment la valeur du texel correspondant, on interpole la valeur des quatre texels voisins. On réduit l'aspect pixélisé, au prix d'un échantillonnage plus coûteux et d'un effet de flou sur l'image.
-    \item \textbf{Sous-échantillonnage} : lorsqu'un fragment est plus grand qu'un texel~\ref{fig:aliasing}, et qu'il en recouvre plusieurs, alors plusieurs fragments voisins peuvent être très espacés sur la texture et on perd l'information des texels entre. De loin, on aperçoit un motif de moiré et l'image scintille lorsque l'on change légèrement l'angle de vue. La solution idéale serait ainsi de prendre en compte tous les texels touchés et faire une intégrale de la valeur de la texture sur toute la surface couverte par le fragment, ce qui est très souvent irréalisable. L'alternative classique consiste à pré-calculer différentes échelles de la texture utilisée, appelées \og MIP maps \fg, et de trouver l'échelle adéquate de telle sorte qu'un texel ait la même taille qu'un fragment. L'échantillonnage est plus lourd et on prend plus d'espace mémoire pour stocker les MIP maps, mais la texture est mieux rendue de loin.
+    \item le \og sur-échantillonnage \fg signifie que l'empreinte d'un fragment est plus petite qu'un texel. En cas de sur-échantillonnage, plusieurs fragments voisins peuvent prendre la même valeur. Avoir une même valeur pour plusieurs fragments voisins donne un aspect crénelé à l'image et les contours des objets sont en escalier. La solution idéale dans ce cas est d'augmenter la résolution de la texture utilisée ; ce n'est cependant pas tout le temps possible. Une alternative commune est de faire l'interpolation des valeurs des quatres texels voisins. La texture est échantillonnée quatre fois pour chaque fragment et l'image prend un aspect légèrement floutée, mais l'effet escalier est réduit. Un exemple est montré à la figure~\ref{fig:filtering}
+    \item le \og sous-échantillonnage indique que l'empreinte d'un fragment est plus grande qu'un texel et en recouvre plusieurs, comme à la figure~\ref{fig:aliasing}. En cas de sous-échantillonnage, des fragments voisins représentent du contenu éloigné spatialement sur la surface. La surface entre les centres des empreintes de fragments voisins est alors mal représentée. De loin, la surface texturée présente des motifs dits de \og moiré \fg. Des bandes non-présentes dans la texture apparaissent sur le rendu et il y a un effet de scintillement lorsque la caméra est déplacée dans la scène. L'apparence souhaitée est l'intégrale des texels qui sont sous l'empreinte du fragment, mais un algorithme de rastérisation naïf ne lit qu'un seul texel. La solution idéale serait de calculer l'intégrale sur tous les texels couverts par l'empreinte du fragment. Calculer l'intégrale directement est souvent irréalisable. L'approche traditionnelle dite \og filtrage tri-linéaire \fg consiste à pré-calculer une approximation de l'intégrale pour différentes tailles d'empreintes et trouver le bon niveau au moment du rendu. Cette approche double l'occupation mémoire pour chaque texture, mais les effets de moiré disparaissent.
+
+%    \item Différentes résolution des textures utilisées appelées \og MIPs maps \fg sont pré-calculées avant le rendu. Ces MIPs maps sont l'approximation des intégrales de régions de texels de différentes tailles. La technique de filtrage dit \og tri-linéeaire \fg consiste à trouver les niveaux adéquats de MIPs maps auquel l'empreinte du fragment a une taille similaire à un texel. L'échantillonnage de la texture se fait alors dans les deux niveaux les plus proches.
+%    \item L'alternative classique consiste à pré-calculer différentes échelles de la texture utilisée, appelées \og MIP maps \fg, et de trouver l'échelle adéquate de telle sorte qu'un texel ait la même taille qu'un fragment. L'échantillonnage est plus lourd et on prend plus d'espace mémoire pour stocker les MIP maps, mais la texture est mieux rendue de loin.
 \end{itemize}
-% TODO paragraphe à revoir (voir annotations guillaume)
-% TODO voir nico faire attention entre taille frag<->texel, parler d'empreinte
-% TODO "échantillonnage plus lourd" whack, voir nico reformulation
-% TODO source méthode de filtrage
+
+\bigskip
 
 \begin{figure}
     \centering
@@ -158,20 +159,29 @@ Il faut alors employer des méthodes dites de \og filtrage \fg pour corriger l'�
          \caption{Avec filtrage linéaire}
      \end{subfigure}
     \caption{Filtrer correctement est un enjeu majeur dans l'utilisation des textures}
-    \label{fig:filtrage}
+    \label{fig:filtering}
 \end{figure}
 % TODO changer image pour texture plus voir nico comment bien faire la figure
 
-{\color{red}Pertinence de ce paragraphe ?}
-De nombreuses méthodes de filtrage plus élaborées sont employées pour obtenir des résultats de meilleure qualité, ou pour filtrer des textures plus compliquées. Par exemple quand les textures ne sont plus des images prédéterminées à l'avance, mais qu'elles sont générées au moment du rendu.
-% TODO oui pertinent, mentionner les autres solutions "idéales" mais plus difficiles (voir not)
+S'assurer de filtrer correctement lors de l'échantillonnage est un enjeu majeur pour obtenir un rendu fidèle aux textures utilisées. C'est particulièrement le cas lors la création de textures procédurales, qui est le sujet de cette étude. Diverses méthodes peuvent être utilisées pour la création de textures procédurales. S'assurer de la filtrabilité d'une méthode de création de textures est une des problématiques principales et un critère de qualité de la synthèse de textures, présentée dans la section suivante.
+
+%{\color{red}Pertinence de ce paragraphe ?}
+%De nombreuses méthodes de filtrage plus élaborées sont employées pour obtenir des résultats de meilleure qualité, ou pour filtrer des textures plus compliquées. Par exemple quand les textures ne sont plus des images prédéterminées à l'avance, mais qu'elles sont générées au moment du rendu.
+% oui pertinent, mentionner les autres solutions "idéales" mais plus difficiles (voir not). filtre analytique et pré-intégration
+%OU p-e supprimer paragraphe
 
 \section{Synthèse de texture}
 %TODO "bien souvent" vague
-Bien souvent, les surfaces que l'on souhaite couvrir sont de grande taille, par exemple des sols. Produire et stocker des textures de même taille que les surfaces n'est pas toujours envisageable, le coût en temps de création et en empreinte mémoire est trop élevé. Étirer les textures en utilisant les coordonnées UV est une solution, qui atteint cependant ses limites assez rapidement : on remarque qu'une texture de plus basse résolution est utilisée. En rendu interactif, on résout le problème en synthétisant directement une texture de taille adaptée à notre surface. On peut catégoriser les types de texture existants de plusieurs manières ; pour le présent manuscrit, nous les distinguerons selon le niveau d'organisation des éléments qui les compose~\ref{fig:échelle-structure}.
+De nombreuses surfaces texturées lors d'un rendu, comme des sols, sont de grande taille. Comme discuté précédemment~\ref{subsec:filtering}, produire des textures de résolution suffisante pour texturer de grandes surfaces sans artefacts demande une grande occupation mémoire et un long temps de création. Étirer les textures en utilisant les coordonnées UV est une solution, qui atteint cependant ses limites assez rapidement. Utiliser une texture de plus basse résolution cause des artefacts visuels, comme discuté. Il est possible de résoudre le problème en synthétisant directement une texture de taille adaptée à notre surface.
+
+HEREEEEEE
+
+On peut catégoriser les types de texture existants de plusieurs manières ; pour le présent manuscrit, nous les distinguerons selon le niveau d'organisation des éléments qui les compose~\ref{fig:échelle-structure}.
 % TODO mieux faire le lien et introduire partie d'après (voir not)
 % TODO "catégorisation plusieurs manières" -> quelles sont les autres
 % todo source pour les méthodes usuelles
+% TODO attention confusion taille / resolution
+
 
 \subsection*{Algorithme de synthèse}
 
