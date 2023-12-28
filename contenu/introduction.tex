@@ -12,7 +12,7 @@ L'informatique graphique, branche du domaine de l'informatique, est l'étude de 
     \label{fig:hades}
 \end{figure}
 
-Dans ce contexte de méthodes automatisées, la génération procédurale est un procédé utilisé pour produire toutes sortes de ressources numériques~\cite{smelik_survey_2014}. La génération procédurale est en particulier utilisée pour synthétiser l'apparence visuelle des différents composants des scènes virtuelles~\cite{alessio_procedural_2021}. En combinant des méthodes algorithmiques avec de l'aléatoire, il est possible de générer des cartes de texture qui servent à habiller les mondes virtuels. Une carte de texture désigne une image qui est appliquée sur une surface pour lui donner un aspect visuel dans le but d'accentuer l'immersion des utilisateurs. Différentes textures nécessitent différentes méthodes de synthèse pour être générées. Certains genres de textures sont encore difficilement réalisables avec les méthodes existantes~\cite{lutz_cyclostationary-gaussian_2021}. C'est dans cette perspective que s'inscrit ce travail de recherche, qui a pour but d'approfondir notre compréhension des éléments qui constituent la structure d'une image. Ce travail explore l'analyse multi-résolutionnelle locale et son application à la synthèse de texture procédurale. L'analyse multi-résolutionnelle locale est un outil du domaine du traitement du signal et est détaillée dans la suite de ce manuscrit au chapitre~\ref{chap:chapitre1}.
+Dans ce contexte de méthodes automatisées, la génération procédurale est un procédé utilisé pour produire toutes sortes de ressources numériques~\cite{smelik_survey_2014}. La génération procédurale est en particulier utilisée pour synthétiser l'apparence visuelle des différents composants des scènes virtuelles~\cite{alessio_procedural_2021}. En combinant des méthodes algorithmiques avec de l'aléatoire, il est possible de générer des cartes de texture qui servent à habiller les mondes virtuels. Une carte de texture désigne une image qui est appliquée sur une surface pour lui donner un aspect visuel dans le but d'accentuer l'immersion des utilisateurs. Différentes textures nécessitent différentes méthodes de synthèse pour être générées. Certains genres de textures sont encore difficilement réalisables avec les méthodes existantes~\cite{lutz_cyclostationary-gaussian_2021}. C'est dans cette perspective que s'inscrit ce travail de recherche, qui a pour but d'approfondir notre compréhension des éléments qui constituent la structure d'une image. La compréhension d'une image et de ces éléments est le sujet d'un autre domaine, le traitement du signal (une image est un signal 2D). Le traitement du signal est un sous-domaine du génie électrique qui étudie la manipulation et l'interprétation des signaux. Nebeker définit le traitement du signal comme étant \og [...] l'ensemble des changements appliqués aux signaux dans le but d'améliorer leur transmission et utilisation. \fg (traduction libre)~\cite{nebeker_fifty_1998}. Quand le signal étudié est une image, le domaine est appelé traitement ou analyse d'image. Afin obtenir une meilleure compréhension de la structure d'une image, ce travail explore l'analyse multi-résolutionnelle locale et son application à la synthèse de texture procédurale. L'analyse multi-résolutionnelle locale est un outil du domaine de l'analyse d'image et est détaillée dans la suite de ce manuscrit au chapitre~\ref{chap:chapitre1}.
 
 \section{Monde virtuel}
 
@@ -185,7 +185,7 @@ De nombreuses surfaces texturées lors d'un rendu, comme des sols, sont de grand
     \caption[Classification des textures selon leur niveau de structure]{Les textures peuvent être classées selon leur niveau de structure : stochastiques ou gaussiennes (gauche), semi-régulières (milieu), ou structurées (droite)}
     \label{fig:échelle-structure}
 \end{figure}
-% TODO changer image de droite, confusant avec périodicité
+% TODO remplacer image de droite par image pote Loucas
 
 Le travail présenté dans ce manuscript s'intéresse cependant à la synthèse de texture présentant de la structure. Le concept de structure, bien qu'intuitif, est difficile à définir de manière formelle. Dans le cadre de ce manuscript, la \og structure \fg d'une texture désigne comment les différentes parties de la structure sont agencées les unes par rapport aux autres. Dans une texture structurée, les éléments de la texture forment certains schémas ou présentent une certaine forme de régularité. La classification de textures utilisée dans ce travail est faite selon le niveau de structure des textures car c'est le thème central de l'étude. La figure~\ref{fig:échelle-structure} illustre la classification proposée.
 
@@ -223,17 +223,34 @@ Le faible qualité du pavage périodique illustre l'importance du choix de la ta
 
 \subsubsection{Synthèse par convolution}
 
-% TODO def noyaux
-L'objectif d'une synthèse par convolution est de construire une texture en disposant des motifs, appelés \og noyaux \fg, selon une distribution statistique. Le choix du noyau, de la distribution, ainsi que de la méthode de mélange, sont les paramètres à ajuster pour contrôler la synthèse. Une pratique habituelle de la synthèse par convolution est de choisir comme noyau une somme d'ondelettes (typiquement des cosinus) spatialement contraintes et à orientation aléatoire, et de contrôler les fréquences des ondelettes utilisées~\cite{tricard_procedural_2019}. En sélectionnant les fréquences, on a un contrôle sur le contenu fréquentiel présent dans la texture produite, ce qui permet une bonne maîtrise de l'apparence générée~\cite{gilet_local_2014}.
-% Tu peux illustrer avec le LRPN de Guillaume. N'hésite pas à fouiller dans mon manuscrit de thèse sinon.
-
+L'objectif d'une synthèse par convolution est de construire une texture en disposant des motifs dits \og noyaux \fg selon une distribution statistique. Un noyau est un petit élément de surface qui peut être un contenu de l'exemple ou du défini de manière fonctionnelle. Le choix du noyau, de la distribution, ainsi que de la méthode de mélange, sont les paramètres à ajuster pour contrôler la synthèse. Une pratique habituelle de la synthèse par convolution est de choisir comme noyau une somme d'ondelettes (typiquement des cosinus) spatialement contraintes et à orientation aléatoire, et de contrôler les fréquences des ondelettes utilisées~\cite{tricard_procedural_2019}. En sélectionnant les fréquences des noyaux, il est possible de contrôler le contenu fréquentiel de la texture synthétisée. Avoir un contrôle sur le contenu fréquentiel de la texture est une bonne méthode pour maîtriser l'apparence de la synthèse~\cite{gilet_local_2014}, comme montré en figure~\ref{fig:lrpn}.
 
 \bigskip
 
-% DIRE QUE LA SYNTHESE DE MOTIFS OU DE STRUCTURE EST ENCORE TRES COMPLIQUEE
-Les méthodes existantes de synthèse ne fonctionnent cependant pas bien lorsque la cible contient des motifs organisés ou de la répétition. Quelques tentatives ont été faites~\cite{lutz_cyclostationary-gaussian_2021} pour synthétiser des textures présentant une forme de structure et régularité, mais en dehors de configurations présentant des caractéristiques particulières, comme une certaine périodicité, la synthèse de structure irrégulière est compliquée.
-% TODO image pour appuyer dernière ligne + mieux expliquer pourquoi
-% TODO contribution \cite à décrire. Tu peux aussi citer l'article sur la préservation de l'autocovariance
+\begin{figure}
+    \centering
+    \includegraphics[width=.8\textwidth]{contenu/resources/images/lrpn}
+    \caption[Maîtriser le contenu fréquentiel permet de contrôler l'apparence d'une synthèse]{Texture synthétisée par \textit{Local Random Phase Noise}. En approximant le spectre de puissance de l'exemple, Gilet et al.~\cite{gilet_local_2014} ont montré que l'apparence de l'exemple est mieux reproduite.}
+    \label{fig:lrpn}
+\end{figure}
+
+Cependant, la synthèse de texture comportant de la structure en temps-réel est encore un sujet difficile. Les méthodes existantes de synthèse ne fonctionnent pas lorsque la cible contient des motifs organisés ou de la répétition. Quand des méthodes traditionnelles de synthèse temps-réel sont utilisées sur des textures structurées, des artefacts visuels apparaissent. La figure~\ref{fig:synthesis-failure} montre quelques cas d'échec de synthèses de la littérature appliquées aux textures structurées. Il est difficile de créer du contenu réellement nouveau et préservant le même genre de motifs structurés que ceux de l'exemple, car la synthèse cohérente de structure n'est pas encore possible. Certaines configurations présentant des caractéristiques particulières facilitent le problème. Lutz et al. ont par exemple montré que la synthèse est possible pour des textures dont la structure est régulière~\cite{lutz_cyclostationary-gaussian_2021}. Le cadre général reste néanmoins non résolu.
+
+\begin{figure}
+    \centering
+    \begin{subfigure}{.45\textwidth}
+        \includegraphics[width=\textwidth]{contenu/resources/images/hpn_failure}
+        \caption{Synthèse par pavage et mélange~\cite{heitz_high-performance_2018}.}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{.45\textwidth}
+        \includegraphics[width=\textwidth]{contenu/resources/images/acf_preserving_hpn_failure}
+        \caption{Synthèse préservant la fonction d'autocovariance~\cite{lutz_preserving_2023}.}
+    \end{subfigure}
+
+    \caption[Échec de synthèse de texture structurée]{Échec de synthèse de texture structurée. Les méthodes de synthèse actuelles ne sont pas capables de reproduire des textures structurées.}
+    \label{fig:synthesis-failure}
+\end{figure}
 
 % \section{Génération procédurale} % Non-nécessaire ? De quoi on parle ici sinon ?
 
@@ -241,11 +258,14 @@ Les méthodes existantes de synthèse ne fonctionnent cependant pas bien lorsque
 
 \section{Analyse multi-résolutionnelle locale}
 
-Une des raisons pour lesquelles la synthèse de texture contenant de la structure est difficile est qu'il faut préserver certaines relations entre les texels de l'image pour garder la structure. Savoir quelles relations préserver, pour garder la structure de l'image, et quelles relations supprimer, pour ajouter de la variation dans la synthèse, est très délicat, surtout dans le contexte du temps-réel. L'idée explorée dans cette recherche est d'appliquer des outils de l'analyse d'image, outils capables d'extraire des caractéristiques d'une image par l'analyse de relations intra-image, à des processus de synthèse.
+Un enjeu pour synthétiser des textures structurées est de mieux comprendre ce qui compose la structure d'une texture. Pour comprendre la structure d'une texture, l'idée explorée dans cette recherche est d'appliquer des outils de l'analyse d'image à des processus de synthèse. Les outils choisis permettent l'extraction de caractéristiques d'une texture par l'analyse de relations statistiques inter-texels.
+
+
+Une des raisons pour lesquelles la synthèse de texture contenant de la structure est difficile est qu'il faut préserver certaines relations entre les texels de l'image pour garder la structure. Savoir quelles relations préserver, pour garder la structure de l'image, et quelles relations supprimer, pour ajouter de la variation dans la synthèse, est très délicat, surtout dans le contexte du temps-réel.
 % TODO question à soulever plutôt qu'affirmation à faire
-% qu'est ce qu'une structure ? mieux introduire avec la partie d'après
 % TODO Suggestion : parler de "relations statistiques" plutôt que de "relations", et dire qu'il faut les préserver au mieux. Tu veux préserver toutes les relations statistiques, mais certaines sont trop complexes à préserver en temps réel, en plus d'être difficiles à "capturer". C'est pour ça que tu essayes de développer les outils suivants.
 % TODO très délicat = trop vague
+% TODO mettre plus bas, après le paragraphe de notion de structure p-e
 
 \subsection*{Notion de structure}
 
