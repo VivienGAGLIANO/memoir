@@ -1,25 +1,23 @@
 \chapter[Modèle de Riesz]{Étude théorique du modèle de Riesz} % signal monogénique ?
 \label{chap:chapitre1}
 
-Dans le but de synthétiser du contenu avec de la structure irrégulière, nous cherchons à avoir une approche locale. Pour cela nous utilisons le modèle du signal monogène~\cite{felsberg_monogenic_2001}, qui permet d'extraire l'énergie locale, en s'appuyant sur la transformée de Riesz. Ce et outil est ensuite mis en application dans un cadre multi-résolutionnel, en utilisant une pyramide de Riesz~\cite{wadhwa_riesz_2014} pour calculer la congruence de phases.
+Dans le but de synthétiser du contenu avec de la structure irrégulière, une approche locale est adoptée. Ce travail utilise le modèle du signal monogène~\cite{felsberg_monogenic_2001}, qui permet d'extraire l'énergie locale, en s'appuyant sur la transformée de Riesz. Le signal monogène est ensuite mis en application dans un cadre multi-résolutionnel, en utilisant une pyramide de Riesz~\cite{wadhwa_riesz_2014} pour calculer la congruence de phases.
 
 \section{Signal monogène}
 
-% TODO source signal monogène
-Le signal monogène est un outil du domaine du traitement du signal, généralement utilisé pour des tâches d'analyse d'image ou de vision par ordinateur, comme la détection de caractéristiques. La revue de la méthode par Bridge~\cite{bridge_introduction_2018} est une bonne introduction aux principes théoriques du signal monogène ; nous reprenons dans cette partie sa notation et son discours exposé dans son document afin de prodiguer une compréhension du modèle.
-% TODO "bonne" introduction ? reformuler
+Le signal monogène est un outil du domaine du traitement du signal introduit par Felsberg et Sommer~\cite{felsberg_monogenic_2001}. Le signal monogène est utilisé pour des tâches d'analyse d'image ou de vision par ordinateur, comme la détection de caractéristiques. La revue de la méthode par Bridge~\cite{bridge_introduction_2018} est une introduction simple et compréhensive aux principes théoriques du signal monogène. Le travail de Bridge est repris dans cette partie, ainsi que ses notations et son discours, afin de prodiguer une compréhension du modèle.
 
 \subsection{Une dimension, signal analytique}
 
 \subsubsection{Construction du signal analytique}
 
-Pour comprendre l'utilité du signal monogène, commençons par expliquer le fonctionnement du signal analytique, dont le signal monogène est l'extension aux signaux de dimension arbitraire. Le signal analytique est une méthode de représentation d'un signal 1D à valeurs réelles, qui facilite la manipulation et l'extraction de certaines informations du signal original. Le constat qui donne lieu à cette représentation est que pour un signal à valeurs réelles, les fréquences négatives sont superflues pour sa représentation de Fourier. En effet, on rappelle que la transformée de Fourier $F(\omega)$ d'un signal à valeurs réelles $f(t)$ présente une symétrie hermitienne :
+Pour comprendre l'utilité du signal monogène, il faut expliquer le fonctionnement du signal analytique. Le signal monogène est ensuite défini comme l'extension du signal analytique aux signaux de dimension arbitraire. Le signal analytique est une méthode de représentation d'un signal 1D à valeurs réelles, qui facilite la manipulation et l'extraction de certaines informations du signal original. Le constat qui donne lieu à cette représentation est que pour un signal à valeurs réelles, les fréquences négatives sont superflues pour sa représentation de Fourier. En effet, la transformée de Fourier $F(\omega)$ d'un signal à valeurs réelles $f(t)$ présente une symétrie hermitienne :
 
 \begin{equation}
     F(-\omega) = \overline{F(\omega)}
 \end{equation}
 
-avec $\overline{\cdot}$ l'opérateur de conjugaison complexe. L'idée est donc de se débarrasser des fréquences négatives, sans perte d'information, et de construire un nouveau signal en n'utilisant que les fréquences positives de $f(t)$. On exprime d'abord le signal $F_{\alpha}$ dans le domaine de Fourier :
+avec $\overline{\cdot}$ l'opérateur de conjugaison complexe. Les fréquences négatives, non-nécessaires, peuvent donc être mises de côté sans perte d'information. Un nouveau signal est construit en n'utilisant que les fréquences positives de $f(t)$. Le signal $F_{\alpha}$ est d'abord exprimé dans le domaine de Fourier :
 
 \begin{equation}
     F_{\alpha}(\omega) = \left\{
@@ -31,7 +29,7 @@ avec $\overline{\cdot}$ l'opérateur de conjugaison complexe. L'idée est donc d
     \right.
 \end{equation}
 
-où l'amplitude des composantes de fréquences positives est doublée, par soucis de conservation d'énergie. Avec cette formulation, toute l'information de notre signal original est conservée, mais cette nouvelle forme permet de faire des manipulations précédemment impossibles qui nous permettent de mieux comprendre notre signal.
+où l'amplitude des composantes de fréquences positives est doublée, par soucis de conservation d'énergie. Avec cette formulation, toute l'information du signal original est conservée. Cette nouvelle forme permet en plus de faire des manipulations précédemment impossibles, qui permettent de mieux comprendre le signal.
 
 \begin{figure}[h]
     %\noindent
@@ -121,7 +119,7 @@ où l'amplitude des composantes de fréquences positives est doublée, par souci
     \label{fig:complex-analytic-representation}
 \end{figure}
 
-En effet, on peut voir le fait de supprimer les composantes de fréquences négatives comme le l'ajout d'un signal impair soigneusement choisi au signal de base.
+La suppression des composantes de fréquences peut être vue comme l'ajout d'un certain signal impair au signal de base.
 
 \begin{equation} \label{eq:2.1}
     F_{\alpha}(\omega) = F(\omega) + F_h(\omega),
@@ -139,14 +137,14 @@ où $F_h(\omega)$ est la « version impaire » du signal $F(\omega)$ :
     \right.
 \end{equation}
 
-que l'on peut reformuler à l'aide de la fonction signe :
+qui se reformule à l'aide de la fonction signe :
 
 \begin{equation}
     F_h(\omega) = \sgn(\omega)\cdot F(\omega).
     \label{eq:2.5}
 \end{equation}
 
-On rappelle l'expression de la fonction signe :
+L'expression de la fonction signe est la suivante :
 
 \begin{equation}
     \sgn(x) = \left\{
@@ -158,7 +156,7 @@ On rappelle l'expression de la fonction signe :
     \right.
 \end{equation}
 
-On obtient alors la ré-écriture de l'équation~\ref{eq:2.1} :
+L'équation~\ref{eq:2.1} est ainsi ré-écrite comme suit :
 
 \begin{equation}
     F_{\alpha}(\omega) = (1+\sgn(\omega))F(\omega)
@@ -199,12 +197,12 @@ On obtient alors la ré-écriture de l'équation~\ref{eq:2.1} :
     \end{axis}
     \end{tikzpicture}
 
-    \caption[Signal analytique pour un signal complexe]{Exemple de représentation analytique. Le signal original réel (en bleu), et sa transformée de Hilbert imaginaire pure (en rouge).}
+    \caption[Signal analytique pour un signal complexe]{Exemple de représentation analytique. Le signal original réel (en bleu) et sa transformée de Hilbert imaginaire pure (en rouge).}
     \label{fig:analytic-representation}
 \end{figure}
 
-
-Le signal $F_{\alpha}$ créé est donc dans le domaine fréquentiel de $F$, signal original pair, de représentation purement réelle dans le domaine temporel, et de $F_h$, signal impair, de représentation purement imaginaire dans le domaine temporel, que l'on nomme $f_h$. Dans le domaine temporel, $f_{\alpha}$ est donc un signal complexe, sans composantes de fréquences négatives, c'est un signal analytique, que l'on appelle la  \og représentation analytique \fg de $f$ :
+Le signal $F_{\alpha}$ créé est la somme dans le domaine fréquentiel de $F$, signal original pair, et de $F_h$, signal impair. Dans le domaine temporel, les représentations de $F$
+et $F_h$ sont purement réelle et purement imaginaire respectivement. La représentation dans le domaine temporel de $F_h$ est nommée $f_h$. Dans le domaine temporel, $f_{\alpha}$ est donc un signal complexe sans composantes de fréquences négatives. $f_\alpha$ est un signal analytique et est appelé la \og représentation analytique \fg de $f$ :
 
 \begin{equation}
     f_{\alpha}(t) = \underbrace{f(t)}_\text{réel pur} + \underbrace{f_h(t)}_\text{imaginaire pur}.
@@ -216,24 +214,22 @@ Le signal ajouté pour annuler les fréquences $F_h$ est par ailleurs un objet c
     f_h(t) = i \cdot \textnormal{p.v.} \int_{-\infty}^{\infty} \frac{f(t)}{\pi(t-\tau)} \,d\tau,
 \end{equation}
 
-où p.v. est la valeur principale de Cauchy, nécessaire pour cette intégrale, qui représente la convolution avec la distribution $\frac 1{\pi t}$ et qui est impropre à cause de la singularité en $t=\tau$. Cependant, dû à la complexité de cet objet, nous utiliserons majoritairement l'expression fréquentielle de la transformée de Hilbert :
+où p.v. est la valeur principale de Cauchy. Cette intégrale représente la convolution avec la distribution $\frac 1{\pi t}$. L'intégrale est impropre à cause de la singularité en $t=\tau$. La valeur principale est nécessaire pour définir correctement cet objet. Dû à la complexité de l'intégrale, l'expression fréquentielle de la transformée de Hilbert est utilisée à la place :
 
 \begin{align*}
     &\hil(F) = F_h = \sgn\cdot F \\
-    &\mathcal{H}(F) = F_h = \sgn\cdot F
 \end{align*}
-% TODO choisir l'une des deux
 
 
 \subsubsection{Amplitude et phase locales}
 
-Pour comprendre l'intérêt du signal analytique, on étudie d'abord l'exemple d'une fonction sinusoïdale, d'amplitude $A$ et de fréquence $\omega_0$ fixées :
+Pour comprendre l'intérêt du signal analytique, l'exemple d'une fonction sinusoïdale, d'amplitude $A$ et de fréquence $\omega_0$ fixées est présenté :
 
 \begin{equation}
     f(t) = A\sin(\omega_0t).
 \end{equation}
 
-En utilisant les relations montrées précédemment, on trouve la transformée de Hilbert de $f$ et on calcule sa représentation analytique :
+La transformée de Hilbert de $f$ est calculée en utilisant les relations présentées précédemment, ce qui donne la représentation analytique du signal :
 
 \begin{align}
     f_h(t) &= iA\cos(\omega_0t) \\
@@ -242,11 +238,11 @@ En utilisant les relations montrées précédemment, on trouve la transformée d
     &= Ae^{i\omega_0t}.
 \end{align}
 
-Pour une sinusoïde, la transformée de Hilbert est un simple déphasage de $-\frac{\pi}2$ du signal original. Or la théorie de Fourier nous indique que n'importe quel signal générique peut être décomposé comme une somme de sinusoïdes. Ainsi la transformée de Hilbert agit de la même manière sur tous les signaux : c'est un déphasage de $-\frac{\pi}2$ de chaque composante fréquentielle qui compose le signal. Le signal $f$ et sa transformée de Hilbert $f_h$ sont dit en \og quadrature de phase \fg, et le signal analytique s'exprime comme une exponentielle complexe.
+Pour une sinusoïde, la transformée de Hilbert est un simple déphasage de $-\frac{\pi}2$ du signal original. Or la théorie de Fourier indique que n'importe quel signal générique peut être décomposé comme une somme de sinusoïdes. La transformée de Hilbert agit donc de la même manière sur tous les signaux : c'est un déphasage de $-\frac{\pi}2$ de chaque composante fréquentielle qui compose le signal. Le signal $f$ et sa transformée de Hilbert $f_h$ sont dits en \og quadrature de phase \fg. Le signal analytique s'exprime comme une exponentielle complexe.
 
 \bigskip
 
-En fait, puisque tout signal est maintenant représenté comme la somme d'un réel et d'un imaginaire pur, on peut toujours l'exprimer en coordonnées polaires comme une exponentielle complexe, d'amplitude et phase variant au cours du temps :
+Puisque tout signal est représenté comme la somme d'un réel et d'un imaginaire pur, il est possible d'utiliser une représentation en coordonnées polaires pour exprimer l'exponentielle complexe. L'amplitude et la phase du signal sont alors variables au cours du temps :
 
 \begin{equation}
     f_{\alpha} (t) = A(t)e^{i\phi(t)}.
@@ -259,7 +255,7 @@ avec
     \phi(t) &= \arctan\left(\frac{f_h(t)}{f(t)}\right).
 \end{align}
 
-Cette représentation introduit le concept d' \og amplitude locale \fg et de \og phase locale \fg (ici temporellement locales), qui sont deux outils d'analyse particulièrement intéressants pour l'étude approfondie du signal original. L'amplitude locale agit comme une mesure de l'enveloppe du signal, et la phase locale comme une mesure de la forme du signal. Par exemple, une phase de $0$ indique un extremum, et une phase de $\pm\pi$ indique un passage par zéro. La figure~\ref{fig:local-pha-amp} montre un signal avec son amplitude locale et sa phase locale. À partir uniquement de notre signal initial, on a ainsi créé un outil nous permettant d'obtenir de l'information bien plus intéressante sur l'apparence et les propriétés du signal.
+Cette représentation introduit le concept d' \og amplitude locale \fg et de \og phase locale \fg (ici temporellement locales). L'amplitude et la phase locales sont deux outils d'analyse particulièrement intéressants pour l'étude approfondie du signal original. L'amplitude locale agit comme une mesure de l'enveloppe du signal. La phase locale agit comme une mesure de la forme du signal. Par exemple, une phase de $0$ indique un extremum, et une phase de $\pm\pi$ indique un passage par zéro. La figure~\ref{fig:local-pha-amp} montre un signal avec son amplitude locale et sa phase locale. À partir uniquement du signal initial, de l'information sur des caractéristiques et sur l'apparence du signal est obtenue.
 
 \begin{figure}[h]
 
@@ -327,7 +323,7 @@ Cette représentation introduit le concept d' \og amplitude locale \fg et de \og
     \end{axis}
     \end{tikzpicture}
 
-    \caption[Informations locales pour un signal simple]{Extraction d'informations locales pour un cosinus modulé par un sinus. L'amplitude locale (gauche) donne l'enveloppe de la sinusoïde, et la phase locale (droite) nous donne de l'information quant à la position dans le cycle d'oscillation.}
+    \caption[Informations locales pour un signal simple]{Extraction d'informations locales pour un cosinus modulé par un sinus. L'amplitude locale (gauche) donne l'enveloppe de la sinusoïde, et la phase locale (droite) donne de l'information quant à la position dans le cycle d'oscillation.}
     \label{fig:local-pha-amp}
 
 \end{figure}
@@ -335,9 +331,7 @@ Cette représentation introduit le concept d' \og amplitude locale \fg et de \og
 \subsubsection{Notion d'échelle}
 \label{subsubsec:echelle}
 
-L'exemple donné avec la figure~\ref{fig:local-pha-amp} fonctionne bien car le signal est simple, l'interprétation de l'amplitude et la phase locale est claire et visuelle. Pour un signal plus complexe, plus représentatif des signaux que l'on doit souvent étudier, ce n'est pas si facile. La figure~\ref{fig:complex-local-pha-amp} affiche les informations locales du signal de la figure~\ref{fig:analytic-representation}, une somme de trois sinusoïdes de fréquences différentes ; il est moins évident de comprendre ce que les informations locales représentent dans ce cas.
-% TODO "pas si facile"
-% TODO "moins évident de comprendre"
+L'exemple donné avec la figure~\ref{fig:local-pha-amp} fonctionne bien car le signal est simple. L'interprétation de l'amplitude et la phase locale est claire et visuelle. Pour un signal plus complexe, plus représentatif des signaux étudiés, l'interprétation des informations locales est moins directe. La figure~\ref{fig:complex-local-pha-amp} affiche les informations locales du signal de la figure~\ref{fig:analytic-representation}, une somme de trois sinusoïdes de fréquences différentes. Les informations locales semblent décorrélées du signal complexe, ou le lien n'est pas directement apparent.
 
 \bigskip
 
@@ -404,24 +398,21 @@ L'exemple donné avec la figure~\ref{fig:local-pha-amp} fonctionne bien car le s
     \end{axis}
     \end{tikzpicture}    
 
-    \caption[Informations locales pour un signal complexe]{Informations locales pour un signal complexe, somme de plusieurs sinusoïdes. Pour un tel signal, l'interprétation des informations locales est moins évidente.}
+    \caption[Informations locales pour un signal complexe]{Informations locales pour un signal complexe, somme de plusieurs sinusoïdes. Pour un tel signal, l'interprétation des informations locales est moins directe.}
     \label{fig:complex-local-pha-amp}
 \end{figure}
 
-% TODO "plusieurs niveaux de streucture" -> ref intro
-Le problème à l'analyse de ce signal est le fait qu'il existe plusieurs niveaux de structure, qui interfèrent et rendent l'interprétation des informations locales impossible à l'échelle macroscopique. Pour extraire de l'information utile, il faut sélectionner et faire l'analyse d'un seul niveau de structure, donc d'échelle. Pour cela, on filtre les composantes des niveaux qui ne nous intéressent pas. Pour se faire, il est possible d'utiliser des filtres passe-bande, comme le fait Bridge avec les filtres log-Gabor, un choix commun pour ce genre de pratique. Un filtre log-Gabor est un filtre défini dans le domaine fréquentiel, qui permet de sélectionner une bande de fréquence centrée autour d'une fréquence centrale $\omega_0$. Il a une réponse en fréquence de forme gaussienne quand observé en échelle logarithmique :
-% TODO ""filtre les composantes des niveaux qui ne nous intéressent pas" -> faire lien avec intro 0.4
-% todo "extraire de l'info utile" utile a quoi ?
+Le problème à l'analyse de ce signal est le fait qu'il existe plusieurs niveaux de structure, comme expliqué dans la section~\ref{subsec:structure}. Les différents niveaux de structure interfèrent et rendent l'interprétation des informations locales impossible à l'échelle macroscopique. Pour extraire de l'information interprétable, il faut sélectionner et faire l'analyse d'un seul niveau de structure, donc d'échelle. Un filtrage est fait pour sélectionner un niveau de structure en particulier et enlever les composantes des niveaux non désirés. Pour filtrer les niveaux de structure, il est possible d'utiliser des filtres passe-bande. Les filtres log-Gabor, utilisés par Bridge, sont un choix commun pour ce genre de pratique. Un filtre log-Gabor permet de sélectionner une bande de fréquence centrée autour d'une fréquence centrale $\omega_0$. Les filtres log-Gabor sont définis dans le domaine fréquentiel et ont une réponse en fréquence de forme gaussienne quand observés en échelle logarithmique :
 
 \begin{equation}
     G(\omega) = \exp\left(-\frac{\log^2(\frac{|\omega|}{\omega_0})}{2\log(\sigma_0)^2}\right).
 \end{equation}
 
-Ces filtres sont caractérisés par deux paramètres : la fréquence centrale $\omega_0$, qui contrôle quelle échelle de structure est sélectionnée, et la largeur de bande $\sigma_0$, un paramètre de forme qui contrôle la largeur de la bande de fréquence sélectionnée. Des exemples de filtre log-Gabor sont montrés à la figure~\ref{fig:log-gabor-filters}.
+Ces filtres sont caractérisés par deux paramètres : la fréquence centrale $\omega_0$ et et la largeur de bande $\sigma_0$. La fréquence centrale contrôle quelle échelle de structure est sélectionnée. La largeur de bande est un paramètre de forme qui contrôle la largeur de la bande de fréquence sélectionnée. Des exemples de filtre log-Gabor sont montrés à la figure~\ref{fig:log-gabor-filters}.
 
 \bigskip
 
-En appliquant un filtre log-Gabor à notre signal avant de lui appliquer la transformée de Hilbert et de déterminer sa représentation analytique, on obtient une représentation locale du signal, centrée autour d'une fréquence $\omega_0$ et d'une échelle $\sigma_0$ que l'on peut faire varier arbitrairement.
+Le filtre log-Gabor est appliqué au signal avant de lui appliquer la transformée de Hilbert et de déterminer sa forme analytique. Le signal filtré offre une représentation locale en fréquence, centrée autour d'une fréquence $\omega_0$ et d'une échelle $\sigma_0$ variable arbitrairement.
 
 \begin{equation}
     F_{\alpha}(\omega) = (1+\sgn(\omega))G(\omega)F(\omega)
@@ -472,10 +463,10 @@ En appliquant un filtre log-Gabor à notre signal avant de lui appliquer la tran
     \label{fig:log-gabor-filters}
 \end{figure}
 
-En étudiant la réponse du signal sur une large gamme de fréquences et d'échelles, on obtient une représentation locale du signal à différentes échelles, et ainsi extraire de l'information sur les différentes structures du signal. On peut rassembler toutes ces informations dans un graphique appelé scalogramme, qui représente le comportement de la phase locale en fonction du temps et de l'échelle, comme montré à la figure~\ref{fig:scalogram}. On y voit facilement les différents niveaux de structure du signal, et l'interprétation des informations locales devient plus utile car on peut choisir à quel niveau on regarde.
+Étudier la réponse du signal sur une large gamme de fréquences et d'échelles offre une représentation locale du signal à différentes échelles. La représentation du signal à différentes échelles permet d'extraire de l'information sur les différentes structures du signal. Les informations locales sont présentées dans un graphique appelé \og scalogramme \fg. Le scalogramme montre la réponse d'un signal en fonction du temps et de l'échelle, comme montré à la figure~\ref{fig:scalogram}. Les différents niveaux de structure du signal y sont visibles. Choisir le niveau d'échelle étudié donne un meilleur sens à l'interprétation des informations locales.
 
 \bigskip
-
+% TODO HEREEEEEEEEEEEee
 Si l'on compare le modèle du signal analytique à celui de la transformée de Fourier, on remarque que les informations que l'on obtient avec les deux diffèrent et se complètent. La transformée de Fourier nous donne de l'information globale sur tout le signal, mais localisée en termes de fréquence. La représentation analytique, elle, nous donne une information spatialement locale sur le signal, mais sur une bande de fréquences, sélectionnées par un filtre passe-bande. Le modèle d'information locale est donc un compromis entre la localisation spatiale et fréquentielle, et permet d'obtenir une information différente sur le signal.
 % todo "information différente sur le signal" diff en quoi ? en quoi c'est utile ?
 
