@@ -46,7 +46,7 @@ Les méthodes de rendu peuvent être séparés en deux grandes catégories : le 
 \begin{figure}[h]
     \centering
     \includegraphics[width=\textwidth]{contenu/resources/images/zero_day_comparison}
-    \caption[{\it Zero-Day} (2015), BEEPLE]{{\it Zero-Day} (2015), BEEPLE. À gauche rendu original hors-ligne, à droite rendu temps-réel par SY tracé de chemins, NVIDIA~\cite{ZeroDay}}
+    \caption[{\it Zero-Day} (2015), BEEPLE]{{\it Zero-Day} (2015), BEEPLE. À gauche rendu original hors-ligne, à droite rendu temps-réel par SY tracé de chemins, NVIDIA~\cite{winkelman_zero-day_2019}}
     \label{fig:zero-day}
 \end{figure}
 
@@ -74,11 +74,11 @@ Le maillage utilisé pour représenter une géométrie est une approximation. Po
 \begin{figure}
     \centering
     \includegraphics[width=.65\textwidth]{contenu/resources/images/mutli-material-object}
-    \caption[Rendu d'un objet comportant plusieurs matériaux]{Plusieurs matériaux différents sont utilisés pour le rendu de cet objet~\cite{fig:multi-material}}
+    \caption[Rendu d'un objet comportant plusieurs matériaux]{Plusieurs matériaux différents sont utilisés pour le rendu de cet objet~\cite{lepkarepka_steampunk_2021}}
     \label{fig:multi-material}
 \end{figure}
 
-La méthode de travail usuelle en industrie consiste à regrouper ces différentes textures, ainsi que le modèle d'éclairage, dans une ressource dite \og matériau \fg. Les objets d'une scène sont composés de plusieurs matériaux, qui présentent chacun des propriétés physiques différentes. Dans la figure~\ref{multi-material} par exemple, la lunette a un harnais en cuir, un objectif en métal et des lentilles en verre. Pour créer leurs scènes, les artistes façonnent leurs objets en commençant par la géométrie, avant de créer (ou réutiliser) différents matériaux pour habiller leurs objets.
+La méthode de travail usuelle en industrie consiste à regrouper ces différentes textures, ainsi que le modèle d'éclairage, dans une ressource dite \og matériau \fg. Les objets d'une scène sont composés de plusieurs matériaux, qui présentent chacun des propriétés physiques différentes. Dans la figure~\ref{fig:multi-material} par exemple, la lunette a un harnais en cuir, un objectif en métal et des lentilles en verre. Pour créer leurs scènes, les artistes façonnent leurs objets en commençant par la géométrie, avant de créer (ou réutiliser) différents matériaux pour habiller leurs objets.
 
 \bigskip
 
@@ -98,7 +98,7 @@ Les textures procédurales ont cependant des désavantages. Certaines apparences
     \centering
     \includegraphics[width=.5\textwidth]{contenu/resources/images/perlin-noise}
     \caption[Bruit de Perlin]{La notion de texture procédurale est introduite par Ken Perlin en 1985 avec son bruit de Perlin~\cite{perlin_image_1985}.}
-    \caption{fig:perlin-noise}
+    \label{fig:perlin-noise}
 \end{figure}
 
 Résoudre les problématiques des textures procédurales est un enjeu de l'informatique graphique. Obtenir de nouvelles apparences, avoir un meilleur contrôle par les artistes et une évaluation plus rapide sont des sujets constamment explorés dans le domaine~\cite{heitz_high-performance_2018, tricard_procedural_2019, lutz_cyclostationary-gaussian_2021, baldi_differentiable_2023}. Le sujet présenté dans ce manuscrit s'inscrit dans la problématique de l'agrandissement du champ des apparences représentables par texture procédurale.
@@ -119,11 +119,11 @@ Le processus utilisé traditionnellement pour le rendu en temps-réel est appel�
 \begin{figure}
     \centering
     \includegraphics[width=.55\textwidth]{contenu/resources/images/uv_suzanne}
-    \caption[Coordonnées UV du modèle Suzanne]{Visualisation des coordonnées UV de Suzanne~\cite{suzanne-uv}, modèle 3D de référence du logiciel Blender}
+    \caption[Coordonnées UV du modèle Suzanne]{Visualisation des coordonnées UV de Suzanne~\cite{overbruggen_suzanne_2002}, modèle 3D de référence du logiciel Blender}
     \label{fig:uv-suzanne}
 \end{figure}
 
-Pour appliquer une texture à une géométrie, un système de coordonnées, dites \og coordonnées UV \fg, est utilisé. Les coordonnées UV sont des vecteurs 2D, entre $(0, 0)$ et $(1, 1)$. Les sommets des maillages des objets de la scène ont chacun des coordonnées UV, qui leurs sont associées à la création de l'objet. Les coordonnées UV sont ensuite interpolées entre les sommets lors de la rastérisation. Les fragments ont ainsi chacun des coordonnées UV. Un exemple de rendu exhibant les coordonnées UV d'un modèle 3D est montré à la figure~\ref{fig:suzanne}. Les coordonnées UV indiquent quelles parties de la texture correspondent à chaque fragment de la géométrie. L'action d'évaluer une texture en utilisant les coordonnées UV des fragments est appelée \og échantillonnage \fg de la texture. Ce processus d'échantillonnage s'effectue en général au moment du rendu.
+Pour appliquer une texture à une géométrie, un système de coordonnées, dites \og coordonnées UV \fg, est utilisé. Les coordonnées UV sont des vecteurs 2D, entre $(0, 0)$ et $(1, 1)$. Les sommets des maillages des objets de la scène ont chacun des coordonnées UV, qui leurs sont associées à la création de l'objet. Les coordonnées UV sont ensuite interpolées entre les sommets lors de la rastérisation. Les fragments ont ainsi chacun des coordonnées UV. Un exemple de rendu exhibant les coordonnées UV d'un modèle 3D est montré à la figure~\ref{fig:uv-suzanne}. Les coordonnées UV indiquent quelles parties de la texture correspondent à chaque fragment de la géométrie. L'action d'évaluer une texture en utilisant les coordonnées UV des fragments est appelée \og échantillonnage \fg de la texture. Ce processus d'échantillonnage s'effectue en général au moment du rendu.
 
 \subsection*{Filtrage}
 \label{subsec:filtering}
@@ -175,17 +175,16 @@ S'assurer de filtrer correctement lors de l'échantillonnage est un enjeu majeur
 
 \section{Synthèse de texture}
 
-De nombreuses surfaces texturées lors d'un rendu, comme des sols, sont de grande taille. Comme discuté précédemment~\ref{subsec:filtering}, produire des textures de résolution suffisante pour texturer de grandes surfaces sans artefacts demande une grande occupation mémoire et un long temps de création. Étirer les textures en utilisant les coordonnées UV est une solution, qui atteint cependant ses limites assez rapidement. Utiliser une texture de plus basse résolution cause des artefacts visuels. Il est possible de résoudre le problème en créant directement une texture de taille adaptée à la surface à couvrir, procédé appelé \og synthèse de texture \fg. Par extension, une texture générée par un algorithme de synthèse est aussi appelée une synthèse. Les textures représentent des apparences visuelles de matériaux diverses. Il est possible de classifier des textures de plusieurs manières différentes. Une façon commune de classifier des textures est d'opposer les textures stochastiques, dont les couleurs de pixels semblent aléatoires, et les textures régulières, qui présentent une répétition régulière de motifs~\cite{lieu_near-regular_2004}.
+De nombreuses surfaces texturées lors d'un rendu, comme des sols, sont de grande taille. Comme discuté précédemment~\ref{subsec:filtering}, produire des textures de résolution suffisante pour texturer de grandes surfaces sans artefacts demande une grande occupation mémoire et un long temps de création. Étirer les textures en utilisant les coordonnées UV est une solution, qui atteint cependant ses limites assez rapidement. Utiliser une texture de plus basse résolution cause des artefacts visuels. Il est possible de résoudre le problème en créant directement une texture de taille adaptée à la surface à couvrir, procédé appelé \og synthèse de texture \fg. Par extension, une texture générée par un algorithme de synthèse est aussi appelée une synthèse. Les textures représentent des apparences visuelles de matériaux diverses. Il est possible de classifier des textures de plusieurs manières différentes. Une façon commune de classifier des textures est d'opposer les textures stochastiques, dont les couleurs de pixels semblent aléatoires, et les textures régulières, qui présentent une répétition régulière de motifs~\cite{liu_near-regular_2004}.
 
 \bigskip
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth]{contenu/resources/images/structure_scale}
+    \includegraphics[width=\textwidth]{contenu/resources/images/structure_scale_loucas}
     \caption[Classification des textures selon leur niveau de structure]{Les textures peuvent être classées selon leur niveau de structure : stochastiques ou gaussiennes (gauche), semi-régulières (milieu), ou structurées (droite)}
     \label{fig:échelle-structure}
 \end{figure}
-% TODO remplacer image de droite par image pote Loucas
 
 Le travail présenté dans ce manuscript s'intéresse cependant à la synthèse de texture présentant de la structure. Le concept de structure, bien qu'intuitif, est difficile à définir de manière formelle. Dans le cadre de ce manuscript, la \og structure \fg d'une texture désigne comment les différentes parties de la structure sont agencées les unes par rapport aux autres. Dans une texture structurée, les éléments de la texture forment certains schémas ou présentent une certaine forme de régularité. La classification de textures utilisée dans ce travail est faite selon le niveau de structure des textures car c'est le thème central de l'étude. La figure~\ref{fig:échelle-structure} illustre la classification proposée.
 
@@ -252,47 +251,50 @@ Cependant, la synthèse de texture comportant de la structure en temps-réel est
     \label{fig:synthesis-failure}
 \end{figure}
 
-% \section{Génération procédurale} % Non-nécessaire ? De quoi on parle ici sinon ?
-
-% \section{Bruit procédural}
-
 \section{Analyse multi-résolutionnelle locale}
 
 Un enjeu pour synthétiser des textures structurées est de mieux comprendre ce qui compose la structure d'une texture. Pour comprendre la structure d'une texture, l'idée explorée dans cette recherche est d'appliquer des outils de l'analyse d'image à des processus de synthèse. Les outils choisis permettent l'extraction de caractéristiques d'une texture par l'analyse de relations statistiques inter-texels.
 
-
-Une des raisons pour lesquelles la synthèse de texture contenant de la structure est difficile est qu'il faut préserver certaines relations entre les texels de l'image pour garder la structure. Savoir quelles relations préserver, pour garder la structure de l'image, et quelles relations supprimer, pour ajouter de la variation dans la synthèse, est très délicat, surtout dans le contexte du temps-réel.
-% TODO question à soulever plutôt qu'affirmation à faire
-% TODO Suggestion : parler de "relations statistiques" plutôt que de "relations", et dire qu'il faut les préserver au mieux. Tu veux préserver toutes les relations statistiques, mais certaines sont trop complexes à préserver en temps réel, en plus d'être difficiles à "capturer". C'est pour ça que tu essayes de développer les outils suivants.
-% TODO très délicat = trop vague
-% TODO mettre plus bas, après le paragraphe de notion de structure p-e
-
 \subsection*{Notion de structure}
 
-La structure d'une image désigne comment les différentes parties de l'image sont agencées les unes par rapport aux autres, comment les éléments de l'image forment certains schémas ou présentent une certaine forme de régularité. Ces relations sont présentes à différents niveaux d'échelle, on a donc différents niveaux de structure. Savoir quels niveaux préserver et comment est important pour reproduire les caractéristiques désirées de la texture.
+La structure d'une image désigne comment les différentes parties de l'image sont agencées les unes par rapport aux autres et comment les éléments de la texture forment certains schémas ou présentent une certaine forme de régularité. L'agencement des éléments de la texture peut se faire à différents niveaux d'échelle. Il y a donc différents niveaux de structure dans une image, principe illustré à la figure~\ref{fig:structure-level}. Les caractéristiques d'une texture telles que l'agencement sont déterminées par des relations statistiques entre les texels de la texture. Préserver toutes les relations statistiques entre les texels est désirable pour la conservation de l'apparence, mais certaines sont trop complexes à préserver en temps-réel. Comprendre quelles relations statistiques préserver et à quel niveau de structure œuvrer sont des enjeux majeurs pour la synthèse de texture structurée et sont l'objet de ce travail.
 
 \begin{figure}[h!]
     \centering
     \includegraphics[width=.85\linewidth]{contenu/resources/images/structure_level}
     \caption{Différents niveaux de structure au sein d'une image}
-    \label{fig:structure_level}
+    \label{fig:structure-level}
 \end{figure}
 
 \subsection*{Congruence de phases}
 
-Lorsque l'on veut préserver la structure d'une image, les éléments saillants tels que des coins et des lignes, ou plus généralement des bords, sont compliqués à reproduire. On appelle \og bord \fg une région frontière entre un objet et un autre élément de l'image, comme l'arrière plan ou un autre objet. Visuellement, un bord se distingue par un changement brusque de luminosité. Ces changements sont cependant plus difficiles à détecter automatiquement, car le seuil minimum de contraste entre des pixels voisins n'est pas toujours le même, dépendamment de si le bord est franc ou flou. Une approche intéressante est d'utiliser des informations du domaine fréquentiel pour caractériser des bords.
-% TODO /!\ luminosité terme nouveau à mieux definir
-% p-e image pour illustrer
-% TODO "compliqué à reproduire" pourquoi ?
-% TODO source pour utilisation domaine fréquentiel
+Dans une image, une discontinuité de luminosité est appelée un \og bord \fg~\cite{torre_edge_1986}. La luminosité ou intensité lumineuse mesure la capacité d'une surface à éclairer dans une certaine direction. En informatique graphique, la luminosité désigne une quantité de lumière présente dans une image. Il a été observé qu'une discontinuité dans la luminosité correspond fréquemment à une discontinuité de la profondeur, de l'orientation, de la reflectance ou de la luminance~\cite{lindeberg_edge_1998}. Les bords d'une image sont donc en lien avec les caractéristiques physiques de la scène représentée. Les bords peuvent représenter une région frontière entre un objet et un autre élément de l'image, comme l'arrière-plan ou un autre objet.
 
 \bigskip
 
-Lorsqu'une image est décomposée dans le domaine de Fourier, on retrouve de nombreuses informations sur la structure dans la phase~\cite{oppenheim_importance_1981}. En explorant le rôle de la phase, Kovesi a mis au point un outil de détection de d'éléments caractéristiques~\cite{kovesi_image_1995} basé sur le modèle physiologiquement réaliste d'énergie locale de Morrone et al.~\cite{morrone_feature_1987, morrone_feature_1988}. Ce modèle postule que les éléments caractéristiques sont présents dans une image là où les composants de Fourier sont maximalement en phase. La congruence de phases qui dérive du modèle d'énergie locale est une grandeur qui quantifie cet alignement. Elle donne lieu à un outil de détection plus robuste que ceux développés auparavant, qui sont souvent sensibles au niveau d'illumination et de grossissement, et nécessitent donc une connaissance a priori des images étudiées. C'est ce modèle de congruence de phases que nous avons repris et adapté à la synthèse de texture.
-% TODO paragraphe trop rapide
-% étendre et reposer la problématique
-% notamment vis a vis de l'aléatoire, préserver congruence avec aléatoire est le noeud du pbl
-% todo introduire PC avant de juste en parler
+\begin{figure}[h]
+    \centering
+    \begin{subfigure}[b]{.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{contenu/resources/images/discrete_discontinuity}
+        \caption{Bord franc}
+    \end{subfigure}
+    \\
+    \vspace{1em}
+    \begin{subfigure}[b]{.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{contenu/resources/images/discrete_smooth}
+        \caption{Bord doux}
+    \end{subfigure}
+    \caption[Difficulté à définir un bord]{Ces signaux 1D discrets ont des discontinuités en luminosité et représentent un bord. Le premier signal (en haut) a une discontinuité franche, le second (en bas) a une discontinuité floues.}
+    \label{fig:edge-difficulty}
+\end{figure}
+
+Les bords font partie des éléments qui composent la structure d'une image. Préserver la structure implique donc de préserver les bords. La détection de bords est une tâche difficile car le niveau de discontinuité entre deux texels représentant un bord n'est pas fixé, comme illustré à la figure~\ref{fig:edge-difficulty}. Afin de caractériser les bords et comprendre comment les préserver, il est possible d'utiliser des informations du domaine fréquentiel.
+
+\bigskip
+
+Une image peut être exprimée dans le domaine fréquentiel, ou de Fourier, à l'aide de la transformée de Fourier. Contrairement à la représentation par des texels, dit domaine spatial, l'expression dans le domaine fréquentiel permet de séparer les composantes de l'image selon leur fréquence. La transformée de Fourier est une transformation linéaire qui permet de passer d'une représentation à l'autre. La représentation d'une image dans le domaine de Fourier est dite représentation fréquentielle. Une décomposition dans le domaine fréquentiel permet d'extraire de l'information sur des caractéristiques de l'image qui ne sont pas visibles dans le domaine spatial~\cite{strumillo_fourier}. En particulier Oppenheim a montré que des informations sur la structure d'une image se trouvent dans la phase de sa représentation fréquentielle~\cite{oppenheim_importance_1981}. Morrone et al. ont mis au point un modèle physiologiquement réaliste d'énergie locale~\cite{morrone_feature_1987, morrone_feature_1988} qui permet d'extraire des informations sur les éléments saillants d'une image en utilisant la phase. Leur modèle postule que les éléments caractéristiques sont présents dans une image là où les composants de Fourier sont maximalement en phase. Morrone et al. introduisent la \og congruence de phases \fg, grandeur qui quantifie l'alignement de phase des composants de Fourier.
 
 \bigskip
 
@@ -300,18 +302,14 @@ Lorsqu'une image est décomposée dans le domaine de Fourier, on retrouve de nom
     \centering
     \includegraphics[width=.35\linewidth]{contenu/resources/images/pc_1d_kovesi}
     \caption[Congruence de phases pour un signal 1D]{Congruence de phases pour un signal 1D, Kovesi (1995)~\cite{kovesi_image_1995}}
-    \label{fig:pc_1d_kovesi}
+    \label{fig:pc-1D-kovesi}
 \end{figure}
 
-Pour détecter un alignement de phase, il est nécessaire d'avoir un modèle donnant des informations locales sur notre image. Kovesi utilise pour cela une banque de filtres à orientation variable. Nous utilisons à la place le modèle mathématique de la transformée de Riesz, qui permet de décomposer une image dans un espace différent, similairement à la transformée de Fourier, mais avec des informations locales, au niveau du texel (on rappelle que la transformation de Fourier fournit des informations fréquentiellement locales, mais spatialement globales). Utiliser cette transformée nous permet ainsi d'étudier la présence et préservation de relations dans un autre espace que le domaine spatial, donc de mieux comprendre et caractériser nos images.
-% TODO dernière ligne : comment pourquoi dans quel but pour atteindre quoi ?
+Le travail présenté dans ce manuscript s'intéresse à la congruence de phases comme un moyen d'aider la création de nouvelle structure lors de la synthèse d'une texture. L'objectif est de créer de la structure en introduisant de l'aléatoire, mais de contrôler le processus à l'aide de la congruence de phases. L'étude s'appuie sur les travaux de Kovesi~\cite{kovesi_image_1995}, qui a étendu le modèle de Morrone et al.~\cite{morrone_feature_1987, morrone_feature_1988} pour extraire de l'information locale des images~\ref{fig:pc-1D-kovesi}. Une des limites de la transformée de Fourier est en effet que l'information obtenue est spatialement globale. La représentation fréquentielle d'une image ne donne pas directement d'informations sur les relations locales entre les texels. C'est le modèle de Kovesi qui est repris et modifié dans ce travail pour extraire de l'information locale des images. Le modèle de Kovesi est redéfini à l'aide d'un outil mathématique appelé \og trasnformée de Riesz \fg. La transformée de Riesz permet une représentation alternative d'un signal, avec des informations locales. L'image est ré-exprimée dans un espace différent qui facilite l'étude des relations locales entre les texels.
 
 \subsection*{Analyse multi-échelle}
 
-% TODO première phrase : pourquoi ? répond a quel besoin ?
-Un objectif de la méthode présentée ici est de pouvoir agir avec précision sur certains niveaux d'échelle de structure ciblés. Une méthode d'analyse qui permet de travailler avec plusieurs niveaux de résolution de la même image est dite \og multi-résolutionnelle \fg~\cite{mallat_theory_1989}, ou multi-échelle. Des exemples d'application communs de méthodes d'analyse multi-résolutionnelle sont la détection robuste de caractéristiques de différentes tailles~\cite{park_multiresolution_2010} et la compression d'images~\cite{averbuch_image_1996}.
-%TODO étendre et mieux expliquer. intégrer la phrase d'après qui a été coupée du texte
-On décompose notre image en pyramide d'images, ce qui nous permet d'étudier les différences de détails entre les différents niveaux d'échelle.
+Comme expliqué précédemment, la structure d'une image est composée de plusieurs niveaux d'échelle. Le travail décrit dans ce manuscrit a pour objectif de synthétiser de la nouvelle structure en préservant certains niveaux de structure et en ajoutant de l'aléatoire à d'autres. Un but de la méthode présentée ici est de pouvoir agir avec précision sur certains niveaux d'échelle de structure ciblés. Une méthode d'analyse qui permet de travailler avec plusieurs niveaux de résolution d'une même image est dite \og multi-résolutionnelle \fg~\cite{mallat_theory_1989}, ou multi-échelle. Des exemples d'application communs de méthodes d'analyse multi-résolutionnelle sont la détection robuste de caractéristiques de différentes tailles~\cite{park_multiresolution_2010} et la compression d'images~\cite{averbuch_image_1996}. Dans cette étude, l'analyse multi-résolutionnelle est faite à l'aide d'une pyramide d'images. Une \og pyramide d'images \fg est une méthode de représentation d'image qui permet d'étudier les différences de détails entre les différents niveaux d'échelle.
 
 \section{Plan du manuscript} % / problématique
 
