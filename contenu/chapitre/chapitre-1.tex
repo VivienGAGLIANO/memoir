@@ -466,30 +466,29 @@ Le filtre log-Gabor est appliqué au signal avant de lui appliquer la transform�
 Étudier la réponse du signal sur une large gamme de fréquences et d'échelles offre une représentation locale du signal à différentes échelles. La représentation du signal à différentes échelles permet d'extraire de l'information sur les différentes structures du signal. Les informations locales sont présentées dans un graphique appelé \og scalogramme \fg. Le scalogramme montre la réponse d'un signal en fonction du temps et de l'échelle, comme montré à la figure~\ref{fig:scalogram}. Les différents niveaux de structure du signal y sont visibles. Choisir le niveau d'échelle étudié donne un meilleur sens à l'interprétation des informations locales.
 
 \bigskip
-% TODO HEREEEEEEEEEEEee
-Si l'on compare le modèle du signal analytique à celui de la transformée de Fourier, on remarque que les informations que l'on obtient avec les deux diffèrent et se complètent. La transformée de Fourier nous donne de l'information globale sur tout le signal, mais localisée en termes de fréquence. La représentation analytique, elle, nous donne une information spatialement locale sur le signal, mais sur une bande de fréquences, sélectionnées par un filtre passe-bande. Le modèle d'information locale est donc un compromis entre la localisation spatiale et fréquentielle, et permet d'obtenir une information différente sur le signal.
-% todo "information différente sur le signal" diff en quoi ? en quoi c'est utile ?
+
+Les informations obtenues avec le signal analytique sont différentes de celles obtenues avec la transformée de Fourier. Les informations des deux modèles diffèrent et se complètent. La transformée de Fourier donne de l'information globale sur tout le signal, mais localisée en termes de fréquence. La représentation analytique, elle, donne une information spatialement locale sur le signal, mais sur une bande de fréquences sélectionnée par un filtre passe-bande. Le modèle d'information locale est donc un compromis entre la localisation spatiale et fréquentielle.
 
 
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{contenu/resources/images/scalogram}
-    \caption[Scalogramme de la phase locale]{Scalogramme de la phase locale pour un signal complexe. La phase locale est représentée en échelle de gris, et varie en fonction du temps (en abscisse) et de l'échelle en nombre de pixels (en ordonnée). Diagramme par Bridge~\cite{bridge_introduction_2018}.}
+    \caption[Scalogramme de la phase locale]{Scalogramme de la phase locale pour un signal complexe. La phase locale est représentée en échelle de gris et varie en fonction du temps (en abscisse) et de l'échelle en nombre de pixels (en ordonnée). Diagramme par Bridge~\cite{bridge_introduction_2018}.}
     \label{fig:scalogram}
 \end{figure}
 
 
 \subsection{Deux dimensions, signal monogène}
 
-Le modèle du signal analytique est utile à l'extraction d'informations locales pour des signaux 1D, et il serait intéressant d'avoir accès à ces informations pour des images, donc des signaux 2D. En effet l'importance de la phase dans l'analyse d'image a déjà été soulignée depuis longtemps~\cite{oppenheim_importance_1981}. Cependant, l'application n'est pas directe dans le cas de deux (ou plus) dimensions, car il y a une notion de direction à considérer. C'est ce que le modèle du \og signal monogène \fg, proposé par Felsberg et Sommer~\cite{felsberg_monogenic_2001}, permet de faire, et que nous allons développer dans cette partie.
+Le modèle du signal analytique permet l'extraction d'informations locales pour des signaux 1D. Il serait intéressant d'accéder à ces informations pour des images, des signaux 2D. En effet l'importance de la phase dans l'analyse d'image est connue depuis longtemps~\cite{oppenheim_importance_1981}. Cependant, l'application n'est pas directe dans le cas de deux (ou plus) dimensions, car il y a une notion de direction à considérer. Le modèle du \og signal monogène \fg, proposé par Felsberg et Sommer~\cite{felsberg_monogenic_2001}, permet de prendre en compte la direction. La dérivation de ce modèle est expliquée dans cette partie.
 
 \subsubsection{Construction du signal monogène}
 
-Pour créer la représentation analytique d'un signal 1D, on trouve un imaginaire pur, en quadrature de phase avec le signal original, en utilisant la transformée de Hilbert. Pour un signal 2D, on a besoin de former deux parties imaginaires, une pour chaque direction. On ne peut donc pas représenter le signal monogène comme un complexe. Pour un traitement exact, il faudrait utiliser les quaternions, que l'on peut voir comme une extension des nombres complexes à une plus haute dimension. Pour simplifier la compréhension et manipulation, on peut cependant se passer de la théorie des quaternions, et traiter le signal monogène comme s'il avait trois parties réelles distinctes dans un premier temps.
+Pour créer la représentation analytique d'un signal 1D, un imaginaire pur en quadrature de phase avec le signal original est ajouté au signal. La transformée de Hilbert est utilisée pour former le signal analytique. Pour un signal 2D, deux parties imaginaires sont nécessaires, une pour chaque direction. Il n'est donc pas possible de représenter le signal monogène comme un complexe. Pour un traitement exact, il faudrait utiliser les quaternions. Les quaternions peuvent être vus comme une extension des nombres complexes à une plus haute dimension. Pour simplifier la compréhension et manipulation, il est cependant possible se passer de la théorie des quaternions. Le signal monogène est traité comme s'il avait trois parties réelles distinctes dans un premier temps.
 
 \bigskip
 
-Pour générer les parties impaires du signal, on utilise une généralisation de la transformée de Hilbert à plusieurs dimensions, la \og transformée de Riesz \fg. Soit $f$ un signal d'un espace 2D de la variable $\mathbf{x} = (x, y)^T$, et $F$ sa représentation dans le domaine fréquentiel obtenue par transformée de Fourier 2D, avec $\mathbf{\omega}=(\omega_x, \omega_y)^T$ une fréquence 2D. Alors les parties impaires de $f$, $F_{o1}$ et $F_{o2}$, sont données par :
+Pour générer les parties impaires du signal, une généralisation de la transformée de Hilbert est utilisée. La \og transformée de Riesz \fg généralise la transformée de Hilbert à plusieurs dimensions et permet l'expression du signal analytique pour des signaux multi-dimensionnels. Soit $f$ un signal d'un espace 2D de la variable $\mathbf{x} = (x, y)^T$ et $F$ sa représentation dans le domaine fréquentiel obtenue par transformée de Fourier 2D, avec $\mathbf{\omega}=(\omega_x, \omega_y)^T$ une fréquence 2D. Alors les parties impaires de $f$, $F_{o1}$ et $F_{o2}$, sont données par :
 
 \begin{align}
     F_{o1}(\mathbf{\omega}) &= \widehat{\mathcal{R}_1(f)}(\mathbf{\omega}) =
@@ -509,17 +508,17 @@ Pour générer les parties impaires du signal, on utilise une généralisation d
     \label{eq:2.20}
 \end{align}
 
-Avec cette définition de $F_{o1}$ et $F_{o2}$, on a que les signaux correspondant dans le domaine spatial sont des signaux à valeurs réelles. En effet un signal 2D à valeurs réelles $f$ a un spectre dont la partie réelle est paire, et la partie imaginaire impaire, soit :
+Avec cette définition de $F_{o1}$ et $F_{o2}$, les signaux correspondant dans le domaine spatial sont des signaux à valeurs réelles. En effet un signal 2D à valeurs réelles $f$ a un spectre dont la partie réelle est paire et la partie imaginaire impaire, soit :
 
 \begin{equation}
     Re\{F(\omega)\} = Re\{F(-\omega)\}, \quad Im\{F(\omega)\} = -Im\{F(-\omega)\}.
 \end{equation}
 
-Dans la définition~\ref{eq:2.20}, comme $F$ est le spectre d'un signal réel, on a que $F_{o1}$ et $F_{o2}$ vérifient ces propriétés de symétrie, et donc que les signaux correspondants dans le domaine spatial sont bien réels.
+Dans la définition~\ref{eq:2.20}, comme $F$ est le spectre d'un signal réel. $F_{o1}$ et $F_{o2}$ vérifient donc ces propriétés de symétrie. Les signaux correspondants dans le domaine spatial sont bien réels.
 
 \bigskip
 
-Si l'on compare à comment la transformée de Hilbert est formée~\ref{eq:2.5}, on remarque que ces parties impaires sont des versions généralisées de la transformée de Hilbert, où l'on prend en compte la direction de la fréquence. Chaque composante fréquentielle dans ces parties impaires est déphasée de $-\pi/2$ et mise à l'échelle de telle sorte que l'amplitude soit partagée entre les deux parties.
+Les parties impaires sont des versions généralisées de la transformée de Hilbert~\ref{eq:2.5}. Les parties impaires prennent en compte la direction de la fréquence. Chaque composante fréquentielle des parties impaires est déphasée de $-\pi/2$ et mise à l'échelle de telle sorte que l'amplitude est partagée entre les deux parties.
 
 \bigskip
 
@@ -539,11 +538,11 @@ Si l'on compare à comment la transformée de Hilbert est formée~\ref{eq:2.5}, 
         \includegraphics[width=\textwidth]{contenu/resources/images/r1_disk}
         \caption{Seconde partie impaire}
     \end{subfigure}
-    \caption[Visualisation du signal monogène pour un disque]{Visualisation du signal monogène pour un disque : le signal original $f$ (gauche), et ses parties impaires $f_{o1}$ (milieu) et  $f_{o2}$ (droite), affichées avec une échelle de couleurs encodant la valeur, de -1 (noir) à +1 (blanc).}
+    \caption[Visualisation du signal monogène pour un disque]{Visualisation du signal monogène pour un disque : le signal original $f$ (gauche) et ses parties impaires $f_{o1}$ (milieu) et  $f_{o2}$ (droite), affichées avec une échelle de couleurs encodant la valeur, de -1 (noir) à +1 (blanc).}
     \label{fig:monogenic-signal-disk}
 \end{figure}
 
-On obtient ainsi une expression du signal monogène comme un vecteur à trois composantes, une paire et deux impaires :
+Le signal monogène est alors exprimé comme un vecteur à trois composantes, une paire et deux impaires :
 
 \begin{equation}
     f_m(\mathbf{x}) =
@@ -556,42 +555,41 @@ On obtient ainsi une expression du signal monogène comme un vecteur à trois co
     \right],
 \end{equation}
 
-où $f_e$ est le signal original, indexé par un $e$ pour souligner qu'il représente la partie paire du signal monogène. Une représentation d'un signal et de ses parties impaires est présentée à la figure~\ref{fig:monogenic-signal-disk}. On remarque notamment que les parties impaires détectent des changements verticaux et horizontaux dans le signal. Ceci est dû au fait que la transformée de Riesz présente une ressemblance et une connexion au gradient (l'équation~\ref{eq:2.20} rappelle fortement la définition du gradient, à un facteur près), que présente aussi d'ailleurs la transformée de Hilbert en une dimension. Ce rapport au gradient ne sera cependant pas exploré plus en profondeur dans la suite de ce travail.
-% todo source lecteur intéressé rapport gradient
+où $f_e$ est le signal original, indexé par un $e$ pour souligner qu'il représente la partie paire du signal monogène. Une représentation d'un signal et de ses parties impaires est montrée à la figure~\ref{fig:monogenic-signal-disk}. Dans la figure, les parties impaires détectent des changements verticaux et horizontaux dans le signal. La détection des changements est due au fait que la transformée de Riesz présente une ressemblance et une connexion au gradient (l'équation~\ref{eq:2.20} rappelle fortement la définition du gradient, à un facteur près). La transformée de Hilbert présente d'ailleurs aussi une connexion au gradient en 1D. La relation entre les transformées étudiées et le gradient n'est pas le sujet de cette étude et n'est pas explorée plus en profondeur. La personne intéressée se référera à Unser et al.\cite{unser_multiresolution_2009} pour plus de détails.
 
 \bigskip
 
-Il est aussi commun de se représenter le signal monogène comme un vecteur de deux composantes seulement, une paire et une impaire, où cette dernière est en fait une combinaison des deux parties impaires présentées ici. Cette représentation est plus compacte, mais ce au détriment de la perte d'information sur l'orientation. Elle sera parfois utilisée dans la suite de ce travail :
+Il est aussi commun de se représenter le signal monogène comme un vecteur de deux composantes seulement, une paire et une impaire. La composante impaire est alors une combinaison des deux parties impaires présentées ici. Cette représentation est plus compacte, au détriment de la perte d'information sur l'orientation. Elle sera parfois utilisée dans la suite de ce travail :
 
 \begin{equation}
     f_o(\mathbf{x}) = \sqrt{f_{o1}(\mathbf{x})^2 + f_{o2}(\mathbf{x})^2}.
 \end{equation}
 
-La transformée de Riesz peut s'exprimer directement dans le domaine spatial, mais comme la transformée de Hilbert, elle n'est représentable que par un objet mathématique compliqué, une intégrale singulière :
+La transformée de Riesz peut s'exprimer directement dans le domaine spatial. Comme la transformée de Hilbert, la représentation spatiale de la transformée de Riesz est un objet mathématique compliqué, une intégrale singulière :
 
 \begin{equation}
     R_if(x) = c_d \lim_{\epsilon \to 0}\int_{\mathbb{R}^d\setminus B_\epsilon(x)}\frac{(x_i-t_i)f(t)}{|x-t|^{d+1}}\,dt,
     \label{eq:riesz-transform-spatial}
 \end{equation}
 
-pour $i\in\llbracket 0, d\rrbracket$ avec $d$ la dimension, et où $c_d$ est une constante de normalisation dimensionnelle :
+pour $i\in\llbracket 0, d\rrbracket$ avec $d$ la dimension. $c_d$ est une constante de normalisation dimensionnelle :
 
 \begin{equation}
     c_d = \frac1{\pi\omega_{d-1}} = \frac{\Gamma((d+1)/2)}{\pi^{(d+1)/2}},
 \end{equation}
 
-avec $\omega_{d-1}$ le volume de la $(d-1)$-sphère unité. Au vue de la complexité de calcul et de manipulation de cette expression, nous utiliserons plutôt la formulation fréquentielle dans la suite du travail.
+avec $\omega_{d-1}$ le volume de la $(d-1)$-sphère unité. Au vue de la complexité de calcul et de manipulation de cette expression, la formulation fréquentielle est utilisée dans la suite du travail.
 
 \subsubsection{Amplitude, phase et orientation locales}
 
-Avec cet outil qu'est le signal monogène, on peut maintenant étendre les concepts d'informations locales à nos images, qui sont des signaux 2D. En 1D, on a deux parties pour le signal analytique, que l'on représente en coordonnées polaires avec l'amplitude et la phase. En 2D, on a trois coordonnées, que l'on représente donc en coordonnées sphériques où sont définis le rayon, l'angle d'élévation et l'azimut, comme montré en figure~\ref{fig:spherical-representation}.
+Avec le signal monogène, le concept d'informations locales est maintenant dérivable pour des images. En 1D, les deux parties du signal analytiques sont représentées en coordonnées polaires avec l'amplitude et la phase. En 2D il y a trois parties à représenter. Les coordonnées sphériques sont donc utilisées. En coordonnées sphériques trois composantes sont définies : le rayon, l'angle d'élévation et l'azimut, comme montré en figure~\ref{fig:spherical-representation}.
 
 \bigskip
 
 \begin{figure}
     \centering
     \includegraphics[width=.45\textwidth]{contenu/resources/images/spherical_representation}
-    \caption[Représentation du signal monogène en coordonnées sphériques]{Représentation du signal monogène $f_m$ (rouge) en coordonnées sphériques, où les axes sont les différentes parties du signal. Le rayon représente l'amplitude locale, l'angle d'élévation $\phi$ la phase locale, et l'azimut $\theta$ l'orientation locale.}
+    \caption[Représentation du signal monogène en coordonnées sphériques]{Représentation du signal monogène $f_m$ (rouge) en coordonnées sphériques, où les axes sont les différentes parties du signal. Le rayon représente l'amplitude locale, l'angle d'élévation $\phi$ la phase locale et l'azimut $\theta$ l'orientation locale.}
     \label{fig:spherical-representation}
 \end{figure}
 
@@ -602,13 +600,13 @@ L'amplitude locale $A$ représente, comme en 1D, le rayon de la représentation 
     &= \sqrt{f_e(\mathbf{x})^2 + f_o(\mathbf{x})^2}.
 \end{align}
 
-La phase locale $\phi$ mesure l'angle entre la partie paire $f_e$ et la partie impaire combinée $f_o$, et représente donc l'angle d'élévation de la représentation :
+La phase locale $\phi$ mesure l'angle entre la partie paire $f_e$ et la partie impaire combinée $f_o$. La phase représente ainsi l'angle d'élévation de la représentation :
 
 \begin{equation}
     \phi(\mathbf{x}) = \arctan\left(\frac{f_o(\mathbf{x})}{f_e(\mathbf{x})}\right).
 \end{equation}
 
-Enfin l'orientation locale $\theta$ complète la représentation en donnant l'angle d'azimut, soit la direction dominante dans l'image à cet endroit, exprimé comme l'orientation de la partie impaire $f_o$ :
+Enfin l'orientation locale $\theta$ complète la représentation en donnant l'angle d'azimut. L'orientation locale indique la direction dominante dans l'image à cet endroit, exprimée comme l'orientation de la partie impaire $f_o$ :
 
 \begin{equation}
     \theta(\mathbf{x}) = \arctan\left(\frac{f_{o2}(\mathbf{x})}{f_{o1}(\mathbf{x})}\right).
@@ -625,7 +623,7 @@ La figure~\ref{fig:monogenic-local-representation} montre un exemple de représe
     \label{fig:monogenic-local-representation}
 \end{figure}
 
-Le changement de représentation est réversible, et on peut retrouver le signal monogène à partir des informations locales :
+Le changement de représentation est réversible. Le signal monogène peut être reconstruit à partir de ses informations locales :
 
 \begin{equation}
     f_m(\mathbf{x}) = A(\mathbf{x})\left[
@@ -637,13 +635,11 @@ Le changement de représentation est réversible, et on peut retrouver le signal
     \right].
 \end{equation}
 
-L'image originale notamment s'exprime simplement par $f(\mathbf{x}) = A(\mathbf{x})\cos(\phi(\mathbf{x}))$. Nous utiliserons cette formule plus tard dans nos travaux pour reconstruire nos images après avoir modifié leurs informations locales.
+Notamment, l'image originale s'exprime simplement par $f(\mathbf{x}) = A(\mathbf{x})\cos(\phi(\mathbf{x}))$. Cette formule est utilisée plus tard dans ce travail pour reconstruire les images après modification de leurs informations locales.
 
 \bigskip
 
-% TODO intéressant ?
-Comme pour le signal analytique en 1D, il est intéressant d'utiliser des filtres pour sélectionner un niveau d'échelle à analyser, afin d'extraire de l'information sur certains niveaux de structure en particulier. Ici encore, on peut utiliser des filtres log-Gabor pour sélectionner les parties du signal qui nous intéressent.
-% TODO dernier phrease trop parlée
+Comme pour le signal analytique en 1D, des filtres peuvent être utilisés pour sélectionner un niveau d'échelle à analyser. Sélectionner un niveau d'échelle permet ici encore d'extraire de l'information sur certains niveaux de structure en particulier. Les filtres log-Gabor peuvent être étendus en 2D et utilisés pour sélectionner certaines parties du signal.
 
 \bigskip
 
@@ -665,11 +661,11 @@ Comme pour le signal analytique en 1D, il est intéressant d'utiliser des filtre
     \end{axis}
     \end{tikzpicture}
 
-    \caption[Filtre log-Gabor en 2D]{Représentation en domaine fréquentiel d'un filtre log-Gabor. Comme en 1D, le filtre sélectionne une bande de fréquence centrée autour d'une fréquence centrale $\omega_0$, et de largeur de bande $\sigma_0$.}
+    \caption[Filtre log-Gabor en 2D]{Représentation en domaine fréquentiel d'un filtre log-Gabor. Comme en 1D, le filtre sélectionne une bande de fréquence centrée autour d'une fréquence centrale $\omega_0$ et de largeur de bande $\sigma_0$.}
     \label{fig:2D-log-gabor}
 \end{figure}
 
-Avec ces filtres, on calcule les parties paires et impaires du signal en sélectionnant plusieurs échelles différentes, et on obtient ainsi une représentation locale qui met en valeur différents niveaux de structure présents dans l'image. La figure~\ref{fig:cameraman-monogenic} montre une image et son signal monogénique, calculé sur plusieurs niveaux d'échelle.
+Les parties paires et impaires du signal sont calculées en sélectionnant plusieurs échelles différentes. Les représentations locales créées à chaque niveau d'échelle mettent en valeur les différents niveaux de structure présents dans l'image. La figure~\ref{fig:cameraman-monogenic} montre une image et son signal monogène, calculé sur plusieurs niveaux d'échelle.
 
 \begin{figure}
     \centering
@@ -680,40 +676,30 @@ Avec ces filtres, on calcule les parties paires et impaires du signal en sélect
 
 \bigskip
 
-% TODO 1er phrase à faire en 2 phrases
-Maintenant que notre cadre de travail pour le restant du manuscript, le signal monogène, a été plus formellement introduit, nous allons pouvoir nous intéresser RE au cadre que nous avons choisi pour travailler à différents niveaux de structure. Bridge présente dans son article~\cite{bridge_introduction_2018} un cadre de travail utilisant les filtres log-Gabor, qui possèdent une expression complexe dans le domaine temporel. Pour nos travaux, nous avons utilisé une autre méthode de représentation, la pyramide de Riesz, plus simple à calculer et manipuler, et qui nous permet de nous concentrer sur l'analyse de textures. Nous allons maintenant présenter cette pyramide de Riesz, et montrer comment elle peut être utilisée pour l'analyse de textures.
-%todo plus simple a calculer et manipuler -> cad ?
+Le cadre de travail pour le restant du manuscript, le signal monogène, a été introduit. Le cadre choisi pour travailler à différents niveaux de structure va maintenant être discuté. Bridge présente dans son article~\cite{bridge_introduction_2018} un cadre de travail utilisant les filtres log-Gabor. Les filtres log-Gabor 2D possèdent une expression complexe dans le domaine spatial. Pour les travaux présentés, une autre méthode de représentation est utilisée : la pyramide de Riesz. Les calculs nécessaires à la création et manipulation de la pyramide de Riesz sont plus élémentaires que ceux des filtres log-Gabor. Le choix de la simplicité pour les calculs permet de concentrer les efforts de recherche sur l'analyse de textures. La section qui suit introduit la pyramide de Riesz et montre comment elle peut être utilisée pour l'analyse de textures.
+
 \section{Pyramide de Riesz}
 
-% Pyramide d'images inventée par Burt et Adelson~\cite{burt_laplacian_1983} pour la compression d'images.
-% TODO reformuler bien le paragraphe
-L'idée d'utiliser une \og pyramide d'images \fg est introduite par Simoncelli et al.~\cite{simoncelli_shiftable_1992}, {\color{red}REFOLMURER dans le but d'avoir une représentation possédant des bonnes propriétés d'études.}. C'est une méthode de représentation multi-échelle d'une image.
-% AVANTAGES de la pyramide d'images de Simoncelli, la complex steerable pyramid :
-% - steerable, invariance par rotation
-% - invariance par translation et mise à l'échelle
-% - avoids spatial aliasing
-Une pyramide d'images remplit la même fonction qu'une banque de filtres, comme les filtres log-Gabor utilisés par Bridge : on décompose une image en s'intéressant successivement à différentes bandes de fréquences, afin d'extraire de l'information localisée en fréquence. La pyramide que nous utilisons, inspirée de Wadhwa et al.~\cite{wadhwa_phase_based_2013}, est construite en formant dans un premier temps la pyramide de Gauss, puis de Laplace de l'image, qui elle nous sert à avoir une méthode de reconstruction de notre image. On applique ensuite la transformée de Riesz à tous les étages de la pyramide, pour obtenir le signal monogène de chaque niveau. De là, on extrait les informations locales à tous les niveaux de structure, informations qui seront ultérieurement utilisées pour l'analyse et la synthèse de nos textures.
-
-\subsection{Pyramide gaussienne}
-
-RE La méthode de pyramide d'images est une méthode de représentation multi-échelle d'une image, répandue dans les domaines de la vision par ordinateur et du traitement d'image. Initialement introduite par Burt et Adelson~\cite{burt_laplacian_1983} pour la compression d'images, elle permet d'étudier une image à différents niveaux de résolution, afin de faciliter la détection de motifs en sélectionnant le niveau d'échelle correspondant au motif recherché. Elle est ensuite étendue par Simoncelli et al.~\cite{simoncelli_shiftable_1992} pour RE avoir une représentation possédant des bonnes propriétés d'études.
-%TODO faciliter -> cad ?
-% TODO bonne propriétés d'études -> cad ?
+L'idée de travailler en considérant plusieurs niveaux d'échelle est introduite par Burt et Adelson~\cite{burt_laplacian_1983} pour la compression d'images. La méthode de la pyramide d'image mise au point par Burt et Adelson est une méthode de représentation multi-échelle utilisée dans les domaines de la vision par ordinateur et du traitement d'image pour la résolution de nombreux problèmes comme la détection de motifs. Une pyramide d'images remplit la même fonction qu'une banque de filtres, comme les filtres log-Gabor utilisés par Bridge. Une image est décomposée en sélectionnant successivement différentes bandes de fréquences. De l'information localisée en fréquence est ainsi extraite.
 
 \bigskip
 
-Il existe deux types principaux de pyramide, passe-bas et passe-bande. Pour créer une pyramide passe-bas, aussi dite \og gaussienne \fg, on procède itérativement suivant les deux étapes qui suivent :
+La pyramide d'image est ensuite étendue par Simoncelli et al.~\cite{simoncelli_shiftable_1992}. La pyramide de Simoncelli et al., dite orientable, a des propriétés d'invariance par rotation, translation et mise à l'échelle. Les propriétés d'invariance de la pyramide orientable sont une amélioration par rapport aux modèles précédent. La pyramide orientable sert de base à la pyramide de Riesz utilisée dans ces travaux. Wadhwa et al.~\cite{wadhwa_phase_based_2013} mettent au point la pyramide de Riesz pour étudier les micro-mouvements dans des vidéos. La pyramide utilisée dans les travaux présentés est fortement inspirée de Wadhwa et al. La construction de la pyramide, plus détaillée dans les paragraphes qui suivent, s'organise comme suit. Dans un premier temps les pyramides gaussienne puis laplacienne sont formées. La pyramide laplacienne offre une méthode de reconstruction de l'image. La transformée de Riesz est ensuite appliquée à tous les étages de la pyramide pour obtenir le signal monogène de chaque niveau. Les informations locales des différents niveaux sont enfin extraites pour analyser les différents niveaux de structure. La pyramide de Riesz est un outil d'analyse qui sera par la suite utilisée pour l'analyse et la synthèse de textures.
+
+\subsection{Pyramide gaussienne}
+
+Il existe deux types principaux de pyramide, passe-bas et passe-bande. Pour créer une pyramide passe-bas, aussi dite \og gaussienne \fg, deux étapes sont répétées itérativement :
 
 \bigskip
 
 \begin{itemize}
-    \item une étape de \og lissage \fg (ou filtrage) de l'image, qui consiste à appliquer un filtre passe-bas à l'image, afin de supprimer les hautes fréquences. On obtient ainsi une image lissée, où les détails fins ont été supprimés ;
-    \item une étape de \og sous-échantillonnage \fg, qui consiste à réduire la taille de l'image en gardant un pixel sur deux dans chaque direction. On obtient ainsi une image de moitié de la taille de l'image originale.
+    \item une étape de \og lissage \fg (ou filtrage) de l'image, qui consiste à appliquer un filtre passe-bas à l'image, afin de supprimer les hautes fréquences. Une image lissée est formée, où les détails fins ont été supprimés ;
+    \item une étape de \og sous-échantillonnage \fg, qui consiste à réduire la taille de l'image en gardant un pixel sur deux dans chaque direction. L'image obtenue a la moitié de la taille de l'image originale.
 \end{itemize}
 
 \bigskip
 
-On répète ces deux étapes sur l'étage nouvellement créé, et ce jusqu'à atteindre la profondeur désirée. On se retrouve ainsi avec une collection d'images de plus en plus petites et de moins en moins raffinées (en termes de résolution), qui peut graphiquement être représentée comme une pyramide, en superposant les étages du plus grand au plus petit, comme montré à la figure~\ref{fig:gaussian-pyramid}.
+Les deux étapes sont répétées sur l'étage nouvellement créé, et ce jusqu'à atteindre la profondeur désirée. Le résultat est une collection d'images de plus en plus petites et de moins en moins raffinées (en termes de résolution). La collection d'images peut être représentée graphiquement comme une pyramide en superposant les étages du plus grand au plus petit, comme montré à la figure~\ref{fig:gaussian-pyramid}.
 
 \begin{figure}[h]
     \centering
@@ -742,12 +728,11 @@ On répète ces deux étapes sur l'étage nouvellement créé, et ce jusqu'à at
 %        \caption{Étage 3}
 %    \end{subfigure}
 
-    \caption[Étages de la pyramide de Gauss]{Étages de la pyramide de Gauss. De gauche à droite, on descend dans les étages de plus en plus petits.}
+    \caption[Étages de la pyramide de Gauss]{Étages de la pyramide de Gauss. De gauche à droite, les étages sont de plus en plus petits.}
     \label{fig:gaussian-pyramid}
 \end{figure}
 
-Plusieurs noyaux de lissage différents ont été proposés dans la littérature, comme la famille des noyaux binomiaux que nous utilisons dans notre implémentation RE en suivant l'exemple de la bibliothèque de traitement d'image OpenCV. Notre noyau de convolution s'exprime à l'aide des coefficients binomiaux :
-% todo cite opencv
+Différents noyaux de lissage ont été proposés dans la littérature. La famille des noyaux binomiaux par exemple est fréquemment utilisée. L'implémentation proposée dans ce travail utilise les noyaux binomiaux, qui s'expriment à l'aide des coefficients binomiaux :
 
 \begin{equation}
     k = \frac{1}{256}\left[
@@ -761,61 +746,55 @@ Plusieurs noyaux de lissage différents ont été proposés dans la littérature
     \right],
 \end{equation}
 
-Il est intéressant de constater que les pyramides gaussiennes sont notamment utilisées dans la synthèse de texture, où elles permettent de résoudre des problèmes d'échantillonnage. En effet les MIP maps employées pour remédier au sous-échantillonnage sont un pré-calcul des textures à différents niveaux de résolution ; ce sont des pyramides gaussiennes.
-% todo résoudre problèmes d'échantillonnage -> cad ?
+Il est intéressant de constater que les pyramides gaussiennes sont notamment utilisées dans la synthèse de texture. En effet les MIP maps employées pour remédier au sous-échantillonnage sont un pré-calcul des textures à différents niveaux de résolution ; ce sont des pyramides gaussiennes.
 
 \begin{figure}
     \centering
     \includegraphics[width=.25\textwidth]{contenu/resources/images/image_pyramid_placeholder}
-    \caption[Représentation pyramidale des étages de la pyramide de Gauss]{Représentation en pyramide des étages de la pyramide de Gauss. {\color{red}PLACEHOLDER CREDIT WIKIPEDIA}}
+    \caption[Représentation pyramidale des étages de la pyramide de Gauss]{Représentation en pyramide des étages de la pyramide de Gauss. Crédit à \textit{Isnomore} pour l'image}
     \label{fig:pyramid-gauss}
 \end{figure}
 
 \subsection{Pyramide laplacienne}
 
-La \og pyramide laplacienne \fg est une autre forme de pyramide, et correspond à un type passe-bande. Comme l'expliquent Burt et Adelson~\cite{burt_laplacian_1983} RE L'intérêt de la pyramide laplacienne réside dans le fait que dans une image, les pixels voisins sont souvent hautement corrélés. Ainsi encoder une image en termes de valeur de pixels n'est pas le plus efficace, puisqu'on a de la redondance d'information. Pour encoder plus efficacement une image, on a besoin d'une représentation plus compacte, et qui décorelle les pixels voisins. La pyramide laplacienne est une méthode qui répond efficacement à ces deux problématiques.
-%todo n'est pas le plus efficace eviter fomrulation negative voir M
-% todo compact + efficacement -> cad ?
+La \og pyramide laplacienne \fg est une autre forme de pyramide qui correspond à un type passe-bande. Comme l'expliquent Burt et Adelson~\cite{burt_laplacian_1983}, les texels voisins dans une image sont souvent hautement corrélés. Encoder une image en termes de valeur de pixels cause une perte d'efficacité à cause de la redondance d'information. Il est possible d'encoder une image plus efficacement, c'est-à-dire avec moins de bits. La pyramide laplacienne est une représentation qui décorelle les texels voisins et qui répond donc à cette problématique.
 
 \subsubsection{Construction de la pyramide}
 
-Plutôt que d'encoder la valeur même de chaque pixel, on prédit la valeur que le pixel devrait avoir, et on encode l'erreur de prédiction. La valeur prédite de chaque pixel est obtenue en calculant une moyenne pondérée locale centrée autour du pixel. On crée donc dans un premier temps une image lissée en faisant la convolution de l'image avec un filtre correspondant au calcul de la moyenne pondérée. Cette image encode les corrélations locales de l'image, au niveau d'échelle correspondant au filtre choisi, et représente les éléments redondants que l'on cherche à réduire. Pour se faire, on soustrait cette image à l'originale, et on obtient une image exprimant l'erreur de prédiction pour chaque pixel. On a ainsi la relation :
+Plutôt que d'encoder la valeur même de chaque pixel, une prédiction est faite sur la valeur que chaque pixel devrait avoir. C'est l'erreur de prédiction qui est alors encodée. La valeur prédite de chaque pixel est obtenue en calculant une moyenne pondérée locale centrée autour du pixel. Dans un premier temps, une image lissée est créée par convolution. La convolution par filtre correspond au calcul de la moyenne pondérée. L'image lissée représente les corrélations locales entre les texels au niveau d'échelle correspondant au filtre choisi. L'image lissée comporte les éléments redondants à encoder plus efficacement. Pour améliorer l'encodage, l'image lissée est soustraire à l'image originale. L'image obtenue exprime l'erreur de prédiction pour chaque texel. La relation suivante illustre le procédé :
 
 \begin{equation}
     L = I - k * I,
 \end{equation}
 
-avec $I$ l'image originale, $L$ l'image d'erreur de prédiction, et $k$ le filtre de moyenne pondérée. Pour la compression d'images, l'intérêt se trouve dans cette ré-écriture, car les pixels de $L$ sont décorrélés et de faible valeur, donc encodables avec peu de bits, et $k*I$ est une image lissée, qui peut être sous-échantillonnée pour obtenir une image de moitié de taille. On n'encode alors que ces deux images, et on obtient ainsi une représentation plus compacte de l'image originale.
+avec $I$ l'image originale, $L$ l'image d'erreur de prédiction et $k$ le filtre de moyenne pondérée. Pour la compression d'images, l'intérêt se trouve dans cette ré-écriture. Les pixels de $L$ sont décorrélés et de faible valeur, donc encodables avec peu de bits. $k*I$ est une image lissée, qui peut être sous-échantillonnée pour obtenir une image de moitié de taille. L'image est représentée par $L$ et $k*I$ uniquement et cette représentation est plus compacte que l'image originale.
 
 \bigskip
 
-On peut répéter ce processus itérativement, en appliquant à chaque fois le même filtre à l'image lissée de résolution inférieure. On enregistre alors seulement les images d'erreur, dont la taille est divisée par 4 à chaque fois, et la dernière image lissée, de taille $N/2^{2d}$, avec $N$ la taille de l'image initiale et $d$ la profondeur désirée. Encore une fois, on peut se représenter cette collection d'images comme une pyramide, en les superposant de la plus grande à la plus petite.
+Le processus est répétable itérativement, en appliquant à chaque fois le même filtre à l'image lissée de résolution inférieure. La figure~\ref{fig:gauss-laplace-pyramid} illustre le processus itératif de construction de la pyramide laplacienne. Seules les images d'erreur, dont la taille est divisée par 4 à chaque fois, sont enregistrées. La dernière image lissée, est de taille $N/2^{2d}$, avec $N$ la taille de l'image initiale et $d$ la profondeur désirée. Encore une fois, la collection d'images est représentable comme une pyramide, en superposant les images de la plus grande à la plus petite.
 
 \bigskip
 
-Le filtre de lissage utilisé est un filtre passe-bas, qui moyenne localement l'image, c'est en fait le même genre que l'on utilise pour créer une pyramide gaussienne. En fait, pour construire une pyramide laplacienne, on utilise souvent la pyramide gaussienne de l'image, qui représente toutes les images lissées. On calcule la pyramide gaussienne, puis ensuite la pyramide laplacienne en soustrayant à chaque étage de la pyramide gaussienne l'étage de plus basse résolution, et on obtient ainsi les images d'erreur de prédiction. En se faisant, on fait une légère approximation des images lissées. En effet dans la pyramide gaussienne, il y a une légère perte d'informations entre les étages, puisque l'on supprime des pixels à chaque fois.
-% todo comment on voit perte information
+Le filtre de lissage utilisé est un filtre passe-bas, qui moyenne localement l'image. Le même genre de filtre passe-bas est utilisé pour créer une pyramide gaussienne. En fait, une pyramide gaussienne est souvent utilisée pour construire une pyramide laplacienne. La pyramide gaussienne représente toutes les images lissées nécessaires à la construction de la pyramide laplacienne. La pyramide gaussienne est calculée, puis à chaque étage est soustrait l'étage de résolution inférieure. Les images d'erreur de prédiction sont obtenus à partir de la pyramide gaussienne.
 
 \bigskip
 
-Lorsque l'on veut soustraire une image lissée à son image de taille originale, il faut passer par une étape d'expansion. Une méthode communément utilisée pour l'expansion consiste à doubler la taille de l'image, en insérant des zéros entre chaque pixel, puis à appliquer un filtre passe-bas à l'image résultante. On obtient ainsi une image de taille double, qui est une approximation de l'image lissée. On peut alors soustraire cette image à l'image originale, et on obtient l'image d'erreur de prédiction.
+Pour soustraire une image lissée à son image de taille originale, une étape d'expansion est nécessaire. Une méthode communément utilisée pour l'expansion consiste à doubler la taille de l'image, en insérant des zéros entre chaque pixel, puis à appliquer un filtre passe-bas à l'image résultante. L'image résultante est une image de taille double qui est une approximation de l'image lissée. Cette image est alors soustraite à l'image originale pour obtenir l'image d'erreur de prédiction.
 
 \begin{figure}
     \centering
     \includegraphics[width=.75\textwidth]{contenu/resources/images/gauss_laplace_pyramid}
-    \caption[Relation entre pyramide gaussienne et laplacienne]{Processus de création de la pyramide laplacienne à partir de ma pyramide gaussienne. Image par Jebamalar et Sutha~\cite{jebamalar_design_2014}.}
+    \caption[Relation entre pyramide gaussienne et laplacienne]{Processus de création de la pyramide laplacienne à partir de ma pyramide gaussienne. Crédit à \textit{Jebamalar et Sutha}~\cite{jebamalar_design_2014} pour l'image.}
     \label{fig:gauss-laplace-pyramid}
 \end{figure}
 
 \subsubsection{Reconstruction de l'image}
 
-Une fois une image décomposée en pyramide laplacienne, on peut la stocker en enregistrant les images d'erreur de prédiction et l'image lissée de plus basse résolution. Pour reconstruire l'image originale, on procède itérativement. On additionne le résidu basse fréquences, l'image la plus lissée de la pyramide, à la dernière image d'erreur, pour former une image moins lissée. On répète alors le processus, en additionnant à chaque fois l'image lissée obtenue à l'image d'erreur suivante, jusqu'à obtenir l'image originale.
+L'image décomposée en pyramide laplacienne est stockée en enregistrant les images d'erreur de prédiction et l'image lissée de plus basse résolution. Pour reconstruire l'image originale, un processus itératif est utilisé. Le résidu basse fréquences est additionné à la dernière image d'erreur pour former une image lissée de résolution supérieure. Le processus est répété en additionnant à chaque fois l'image lissée obtenue à l'image d'erreur suivante, jusqu'à obtenir l'image originale.
 
 \bigskip
 
-%Todo preemire phrase reformuler plus pour l'écrit
-Lorsque l'on utilise une pyramide gaussienne pour créer une pyramide laplacienne, il faut cependant faire attention à la taille des images, qui est divisée par 4 à chaque étage. Pour cela, on étend à chaque étape les images lissées, en utilisant la même opération d'expansion que celle utilisée pour la création de la pyramide. On s'assure ainsi d'opérer sur des images de même taille. Comme à la construction, la reconstruction des images lissées comporte une petite approximation. Puisque l'on travaille avec des images de taille différente, on a perdu de l'information entre les étages. Cependant, à cette étape on additionne les reconstructions d'images lissées, celles qui ont précédemment été soustraites pour la construction. Ainsi, les deux s'annulent, et on a une reconstruction parfaite de notre image originale.
-% todo reco parfaite -> cad ?
+Avec une pyramide gaussienne, les images lissées sont de taille différente (divisée par 4 à chaque fois). Deux images doivent avoir la même taille pour pouvoir être soustraites l'une à l'autre. Pour s'assurer que les images ont la même taille, les images lissées sont étendues à chaque étape. La même opération d'expansion que celle de la création de la pyramide est utilisée pour étendre les images. Le processus de reconstruction est montré à l'image~\ref{fig:laplace-reconstruction}.
 
 \begin{figure}
     \centering
@@ -826,43 +805,33 @@ Lorsque l'on utilise une pyramide gaussienne pour créer une pyramide laplacienn
 
 \subsection{Pyramide de Riesz}
 
-La \og pyramide de Riesz \fg est une extension de la pyramide laplacienne. C'est le cadre qui nous permet d'étudier le signal monogène d'une image à différents niveaux d'échelle. On la construit simplement en appliquant la transformée de Riesz à chaque étage de la pyramide laplacienne. On calcule alors les informations locales de chaque étage, que nous mettons ensuite en relation dans nos travaux afin d'extraire plus d'information de notre image.
+La \og pyramide de Riesz \fg est une extension de la pyramide laplacienne. C'est le cadre permet l'étude du signal monogène d'une image à différents niveaux d'échelle. La pyramide de Riesz est construite en appliquant la transformée de Riesz à chaque étage de la pyramide laplacienne. La pyramide de Riesz est illustrée à la figure~\ref{fig:riesz-pyramid-cameraman}. Les informations locales sont ensuite calculées pour chaque étage de la pyramide. Les informations locales des différents niveaux sont mis en relation dans la suite des travaux afin plus d'information sur l'image, comme expliqué dans le chapitre implémentations~\ref{chap:chapitre2}.
 
 \bigskip
 
 \begin{figure}
     \centering
     \includegraphics[width=.65\textwidth]{contenu/resources/images/riesz_pyramid_cameraman}
-    \caption[Pyramide de Riesz]{Différents étages de notre pyramide de Riesz, calculée avec la transformée de Riesz approximée. En colonne, les différentes composantes : l'image originale de la pyramide laplacienne (gauche), puis les deux composantes de Riesz (milieu et droite). En ligne, les différents étages de la pyramide : étage 0 (haut), étage 2 (milieu) et étage 3, le dernier (bas).}
+    \caption[Pyramide de Riesz]{Différents étages de la pyramide de Riesz, calculée avec la transformée de Riesz approximée. En colonne, les différentes composantes : l'image originale de la pyramide laplacienne (gauche), puis les deux composantes de Riesz (milieu et droite). En ligne, les différents étages de la pyramide : étage 0 (haut), étage 2 (milieu) et étage 3, le dernier (bas).}
     \label{fig:riesz-pyramid-cameraman}
 \end{figure}
 
-Pour des raisons de vitesse de calcul et de simplicité d'implémentation, nous n'utilisons cependant pas la vraie transformée de Riesz, qui nécessiterait une transformation de l'image dans le domaine de Fourier, ou le calcul d'une intégrale singulière (voir~\ref{eq:riesz-transform-spatial}). À la place, nous reprenons l'approximation utilisée par Wadhwa et al.~\cite{wadhwa_riesz_2014}, qui se calcule directement dans le domaine spatial en utilisant les filtres à réponse impulsionnelle finie $[-0.5, 0, 0.5]$ et $[-0.5, 0, 0.5]^T$, dont les réponses en fréquence sont :
+Pour des raisons de vitesse de calcul et de simplicité d'implémentation, la vraie transformée de Riesz n'est pas utilisée dans ce travail. La transformée de Riesz nécessite une transformation de l'image dans le domaine de Fourier ou le calcul d'une intégrale singulière (voir l'équation~\ref{eq:riesz-transform-spatial}), deux méthodes qui sont complexes à opérationnaliser. À la place, l'approximation proposée par Wadhwa et al.~\cite{wadhwa_riesz_2014} est utilisée. L'approximation de Wadhwa et al. se calcule directement dans le domaine spatial en utilisant les filtres à réponse impulsionnelle finie $[-0.5, 0, 0.5]$ et $[-0.5, 0, 0.5]^T$, dont les réponses en fréquence sont :
 
 \begin{equation}
     -i\sin(\omega_x) \quad \text{et} \quad -i\sin(\omega_y).
 \end{equation}
 
-Cette approximation donne de bons résultats dans notre pyramide, car les filtres ont une réponse équivalente aux alentours de $\frac\pi2$, où se concentre la majorité de l'énergie de nos images dans la pyramide laplacienne~\cite{wadhwa_riesz_2014}. En $0$, la différence notable entre les filtres n'est pas très grave, puisque le contenu fréquentiel est très faible. On rappelle en effet que la pyramide laplacienne est formée en soustrayant à chaque étage une image lissée qui correspond au contenu basse fréquence. Wadhwa et al. proposent une méthode pour calculer une meilleure approximation de la transformée de Riesz à l'aide de filtres finis de plus haut ordre. Nous n'avons cependant pas implémenté cette méthode, car l'approximation basique nous donne déjà de bons résultats. Pour avoir de meilleurs résultats, nous aurions plutôt cherché à implémenter un calcul de la transformée de Riesz passant par le domaine fréquentiel et utilisant la transformée de Fourier.
-% TODO "pas très grave" : à reformuler
-% TODO pertinence de "Wadhwa et al proposent [...] de bons résultats" ?
-% todo cad pour avoir meilleurs resultats
-
-{\color{red}VOIR TRAVAUX LÉO}
-
+Cette approximation donne de bons résultats ici, car les filtres ont une réponse équivalente à celle de la transformée de Riesz aux alentours de $\frac\pi2$, où se concentre la majorité de l'énergie des images dans la pyramide laplacienne~\cite{wadhwa_riesz_2014}. En $0$, il y a une différence notable entre la réponse des filtres et la réponse de la transformée de Riesz. Cependant, le contenu fréquentiel est faible en $0$ puisque, par construction, le contenu basse fréquences est supprimé dans la pyramide laplacienne. L'erreur due à la différence en $0$ est donc faible aussi. La figure~\ref{fig:riesz-approximation} montre une comparaison entre l'application de la transformée de Riesz et de son approximation. Les informations locales pour chaque étage, amplitude, phase et orientation, sont ensuite calculées comme expliqué dans la section précédente. La figure~\ref{fig:riesz-pyramid-local} présente les informations locales obtenues avec la pyramide de Riesz.
 
 \bigskip
 
-\begin{figure}
+\begin{figure}[h]
     \centering
     \includegraphics[width=.65\textwidth]{contenu/resources/images/riesz_approximation}
-    \caption[Approximation de la transformée de Riesz]{Comparaison de l'application de la transformée de Riesz (gauche) et de son approximation (droite) pour un niveau de pyramide. Les tranches horizontales en jaune sur les images (a) et (b) sont représentés dans le diagramme en (c).}
+    \caption[Approximation de la transformée de Riesz]{Comparaison de l'application de la transformée de Riesz (gauche) et de son approximation (droite) pour un niveau de pyramide. Les tranches horizontales en jaune sur les images (a) et (b) sont représentées dans le diagramme en (c). Image par Wadhwa et al.~\cite{wadhwa_riesz_2014}.}
     \label{fig:riesz-approximation}
 \end{figure}
-
-Après avoir fait la transformée de Riesz, on peut calculer pour chaque étage les images d'informations locales, amplitude, phase et orientation.
-
-\bigskip
 
 \begin{figure}[hp]
     \centering
@@ -871,20 +840,19 @@ Après avoir fait la transformée de Riesz, on peut calculer pour chaque étage 
     \label{fig:riesz-pyramid-local}
 \end{figure}
 
-Avec cette implémentation de la pyramide de Riesz, nous avons défini notre cadre d'étude multi-résolutionnel local. Nous allons voir dans la prochaine partie comment nous l'utilisons afin d'extraire de l'information sur nos textures.
+Avec cette implémentation de la pyramide de Riesz, le cadre d'étude multi-résolutionnel local a été défini. La prochaine partie décrit comment le cadre multi-résolutionnel local est utilisé afin d'extraire de l'information d'une texture.
 
 \section{Congruence de phases}
 
-Le modèle de l'énergie locale est un modèle de détection de caractéristiques saillantes dans une image. Introduit par Morrone et al~\cite{morrone_mach_1986, morrone_feature_1987},il explique la présence de points saillants, tels que des bords et des coins, par l'alignement des phases locales de l'image. Il est basé sur l'observation que les bords et les coins sont des structures résultant de la superposition de sinusoïdes en phase les unes avec les autres. Contrairement aux autres méthodes de détection de caractéristiques, comme celles de Sobel ou Canny, ce modèle est insensible aux variations de luminosité et de grossissement. Les méthodes par gradient utilisent en effet un seuillage pour déterminer les bords, qui dépend de la luminosité et du niveau de zoom de l'image. À l'inverse, le modèle de l'énergie locale permet le calcul de la \og congruence de phases \fg, une grandeur à valeurs dans $[0, 1]$ mesurant uniformément la présence de caractéristiques dans une image et, de façon intéressante, la proximité à un élément caractéristique. C'est cette grandeur à laquelle nous nous intéressons dans la partie qui suit.
+Le modèle de l'énergie locale est un modèle de détection de caractéristiques saillantes dans une image. Introduit par Morrone et al~\cite{morrone_mach_1986, morrone_feature_1987},il explique la présence de points saillants, tels que des bords et des coins, par l'alignement des phases locales de l'image. Le modèle d'énergie locale est basé sur l'observation que les bords et les coins sont des structures résultant de la superposition de sinusoïdes en phase les unes avec les autres. Contrairement aux autres méthodes de détection de caractéristiques, comme celles de Sobel ou Canny, le modèle de Morrone et al. est insensible aux variations de luminosité et de grossissement. Les méthodes par gradient utilisent en effet un seuillage pour déterminer les bords, qui dépend de la luminosité et du niveau de zoom de l'image. À l'inverse, le modèle de l'énergie locale permet le calcul de la \og congruence de phases \fg (PC), une grandeur à valeurs dans $[0, 1]$ mesurant uniformément la présence d'éléments caractéristiques dans une image et la proximité d'un texel à un élément caractéristique. La congruence de phases est le sujet de la partie qui suit.
 
 \bigskip
 
-La formulation initiale de la congruence de phases (PC) utilise les coefficients de la série de Fourier du signal. Cependant, cette formulation comporte trois problèmes : elle est difficile à calculer et manipuler, elle ne permet pas une bonne localisation de l'information (le même problème qui nous pousse à utiliser un cadre de travail multi-résolutionnel pour l'étude du signal monogène), et RE elle ne prend pas en compte la répartition des fréquences en phase. La solution à ces problèmes se fait par différents moyens, dans un premier temps en 1D, puis en 2D.
-% TODO paragraphe à mettre beaucoup plus tôt
+La formulation initiale de la PC utilise les coefficients de la série de Fourier du signal. Cependant, cette formulation comporte trois problèmes : elle est difficile à calculer et manipuler, elle ne permet pas une bonne localisation de l'information (le même problème qui pousse à utiliser un cadre de travail multi-résolutionnel pour l'étude du signal monogène), et RE elle ne prend pas en compte la répartition des fréquences. Ces problèmes et leur solution sont expliqués dans un premier temps en 1D, puis en 2D.
 
 \subsubsection{Énergie locale}
 
-Tout d'abord, Venkatesh et Owens~\cite{venkatesh_energy_1989} montrent qu'il existe une relation directe entre la congruence de phases (PC) et l'énergie locale. Ils mettent ainsi en lumière une expression simplifiée de la congruence de phases (PC) :
+Venkatesh et Owens~\cite{venkatesh_energy_1989} montrent qu'il existe une relation directe entre la PC et l'énergie locale. Ils mettent ainsi en lumière une expression simplifiée de la PC :
 
 \begin{equation}
     PC(x) = \frac{E(x)}{\sum_{n=0}^{+\infty} D_n},
@@ -900,7 +868,7 @@ avec $E(x) = \sqrt{f^2(x) + f_h^2(x)}$ l'énergie locale et $D_n$ les coefficien
 
 \subsubsection{Contexte multi-résolutionnel}
 
-Pour obtenir de l'information localisée en termes de fréquence, Kovesi utilise des ondelettes, sous forme de banque de filtres passe-bande, pour sélectionner successivement différents niveaux d'échelle. Il utilise pour cela des filtres de Gabor, très similaires à ceux présentés dans la section introduisant le signal monogène~\ref{subsubsec:echelle}. En faisant la convolution du signal par ces filtres, il obtient de l'information localisée à la fois spatialement et fréquentiellement :
+Pour obtenir de l'information localisée en termes de fréquence et sélectionner successivement différents niveaux d'échelle, Kovesi utilise des ondelettes sous forme de banque de filtres passe-bande. Les filtres passe-bande utilisés sont des filtres de Gabor, très similaires à ceux présentés dans la section introduisant le signal monogène~\ref{subsubsec:echelle}. En faisant la convolution du signal par ces filtres, il obtient de l'information localisée à la fois spatialement et fréquentiellement :
 
 \begin{equation}
     A_n(x) = \sqrt{(f(x)*M^e_n)^2 + (f(x)*M^o_n)^2},
@@ -913,54 +881,52 @@ et
     \phi_n(x) = \arctan\left(\frac{f(x)*M^o_n}{f(x)*M^e_n}\right),
 \end{equation}
 
-avec $M^e_n$ et $M^o_n$ les filtres passe-bande, paire et impaire, au niveau d'échelle $n$. À noter que le $n$ dans l'équation~\ref{eq:local-scale-amplitude}, entre 1 et $N$ (le nombre de nivaux d'échelle considéré), désigne le niveau d'échelle fréquentiel. Il est différent de celui dans l'équation de la série de Fourier~\ref{eq:phase-congruence-energy} qui, lui, représente les différentes sinusoïdes qui forment le signal. En regardant le scalogramme représenté à la figure~\ref{fig:phase-congruence-scalogram} qui représente l'analyse du signal par la banque de filtres, on voit l'intérêt de la PC : les points saillants sont ceux où la phase est alignée à travers tous les niveaux d'échelle.
+avec $M^e_n$ et $M^o_n$ les filtres passe-bande, paire et impaire, au niveau d'échelle $n$. À noter que le $n$ dans l'équation~\ref{eq:local-scale-amplitude}, entre 1 et $N$ (le nombre de nivaux d'échelle considéré), désigne le niveau d'échelle fréquentiel. Il est différent de celui dans l'équation de la série de Fourier~\ref{eq:phase-congruence-energy} qui, lui, représente les différentes sinusoïdes qui forment le signal. L'intérêt de la PC est exposé à la figure~\ref{fig:phase-congruence-scalogram} qui représente les scalogrammes de phase et d'amplitude d'un signal 1D. Les points saillants sont ceux où la phase est alignée à travers tous les niveaux d'échelle.
 
 \bigskip
 
 \begin{figure}
     \centering
     \includegraphics[width=.85\textwidth]{contenu/resources/images/phase_congruence_scalogram}
-    \caption[Scalogramme d'un signal mettant en évidence des points caractéristiques du signal]{Signal 1D et ses scalogrammes de phase et d'amplitude. L'abscisse des scalogrammes sont les mêmes que celui du signal, et les ordonnées représentent à la fréquence en échelle logarithmique (valeurs croissantes de bas en haut). Les astérisques marquent les transitions abruptes dans le signal, et correspondent aux instants où la phase est alignée à travers tous les niveaux d'échelle ; ce sont des points où la congruence de phases est élevée. Image par Kovesi~\cite{kovesi_image_1995}.}
+    \caption[Scalogramme d'un signal mettant en évidence des points caractéristiques du signal]{Signal 1D et ses scalogrammes de phase et d'amplitude. L'abscisse des scalogrammes sont les mêmes que celui du signal, et les ordonnées représentent à la fréquence en échelle logarithmique (valeurs croissantes de bas en haut). Les astérisques marquent les transitions abruptes dans le signal et correspondent aux instants où la phase est alignée à travers tous les niveaux d'échelle. Les astérisques sont des points où la congruence de phases est élevée. Image par Kovesi~\cite{kovesi_image_1995}.}
     \label{fig:phase-congruence-scalogram}
 \end{figure}
 
-Avec les composantes filtrées à différents niveaux d'échelle du signal, on obtient une nouvelle expression de la PC, qui prend en compte la localisation fréquentielle :
+Une nouvelle expression de la PC qui prend en compte la localisation fréquentielle est dérivée avec les composantes filtrées à différents niveaux d'échelle du signal :
 
 \begin{equation}
     PC(x) = \frac{E(x)}{\sum_{n=1}^{N} A_n(x)} = \frac{\sqrt{F^2(x)+F_H^2(x)}}{\epsilon + \sum_{n=1}^{N}},
 \end{equation}
 
-avec $F$ et $F_H$ une reconstruction du signal et de sa transformée de Hilbert respectivement, à partir des composantes filtrées :
+où $F$ et $F_H$ sont une reconstruction du signal et de sa transformée de Hilbert respectivement. Les reconstructions sont obtenues à partir des composantes filtrées :
 
 \begin{align}
     F(x) &= \sum_{n=1}^{N} f(x)*M_n^e, \,\text{et}\\
-    F_H(x) &= \sum_{n=1}^{N} f(x)*M{_n^o},
+    F_H(x) &= \sum_{n=1}^{N} f(x)*M{_n^o}.
 \end{align}
 
-et $\sum_{n=1}^{N} A_n(x)$ la somme des amplitudes locales à tous les niveaux d'échelle :
+$\sum_{n=1}^{N} A_n(x)$ indique ici la somme des amplitudes locales à tous les niveaux d'échelle :
 
 \begin{equation}
     \sum_{n=1}^{N} A_n(x) = \sum_{n=1}^{N} \sqrt{(f(x)*M^e_n)^2 + (f(x)*M^o_n)^2}
 \end{equation}
 
-et $\epsilon$ une petite constante positive qui assure la stabilité numérique de l'expression quand la somme des amplitudes est très petite. Dans notre implémentation, on utilise $\epsilon = 0.01$.
+avec $\epsilon$ une petite constante positive qui assure la stabilité numérique de l'expression quand la somme des amplitudes est très petite. Dans l'implémentation du calcul de la PC, $\epsilon = 0.01$ est utilisé.
 
 \bigskip
 
-La reconstruction du signal et de sa transformée de Hilbert est possible lorsque l'on choisit avec soin les filtres de la transformée par ondelettes, de telle sorte que leur fonction de transfert se superposent lorsqu'additionnées et recouvrent l'entièreté du spectre du signal, comme montré dans la figure~\ref{fig:wavelet-spectrum-coverage}.
+Pour pouvoir reconstruire le signal et sa transformée de Hilbert, le choix des filtres de la transformée en ondelettes est important. Les filtres doivent être choisis de sorte que leur fonction de transfert se superposent lorsqu'additionnées et recouvrent l'entièreté du spectre du signal, comme montré dans la figure~\ref{fig:wavelet-spectrum-coverage}.
 
 \begin{figure}
            \centering
            \includegraphics[width=.60\textwidth]{contenu/resources/images/wavelet_spectrum_coverage}
-           \caption[Choix des ondelettes pour recouvrir le spectre et permettre la reconstruction du signal]{Banque d'ondelettes choisie de sorte à recouvrir une large couverture du spectre. On voit les ondelettes (haut) et leur fonction de transfert (milieu), et la fonction de transfert de la somme des ondelettes (bas). Image par Kovesi~\cite{kovesi_image_1995}.}
+           \caption[Choix des ondelettes pour recouvrir le spectre et permettre la reconstruction du signal]{Banque d'ondelettes choisie de sorte à recouvrir une large couverture du spectre. Les différents diagrammes représentent les ondelettes (haut) et leur fonction de transfert (milieu), ainsi que la fonction de transfert de la somme des ondelettes (bas). Image par Kovesi~\cite{kovesi_image_1995}.}
            \label{fig:wavelet-spectrum-coverage}
 \end{figure}
 
 \subsubsection{Répartition des fréquences}
 
-La PC mesure l'alignement des phases à différents niveaux de fréquence, il est donc important qu'une large bande de fréquences soit couverte, afin d'avoir un indicateur significatif. Ceci n'est pas le cas lorsque le signal a une réponse en fréquence restreinte, dans le cas d'un signal simple ou lissé par exemple. La PC prend alors des valeurs trop grandes sur des plages trop larges du signal, comme montré dans la figure~\ref{fig:phase-congruency-spread}.
-% todo important que -> cad ?
-% todo val trop grandes -> cad ?
+La PC mesure l'alignement des phases à différents niveaux de fréquence. Afin que la PC soit un indicateur significatif, il faut qu'une large bande de fréquences soit couverte. Lorsque le signal a une réponse en fréquence restreinte, dans le cas d'un signal simple ou lissé par exemple, la bande de fréquence couverte est étroite. La PC prend alors des valeurs trop grandes sur des plages trop larges du signal, comme montré dans la figure~\ref{fig:phase-congruency-spread}. La qualité de détection de bords diminue puisque la PC est haute sur de larges régions.
 
 \bigskip
 
@@ -994,21 +960,19 @@ La PC mesure l'alignement des phases à différents niveaux de fréquence, il es
     \label{fig:phase-congruency-spread}
 \end{figure}
 
-Pour remédier à ce problème, on construit une fonction de pondération qui diminue l'importance des points où la réponse en fréquence est restreinte. On mesure la répartition de la réponse en fréquence en comparant la plus grande amplitude locale à celles des autres niveaux d'échelle :
+Pour remédier à ce problème, une fonction de pondération est mise au point. La fonction de pondération diminue l'importance des points où la réponse en fréquence est restreinte. La répartition de la réponse en fréquence est mesurée en comparant la plus grande amplitude locale à celles des autres niveaux d'échelle :
 
 \begin{equation}
     s(x) = \frac1N\left(\frac{\sum_{n=1}^{N}A_n(x)}{\epsilon + A_{max}(x)}\right),
 \end{equation}
 
-où $A_{max}(x)$ la plus grande amplitude parmi ces niveaux et $\epsilon$ est encore une petite constante positive qui assure la stabilité numérique de l'expression. On obtient ainsi une mesure de la répartition de la réponse en fréquence à valeurs entre 0 et 1, qui nous permet de construire notre fonction de pondération avec la fonction sigmoïde :
+où $A_{max}(x)$ est la plus grande amplitude parmi ces niveaux et $\epsilon$ est encore une petite constante positive qui assure la stabilité numérique de l'expression. Cette mesure de la répartition de la réponse en fréquence est à valeurs entre 0 et 1 et est utilisée pour construire la fonction de pondération avec la fonction sigmoïde :
 
 \begin{equation}
     W(x) = \frac{1}{1 + \exp^{g(c-s(x))}},
 \end{equation}
 
-avec $c$ la valeur de coupure en-dessous de laquelle on considère que la réponse en fréquence est restreinte, et $g$ un paramètre de gain qui contrôle la précision de la coupure. Dans la pratique, on choisit les valeurs $c = 0.4$ et $g = 10$, qui donne des résultats satisfaisants.
-
-On obtient ainsi une fonction de pondération qui vaut 1 lorsque la réponse en fréquence est uniformément répartie, et qui décroit lorsque la réponse en fréquence est restreinte. On peut alors ré-écrire la PC en prenant en compte cette fonction de pondération :
+avec $c$ la valeur de coupure en-dessous de laquelle la réponse en fréquence est considérée restreinte et $g$ un paramètre de gain qui contrôle la précision de la coupure. Dans la pratique, les valeurs $c = 0.4$ et $g = 10$ sont utilisées car elles donnent de bons résultats. La fonction de pondération vaut 1 lorsque la réponse en fréquence est uniformément répartie et décroit lorsque la réponse en fréquence est restreinte. La PC est ré-écrite en tenant compte de cette fonction de pondération :
 
 \begin{equation}
     PC(x) = \frac{W(x)E(x)}{\epsilon + \sum_{n=1}^{N} A_n(x)}.
@@ -1026,14 +990,13 @@ où $\mathcal{O}$ est l'ensemble des orientations utilisées dans la banque de f
 
 \subsubsection{Utilisation du cadre multi-résolutionnel local de Riesz}
 
-Nous souhaitons appliquer le modèle de la PC pour synthétiser des textures présentant de la structure irrégulière. Cependant, le cadre multi-résolutionnel local de Riesz présenté précédemment nous semble plus intéressant que les banques d'ondelettes de Gabor présentée par Kovesi~\cite{kovesi_image_1995}, car il est plus compacte, plus simple à implémenter, et donne plus d'informations. Notamment, il donne accès à l'orientation locale en chaque pixel de l'image, information pertinente pour l'analyse de nos textures. On adapte donc le modèle de la PC à notre cadre de travail, avec une pyramide de Riesz :
-% todo cad compacte
+Le but du travail présenté est d'appliquer le modèle de la PC pour synthétiser des textures présentant de la structure irrégulière. Cependant, le cadre multi-résolutionnel local de Riesz présenté précédemment nous semble plus intéressant que les banques d'ondelettes de Gabor présentée par Kovesi~\cite{kovesi_image_1995}, car il est plus compact, plus simple à implémenter et donne plus d'informations. Notamment, il donne accès à l'orientation locale en chaque pixel de l'image, information pertinente pour l'analyse de texture. Le modèle de la PC est donc adapté au cadre de travail avec une pyramide de Riesz :
 
 \begin{equation}
     PC(\mathbf{x}) = \frac{W(x)E(\mathbf{x})}{\epsilon + \sum_{n=0}^{d} A_{n}(\mathbf{x})} = \frac{W(x)\sqrt{F^2(\mathbf{x})+R_1^2(\mathbf{x})+R_2^2(\mathbf{x})}}{\epsilon + \sum_{n=0}^{d} \sqrt{f_n^2(\mathbf{x}) + r_{1n}^2(\mathbf{x}) + r_{2n}^2(\mathbf{x})}},
 \end{equation}
 
-avec $d$ la profondeur de la pyramide, $f_i, r_{1i}\, \text{et}\, r_{2i}$ les composantes de Riesz de l'étage $i$, et $F, R_1$ et $R_2$ les reconstructions de l'image originale, et des composantes de sa transformée de Riesz, qui se calculent avec les différents étages de la pyramide :
+avec $d$ la profondeur de la pyramide, $f_i, r_{1i}\, \text{et}\, r_{2i}$ les composantes de Riesz de l'étage $i$. $F, R_1$ et $R_2$ sont les reconstructions de l'image originale et des composantes de sa transformée de Riesz, qui se calculent avec les différents étages de la pyramide :
 
 \begin{equation}
     F(\mathbf{x}) = \sum_{n=0}^{d} f_n(\mathbf{x}) \quad \text{et} \quad R_i(\mathbf{x}) = \sum_{n=0}^{d} r_{in}(\mathbf{x})\, \text{pour}\, i \in \{1, 2\}.
@@ -1065,4 +1028,4 @@ avec $d$ la profondeur de la pyramide, $f_i, r_{1i}\, \text{et}\, r_{2i}$ les co
 
 \bigskip
 
-Avec cette formulation, on a défini une méthode de calcul de la PC dans notre cadre de travail. Nous allons maintenant voir comment cette méthode a été implémentée, et comment nous l'utilisons pour la synthèse de texture.
+Avec cette formulation, une méthode de calcul de la PC a été définie pour le cadre multi-résolutionnel local de Riesz. Une comparaison entre la PC de Kovesi et celle proposée dans ce travail est faite à la figure~\ref{fig:phase-congruency-riesz}. Le chapitre suivant décrit comment la méthode a été implémentée et comment elle est utilisée pour la synthèse de texture.
