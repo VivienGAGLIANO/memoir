@@ -777,28 +777,28 @@
 	\fi
 
 %% Liste des tableaux
-	\if@listedestableaux
-		\clearpage
-		\phantomsection
-		\addcontentsline{toc}{chapter}{\listtablename}
-		\listoftables
-	\fi
+%	\if@listedestableaux
+%		\clearpage
+%		\phantomsection
+%		\addcontentsline{toc}{chapter}{\listtablename}
+%		\listoftables
+%	\fi
 	
 %% Liste des algorithmes (en pseudocode)
-	\if@listedesalgos
-		\clearpage
-		\phantomsection
-		\addcontentsline{toc}{chapter}{\listalgorithmname}
-		\listofalgorithms
-	\fi
+%	\if@listedesalgos
+%		\clearpage
+%		\phantomsection
+%		\addcontentsline{toc}{chapter}{\listalgorithmname}
+%		\listofalgorithms
+%	\fi
 
 %% Liste des codes source
-	\if@listedeslistings
-		\clearpage
-		\phantomsection
-		\addcontentsline{toc}{chapter}{\lstlistlistingname}
-		\lstlistoflistings
-	\fi
+%	\if@listedeslistings
+%		\clearpage
+%		\phantomsection
+%		\addcontentsline{toc}{chapter}{\lstlistlistingname}
+%		\lstlistoflistings
+%	\fi
 
 	% Listes des abbréviations
 	\if@listedesabrev
