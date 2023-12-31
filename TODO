@@ -4,16 +4,16 @@ v homogénéiser les guillemets, espace avant et après chaque symbole de guille
 v vérifier la biblio, dates, auteurs, etc.
 v quand utiliser les acronymes (PC typiquement) ?
 v homogénéiser les -s à la fin des termes * d'image(s) ou * de texture(s) ou * de phase(s)
-- SY / RE --> à finir
+v SY / RE --> à finir
 
 - TODO les TODO
-- éviter le narratif ?
-- homogénéiser on vs nous
-- commentaires marie SOURCE
-- commentaires guillaume + nico
-- vérifier que les \ref dans le texte sont bien explicitement utilisées (comme montré en figure~\ref{} plutot que juste machin machin~\ref{})
-- refaire titre
-- signal monogène (et pas monogénique)
+v éviter le narratif ?
+v homogénéiser on vs nous
+v commentaires marie SOURCE
+v commentaires guillaume + nico
+v vérifier que les \ref dans le texte sont bien explicitement utilisées (comme montré en figure~\ref{} plutot que juste machin machin~\ref{})
+v refaire titre
+v signal monogène (et pas monogénique)
 - résumé et remerciements
 v orthographe, grammaire, coquilles, etc.
 - vérifier pas de failed latex command

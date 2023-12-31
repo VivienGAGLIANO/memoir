@@ -122,10 +122,10 @@ où l'amplitude des composantes de fréquences positives est doublée, par souci
 La suppression des composantes de fréquences peut être vue comme l'ajout d'un certain signal impair au signal de base.
 
 \begin{equation} \label{eq:2.1}
-    F_{\alpha}(\omega) = F(\omega) + F_h(\omega),
+    F_{\alpha}(\omega) = F(\omega) + F_h(\omega)
 \end{equation}
 
-où $F_h(\omega)$ est la « version impaire » du signal $F(\omega)$ :
+La formation du signal analytique est montrée dans la figure~\ref{fig:complex-analytic-representation}. Dans l'équation~\ref{eq:2.1}, $F_h(\omega)$ est la « version impaire » du signal $F(\omega)$ :
 
 \begin{equation}
     F_h(\omega) = \left\{
@@ -639,7 +639,7 @@ Notamment, l'image originale s'exprime simplement par $f(\mathbf{x}) = A(\mathbf
 
 \bigskip
 
-Comme pour le signal analytique en 1D, des filtres peuvent être utilisés pour sélectionner un niveau d'échelle à analyser. Sélectionner un niveau d'échelle permet ici encore d'extraire de l'information sur certains niveaux de structure en particulier. Les filtres log-Gabor peuvent être étendus en 2D et utilisés pour sélectionner certaines parties du signal.
+Comme pour le signal analytique en 1D, des filtres peuvent être utilisés pour sélectionner un niveau d'échelle à analyser. Sélectionner un niveau d'échelle permet ici encore d'extraire de l'information sur certains niveaux de structure en particulier. Les filtres log-Gabor peuvent être étendus en 2D et utilisés pour sélectionner certaines parties du signal~\ref{fig:2D-log-gabor}.
 
 \bigskip
 
@@ -699,7 +699,7 @@ Il existe deux types principaux de pyramide, passe-bas et passe-bande. Pour cré
 
 \bigskip
 
-Les deux étapes sont répétées sur l'étage nouvellement créé, et ce jusqu'à atteindre la profondeur désirée. Le résultat est une collection d'images de plus en plus petites et de moins en moins raffinées (en termes de résolution). La collection d'images peut être représentée graphiquement comme une pyramide en superposant les étages du plus grand au plus petit, comme montré à la figure~\ref{fig:gaussian-pyramid}.
+Les deux étapes sont répétées sur l'étage nouvellement créé, et ce jusqu'à atteindre la profondeur désirée. Le résultat est une collection d'images de plus en plus petites et de moins en moins raffinées (en termes de résolution). Un exemple est donné en figure~\ref{fig:gaussian-pyramid}. La collection d'images peut être représentée graphiquement comme une pyramide en superposant les étages du plus grand au plus petit, comme montré à la figure~\ref{fig:pyramid-gauss}.
 
 \begin{figure}[h]
     \centering
@@ -848,7 +848,7 @@ Le modèle de l'énergie locale est un modèle de détection de caractéristique
 
 \bigskip
 
-La formulation initiale de la PC utilise les coefficients de la série de Fourier du signal. Cependant, cette formulation comporte trois problèmes : elle est difficile à calculer et manipuler, elle ne permet pas une bonne localisation de l'information (le même problème qui pousse à utiliser un cadre de travail multi-résolutionnel pour l'étude du signal monogène), et RE elle ne prend pas en compte la répartition des fréquences. Ces problèmes et leur solution sont expliqués dans un premier temps en 1D, puis en 2D.
+La formulation initiale de la PC utilise les coefficients de la série de Fourier du signal. Cependant, cette formulation comporte trois problèmes : elle est difficile à calculer et manipuler, elle ne permet pas une bonne localisation de l'information (le même problème qui pousse à utiliser un cadre de travail multi-résolutionnel pour l'étude du signal monogène), et elle ne prend pas en compte la répartition des fréquences. Ces problèmes et leur solution sont expliqués dans un premier temps en 1D, puis en 2D.
 
 \subsubsection{Énergie locale}
 
