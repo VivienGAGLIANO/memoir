@@ -1,7 +1,7 @@
 \chapter[Modèle de Riesz]{Étude théorique du modèle de Riesz} % signal monogénique ?
 \label{chap:chapitre1}
 
-Dans le but de synthétiser du contenu avec de la structure irrégulière, une approche locale est adoptée. Ce travail utilise le modèle du signal monogène~\cite{felsberg_monogenic_2001}, qui permet d'extraire l'énergie locale, en s'appuyant sur la transformée de Riesz. Le signal monogène est ensuite mis en application dans un cadre multi-résolutionnel, en utilisant une pyramide de Riesz~\cite{wadhwa_riesz_2014} pour calculer la congruence de phases.
+Dans le but de synthétiser du contenu avec de la structure irrégulière, une approche locale est adoptée. Ce travail utilise le modèle du signal monogène~\cite{felsberg_monogenic_2001}, qui permet d'extraire l'énergie locale, en s'appuyant sur la transformée de Riesz. Le signal monogène est ensuite mis en application dans un cadre multirésolution, en utilisant une pyramide de Riesz~\cite{wadhwa_riesz_2014} pour calculer la congruence de phases.
 
 \section{Signal monogène}
 
@@ -555,7 +555,7 @@ Le signal monogène est alors exprimé comme un vecteur à trois composantes, un
     \right],
 \end{equation}
 
-où $f_e$ est le signal original, indexé par un $e$ pour souligner qu'il représente la partie paire du signal monogène. Une représentation d'un signal et de ses parties impaires est montrée à la figure~\ref{fig:monogenic-signal-disk}. Dans la figure, les parties impaires détectent des changements verticaux et horizontaux dans le signal. La détection des changements est due au fait que la transformée de Riesz présente une ressemblance et une connexion au gradient (l'équation~\ref{eq:2.20} rappelle fortement la définition du gradient, à un facteur près). La transformée de Hilbert présente d'ailleurs aussi une connexion au gradient en 1D. La relation entre les transformées étudiées et le gradient n'est pas le sujet de cette étude et n'est pas explorée plus en profondeur. La personne intéressée se référera à Unser et al.\cite{unser_multiresolution_2009} pour plus de détails.
+où $f_e$ est le signal original, indexé par un $e$ pour souligner qu'il représente la partie paire du signal monogène. Une représentation d'un signal et de ses parties impaires est montrée à la figure~\ref{fig:monogenic-signal-disk}. Dans la figure, les parties impaires détectent des changements verticaux et horizontaux dans le signal. La détection des changements est due au fait que la transformée de Riesz présente une ressemblance et une connexion au gradient (l'équation~\ref{eq:2.20} rappelle fortement la définition du gradient, à un facteur près). La transformée de Hilbert présente d'ailleurs aussi une connexion au gradient en 1D. La relation entre les transformées étudiées et le gradient n'est pas le sujet de cette étude et n'est pas explorée plus en profondeur. La personne intéressée se référera à Unser \textit{et al.}\cite{unser_multiresolution_2009} pour plus de détails.
 
 \bigskip
 
@@ -684,7 +684,7 @@ L'idée de travailler en considérant plusieurs niveaux d'échelle est introduit
 
 \bigskip
 
-La pyramide d'image est ensuite étendue par Simoncelli et al.~\cite{simoncelli_shiftable_1992}. La pyramide de Simoncelli et al., dite orientable, a des propriétés d'invariance par rotation, translation et mise à l'échelle. Les propriétés d'invariance de la pyramide orientable sont une amélioration par rapport aux modèles précédent. La pyramide orientable sert de base à la pyramide de Riesz utilisée dans ces travaux. Wadhwa et al.~\cite{wadhwa_phase_based_2013} mettent au point la pyramide de Riesz pour étudier les micro-mouvements dans des vidéos. La pyramide utilisée dans les travaux présentés est fortement inspirée de Wadhwa et al. La construction de la pyramide, plus détaillée dans les paragraphes qui suivent, s'organise comme suit. Dans un premier temps les pyramides gaussienne puis laplacienne sont formées. La pyramide laplacienne offre une méthode de reconstruction de l'image. La transformée de Riesz est ensuite appliquée à tous les étages de la pyramide pour obtenir le signal monogène de chaque niveau. Les informations locales des différents niveaux sont enfin extraites pour analyser les différents niveaux de structure. La pyramide de Riesz est un outil d'analyse qui sera par la suite utilisée pour l'analyse et la synthèse de textures.
+La pyramide d'image est ensuite étendue par Simoncelli \textit{et al.}~\cite{simoncelli_shiftable_1992}. La pyramide de Simoncelli \textit{et al.}, dite orientable, a des propriétés d'invariance par rotation, translation et mise à l'échelle. Les propriétés d'invariance de la pyramide orientable sont une amélioration par rapport aux modèles précédent. La pyramide orientable sert de base à la pyramide de Riesz utilisée dans ces travaux. Wadhwa \textit{et al.}~\cite{wadhwa_phase_based_2013} mettent au point la pyramide de Riesz pour étudier les micro-mouvements dans des vidéos. La pyramide utilisée dans les travaux présentés est fortement inspirée de Wadhwa \textit{et al.} La construction de la pyramide, plus détaillée dans les paragraphes qui suivent, s'organise comme suit. Dans un premier temps les pyramides gaussienne puis laplacienne sont formées. La pyramide laplacienne offre une méthode de reconstruction de l'image. La transformée de Riesz est ensuite appliquée à tous les étages de la pyramide pour obtenir le signal monogène de chaque niveau. Les informations locales des différents niveaux sont enfin extraites pour analyser les différents niveaux de structure. La pyramide de Riesz est un outil d'analyse qui sera par la suite utilisée pour l'analyse et la synthèse de textures.
 
 \subsection{Pyramide gaussienne}
 
@@ -816,7 +816,7 @@ La \og pyramide de Riesz \fg est une extension de la pyramide laplacienne. C'est
     \label{fig:riesz-pyramid-cameraman}
 \end{figure}
 
-Pour des raisons de vitesse de calcul et de simplicité d'implémentation, la vraie transformée de Riesz n'est pas utilisée dans ce travail. La transformée de Riesz nécessite une transformation de l'image dans le domaine de Fourier ou le calcul d'une intégrale singulière (voir l'équation~\ref{eq:riesz-transform-spatial}), deux méthodes qui sont complexes à opérationnaliser. À la place, l'approximation proposée par Wadhwa et al.~\cite{wadhwa_riesz_2014} est utilisée. L'approximation de Wadhwa et al. se calcule directement dans le domaine spatial en utilisant les filtres à réponse impulsionnelle finie $[-0.5, 0, 0.5]$ et $[-0.5, 0, 0.5]^T$, dont les réponses en fréquence sont :
+Pour des raisons de vitesse de calcul et de simplicité d'implémentation, la vraie transformée de Riesz n'est pas utilisée dans ce travail. La transformée de Riesz nécessite une transformation de l'image dans le domaine de Fourier ou le calcul d'une intégrale singulière (voir l'équation~\ref{eq:riesz-transform-spatial}), deux méthodes qui sont complexes à opérationnaliser. À la place, l'approximation proposée par Wadhwa \textit{et al.}~\cite{wadhwa_riesz_2014} est utilisée. L'approximation de Wadhwa \textit{et al.} se calcule directement dans le domaine spatial en utilisant les filtres à réponse impulsionnelle finie $[-0.5, 0, 0.5]$ et $[-0.5, 0, 0.5]^T$, dont les réponses en fréquence sont :
 
 \begin{equation}
     -i\sin(\omega_x) \quad \text{et} \quad -i\sin(\omega_y).
@@ -829,7 +829,7 @@ Cette approximation donne de bons résultats ici, car les filtres ont une répon
 \begin{figure}[h]
     \centering
     \includegraphics[width=.65\textwidth]{contenu/resources/images/riesz_approximation}
-    \caption[Approximation de la transformée de Riesz]{Comparaison de l'application de la transformée de Riesz (gauche) et de son approximation (droite) pour un niveau de pyramide. Les tranches horizontales en jaune sur les images (a) et (b) sont représentées dans le diagramme en (c). Image par Wadhwa et al.~\cite{wadhwa_riesz_2014}.}
+    \caption[Approximation de la transformée de Riesz]{Comparaison de l'application de la transformée de Riesz (gauche) et de son approximation (droite) pour un niveau de pyramide. Les tranches horizontales en jaune sur les images (a) et (b) sont représentées dans le diagramme en (c). Image par Wadhwa \textit{et al.}~\cite{wadhwa_riesz_2014}.}
     \label{fig:riesz-approximation}
 \end{figure}
 
@@ -840,15 +840,15 @@ Cette approximation donne de bons résultats ici, car les filtres ont une répon
     \label{fig:riesz-pyramid-local}
 \end{figure}
 
-Avec cette implémentation de la pyramide de Riesz, le cadre d'étude multi-résolutionnel local a été défini. La prochaine partie décrit comment le cadre multi-résolutionnel local est utilisé afin d'extraire de l'information d'une texture.
+Avec cette implémentation de la pyramide de Riesz, le cadre d'étude multirésolution local a été défini. La prochaine partie décrit comment le cadre multirésolution local est utilisé afin d'extraire de l'information d'une texture.
 
 \section{Congruence de phases}
 
-Le modèle de l'énergie locale est un modèle de détection de caractéristiques saillantes dans une image. Introduit par Morrone et al~\cite{morrone_mach_1986, morrone_feature_1987},il explique la présence de points saillants, tels que des bords et des coins, par l'alignement des phases locales de l'image. Le modèle d'énergie locale est basé sur l'observation que les bords et les coins sont des structures résultant de la superposition de sinusoïdes en phase les unes avec les autres. Contrairement aux autres méthodes de détection de caractéristiques, comme celles de Sobel ou Canny, le modèle de Morrone et al. est insensible aux variations de luminosité et de grossissement. Les méthodes par gradient utilisent en effet un seuillage pour déterminer les bords, qui dépend de la luminosité et du niveau de zoom de l'image. À l'inverse, le modèle de l'énergie locale permet le calcul de la \og congruence de phases \fg (PC), une grandeur à valeurs dans $[0, 1]$ mesurant uniformément la présence d'éléments caractéristiques dans une image et la proximité d'un texel à un élément caractéristique. La congruence de phases est le sujet de la partie qui suit.
+Le modèle de l'énergie locale est un modèle de détection de caractéristiques saillantes dans une image. Introduit par Morrone et al~\cite{morrone_mach_1986, morrone_feature_1987},il explique la présence de points saillants, tels que des bords et des coins, par l'alignement des phases locales de l'image. Le modèle d'énergie locale est basé sur l'observation que les bords et les coins sont des structures résultant de la superposition de sinusoïdes en phase les unes avec les autres. Contrairement aux autres méthodes de détection de caractéristiques, comme celles de Sobel ou Canny, le modèle de Morrone \textit{et al.} est insensible aux variations de luminosité et de grossissement. Les méthodes par gradient utilisent en effet un seuillage pour déterminer les bords, qui dépend de la luminosité et du niveau de zoom de l'image. À l'inverse, le modèle de l'énergie locale permet le calcul de la \og congruence de phases \fg (PC), une grandeur à valeurs dans $[0, 1]$ mesurant uniformément la présence d'éléments caractéristiques dans une image et la proximité d'un texel à un élément caractéristique. La congruence de phases est le sujet de la partie qui suit.
 
 \bigskip
 
-La formulation initiale de la PC utilise les coefficients de la série de Fourier du signal. Cependant, cette formulation comporte trois problèmes : elle est difficile à calculer et manipuler, elle ne permet pas une bonne localisation de l'information (le même problème qui pousse à utiliser un cadre de travail multi-résolutionnel pour l'étude du signal monogène), et elle ne prend pas en compte la répartition des fréquences. Ces problèmes et leur solution sont expliqués dans un premier temps en 1D, puis en 2D.
+La formulation initiale de la PC utilise les coefficients de la série de Fourier du signal. Cependant, cette formulation comporte trois problèmes : elle est difficile à calculer et manipuler, elle ne permet pas une bonne localisation de l'information (le même problème qui pousse à utiliser un cadre de travail multirésolution pour l'étude du signal monogène), et elle ne prend pas en compte la répartition des fréquences. Ces problèmes et leur solution sont expliqués dans un premier temps en 1D, puis en 2D.
 
 \subsubsection{Énergie locale}
 
@@ -866,7 +866,7 @@ avec $E(x) = \sqrt{f^2(x) + f_h^2(x)}$ l'énergie locale et $D_n$ les coefficien
 \end{equation}
 
 
-\subsubsection{Contexte multi-résolutionnel}
+\subsubsection{Contexte multirésolution}
 
 Pour obtenir de l'information localisée en termes de fréquence et sélectionner successivement différents niveaux d'échelle, Kovesi utilise des ondelettes sous forme de banque de filtres passe-bande. Les filtres passe-bande utilisés sont des filtres de Gabor, très similaires à ceux présentés dans la section introduisant le signal monogène~\ref{subsubsec:echelle}. En faisant la convolution du signal par ces filtres, il obtient de l'information localisée à la fois spatialement et fréquentiellement :
 
@@ -988,9 +988,9 @@ Pour étendre la méthode en deux dimensions, Kovesi utilise une banque de filtr
 
 où $\mathcal{O}$ est l'ensemble des orientations utilisées dans la banque de filtres. Le calcul de la répartition des fréquences $W_o(x)$ doit aussi se faire pour chaque orientation.
 
-\subsubsection{Utilisation du cadre multi-résolutionnel local de Riesz}
+\subsubsection{Utilisation du cadre multirésolution local de Riesz}
 
-Le but du travail présenté est d'appliquer le modèle de la PC pour synthétiser des textures présentant de la structure irrégulière. Cependant, le cadre multi-résolutionnel local de Riesz présenté précédemment nous semble plus intéressant que les banques d'ondelettes de Gabor présentée par Kovesi~\cite{kovesi_image_1995}, car il est plus compact, plus simple à implémenter et donne plus d'informations. Notamment, il donne accès à l'orientation locale en chaque pixel de l'image, information pertinente pour l'analyse de texture. Le modèle de la PC est donc adapté au cadre de travail avec une pyramide de Riesz :
+Le but du travail présenté est d'appliquer le modèle de la PC pour synthétiser des textures présentant de la structure irrégulière. Cependant, le cadre multirésolution local de Riesz présenté précédemment nous semble plus intéressant que les banques d'ondelettes de Gabor présentée par Kovesi~\cite{kovesi_image_1995}, car il est plus compact, plus simple à implémenter et donne plus d'informations. Notamment, il donne accès à l'orientation locale en chaque pixel de l'image, information pertinente pour l'analyse de texture. Le modèle de la PC est donc adapté au cadre de travail avec une pyramide de Riesz :
 
 \begin{equation}
     PC(\mathbf{x}) = \frac{W(x)E(\mathbf{x})}{\epsilon + \sum_{n=0}^{d} A_{n}(\mathbf{x})} = \frac{W(x)\sqrt{F^2(\mathbf{x})+R_1^2(\mathbf{x})+R_2^2(\mathbf{x})}}{\epsilon + \sum_{n=0}^{d} \sqrt{f_n^2(\mathbf{x}) + r_{1n}^2(\mathbf{x}) + r_{2n}^2(\mathbf{x})}},
@@ -1028,4 +1028,4 @@ avec $d$ la profondeur de la pyramide, $f_i, r_{1i}\, \text{et}\, r_{2i}$ les co
 
 \bigskip
 
-Avec cette formulation, une méthode de calcul de la PC a été définie pour le cadre multi-résolutionnel local de Riesz. Une comparaison entre la PC de Kovesi et celle proposée dans ce travail est faite à la figure~\ref{fig:phase-congruency-riesz}. Le chapitre suivant décrit comment la méthode a été implémentée et comment elle est utilisée pour la synthèse de texture.
+Avec cette formulation, une méthode de calcul de la PC a été définie pour le cadre multirésolution local de Riesz. Une comparaison entre la PC de Kovesi et celle proposée dans ce travail est faite à la figure~\ref{fig:phase-congruency-riesz}. Le chapitre suivant décrit comment la méthode a été implémentée et comment elle est utilisée pour la synthèse de texture.

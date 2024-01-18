@@ -1,16 +1,16 @@
 \chapter{Implémentations et synthèse de texture}
 \label{chap:chapitre2}
 
-Le travail décrit dans ce manuscrit est une étude exploratoire du modèle multi-résolutionnel local. En particulier le rôle de la PC appliquée dans le contexte de la synthèse de texture est examiné. La mise en application des concepts exposés précédemment ainsi que les résultats obtenus sont le sujet de la partie qui suit.
+Le travail décrit dans ce manuscrit est une étude exploratoire du modèle local multirésolution. En particulier le rôle de la PC appliquée dans le contexte de la synthèse de texture est examiné. La mise en application des concepts exposés précédemment ainsi que les résultats obtenus sont le sujet de la partie qui suit.
 
 \section{Implémentation}
 
-Les concepts d'énergie locale et de signal monogène sont des notions peu communes dans le traitement d'image, aucune librairie standard ne les implémente à notre connaissance. L'implémentation des algorithmes pour mettre en place le modèle multi-résolutionnel local est une des réalisations de ce travail. Le choix du logiciel pour faire ces implémentations a été une question importante.
+Les concepts d'énergie locale et de signal monogène sont des notions peu communes dans le traitement d'image, aucune librairie standard ne les implémente à notre connaissance. L'implémentation des algorithmes pour mettre en place le modèle local multirésolution est une des réalisations de ce travail. Le choix du logiciel pour faire ces implémentations a été une question importante.
 
 
 \paragraph{OpenCV}
 
-Malgré l'objectif final de travailler sur de la synthèse de texture, la première réalisation a été le développement d'un petit logiciel pour pouvoir itérer rapidement et expérimenter avec les concepts de base du modèle multi-résolutionnel local sur des images, sans prendre en compte les problématiques de la synthèse. Pour cela, un logiciel utilisant \cpp avec la librairie OpenCV~\cite{opencv_library} a été mis au point. OpenCV est une librairie standard de traitement d'image en temps réel et de vision par ordinateur, disponible pour les langages de programmation \cpp, Python et Java. Les images y sont représentées comme des matrices et les opérations de bas niveau courantes du traitement d'image y sont implémentées, comme la lecture, l'écriture, l'affichage, le filtrage, la convolution et autres. Le logiciel élaboré permet à un utilisateur de créer, visualiser et modifier les pyramides d'une image d'entrée, ainsi que de calculer et visualiser la PC. Avec ces fonctionnalités, des expérimentations ont été faites pour voir l'effet de différentes modifications et reconstructions de la pyramide de Riesz d'une image.
+Malgré l'objectif final de travailler sur de la synthèse de texture, la première réalisation a été le développement d'un petit logiciel pour pouvoir itérer rapidement et expérimenter avec les concepts de base du modèle local multirésolution sur des images, sans prendre en compte les problématiques de la synthèse. Pour cela, un logiciel utilisant \cpp avec la librairie OpenCV~\cite{opencv_library} a été mis au point. OpenCV est une librairie standard de traitement d'image en temps réel et de vision par ordinateur, disponible pour les langages de programmation \cpp, Python et Java. Les images y sont représentées comme des matrices et les opérations de bas niveau courantes du traitement d'image y sont implémentées, comme la lecture, l'écriture, l'affichage, le filtrage, la convolution et autres. Le logiciel élaboré permet à un utilisateur de créer, visualiser et modifier les pyramides d'une image d'entrée, ainsi que de calculer et visualiser la PC. Avec ces fonctionnalités, des expérimentations ont été faites pour voir l'effet de différentes modifications et reconstructions de la pyramide de Riesz d'une image.
 
 \bigskip
 
@@ -38,7 +38,7 @@ Godot a une classe qui gère les textures, mais la manipuler est compliqué et p
 
 \section{Sélection de niveaux de fréquences}
 
-La mise au point de la PC et l'utilisation d'un contexte multi-résolutionnel permettent de visualiser explicitement que les différents niveaux de structure trouvés dans une image sont liés à différents niveaux de d'échelle. Nous avons émis l'hypothèse que chaque niveau de structure distingué dans une image s'exprime comme la congruence en phases d'un sous-ensemble fréquentiel. Autrement dit, chaque échelle de structure est créée par un sous-ensemble de niveaux de la pyramide d'image. Pour vérifier l'hypothèse, la sélection de sous-ensembles de niveaux de la pyramide lors du calcul de la PC a été étudiée.
+La mise au point de la PC et l'utilisation d'un contexte multirésolution permettent de visualiser explicitement que les différents niveaux de structure trouvés dans une image sont liés à différents niveaux de d'échelle. Nous avons émis l'hypothèse que chaque niveau de structure distingué dans une image s'exprime comme la congruence en phases d'un sous-ensemble fréquentiel. Autrement dit, chaque échelle de structure est créée par un sous-ensemble de niveaux de la pyramide d'image. Pour vérifier l'hypothèse, la sélection de sous-ensembles de niveaux de la pyramide lors du calcul de la PC a été étudiée.
 
 \begin{equation}
     PC_{\mathcal{S}}(\mathbf{x}) = \frac{W(x)E(\mathbf{x})}{\epsilon + \sum_{n\in\mathcal{S}} A_{n}(\mathbf{x})},
@@ -133,7 +133,7 @@ Quelques expériences ont été faites pour exploiter le principe de voisinage, 
 \end{figure}
 
 
-Lutz et al.~\cite{lutz_preserving_2023} font le constat que les méthodes de synthèse par pavage apériodique échouent à préserver la fonction d'autocovariance de l'exemple. Une synthèse par pavage apériodique est une sorte de synthèse par réorganisation reposant sur un échantillonnage uniforme de l'exemple d'entrée. Des corrélations qui contribuent à préserver l'apparence de l'entrée sont mal reproduites, ce qui donne un air trop aléatoire au résultat. Pour mieux préserver les corrélations de l'exemple, ils améliorent l'étape d'échantillonnage en utilisant le principe d' \og échantillonnage préférentiel \fg. L'échantillonnage préférentiel consiste à influer l'échantillonnage en fonction d'une \og fonction de densité de probabilité \fg. En utilisant la fonction d'autocovariance comme densité de probabilité, ils montrent que les corrélations sont mieux préservées et que la synthèse est de meilleure qualité car elle préserve mieux l'apparence.
+Lutz \textit{et al.}~\cite{lutz_preserving_2023} font le constat que les méthodes de synthèse par pavage apériodique échouent à préserver la fonction d'autocovariance de l'exemple. Une synthèse par pavage apériodique est une sorte de synthèse par réorganisation reposant sur un échantillonnage uniforme de l'exemple d'entrée. Des corrélations qui contribuent à préserver l'apparence de l'entrée sont mal reproduites, ce qui donne un air trop aléatoire au résultat. Pour mieux préserver les corrélations de l'exemple, ils améliorent l'étape d'échantillonnage en utilisant le principe d' \og échantillonnage préférentiel \fg. L'échantillonnage préférentiel consiste à influer l'échantillonnage en fonction d'une \og fonction de densité de probabilité \fg. En utilisant la fonction d'autocovariance comme densité de probabilité, ils montrent que les corrélations sont mieux préservées et que la synthèse est de meilleure qualité car elle préserve mieux l'apparence.
 
 \bigskip
 
@@ -145,7 +145,7 @@ Pour la mise au point de méthode de synthèse, nous avons décidé de travaille
 
 \subsection{Échantillonneur préservant la congruence de phases}
 
-Pour mettre en place l'échantillonneur, la stratégie proposée par Pharr et al. dans leur livre~\cite{pharr_physically_2023} est reprise. L'échantillonnage de Pharr et al. utilise la méthode de la transformée inverse. Cette méthode d'échantillonnage repose sur le fait que l'échantillonnage d'une variable aléatoire de loi donnée peut se faire par l'échantillonnage d'une variable aléatoire uniforme et l'application de la fonction de répartition inverse de la loi. L'avantage de la méthode de la transformée inverse est que l'échantillonnage d'une variable de loi uniforme est facile, contrairement à celui d'une variable de loi quelconque. Pour appliquer la méthode d'échantillonnage de Pharr et al., il faut dans un premier temps définir l'échantillonnage d'une fonction constante par morceaux 1D. Soit une fonction $f$ constante par morceaux :
+Pour mettre en place l'échantillonneur, la stratégie proposée par Pharr \textit{et al.} dans leur livre~\cite{pharr_physically_2023} est reprise. L'échantillonnage de Pharr \textit{et al.} utilise la méthode de la transformée inverse. Cette méthode d'échantillonnage repose sur le fait que l'échantillonnage d'une variable aléatoire de loi donnée peut se faire par l'échantillonnage d'une variable aléatoire uniforme et l'application de la fonction de répartition inverse de la loi. L'avantage de la méthode de la transformée inverse est que l'échantillonnage d'une variable de loi uniforme est facile, contrairement à celui d'une variable de loi quelconque. Pour appliquer la méthode d'échantillonnage de Pharr \textit{et al.}, il faut dans un premier temps définir l'échantillonnage d'une fonction constante par morceaux 1D. Soit une fonction $f$ constante par morceaux :
 
 \begin{equation}
     f(x) = \left\{

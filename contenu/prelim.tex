@@ -6,7 +6,7 @@
 % ATTENTION : ne pas utiliser les macros \title \author ou \date !!!
 %
 \auteur{Vivien Gagliano}
-\titre{Étude multi-résolutionnelle locale d'images à structure irrégulière pour la synthèse de texture procédurale}
+\titre{Étude locale multirésolution d'images à structure irrégulière pour la synthèse de texture procédurale}
 
 % n'existe que si la thèse est rédigée en anglais (pas obligatoire)
 \englishTitle{Title in english}
@@ -23,13 +23,13 @@
 
 % DESCRIPTION DU SOMMAIRE (EN FRANCAIS) -----------
 \sommaire{
-En informatique graphique, des méthodes de création de contenu automatisées sont nécessaires pour faire face au besoin grandissant de contenu pour les environnements virtuels. Les détails des objets des scènes virtuelles sont classiquement ajoutés à l'aide de textures. La synthèse de texture permet la génération automatique de textures, en utilisant de l'aléatoire pour apporter de la variété dans le contenu créé. Les textures présentant de la structure irrégulière comme les sols pavés sont en enjeu non-résolu de la synthèse de texture car la reproduction fidèle de la structure est une problématique difficile.
+En informatique graphique, des méthodes de création de contenu automatisées sont nécessaires pour faire face au besoin grandissant de contenu pour les environnements virtuels. Les détails des objets des scènes virtuelles sont classiquement ajoutés à l'aide de textures. La synthèse de texture en permet la génération automatique, en utilisant de l'aléatoire pour apporter de la variété dans le contenu créé. Les textures présentant de la structure irrégulière comme les sols pavés sont un enjeu non-résolu de la synthèse car la reproduction fidèle de la structure est une problématique difficile.
 
 \bigskip
 
-Le travail décrit dans ce manuscript vise à l'amélioration de la synthèse de texture à structure irrégulière en utilisant des outils du domaine du traitement d'image. Le cadre de l'analyse multi-résolutionnelle locale des pyramides de Riesz est utilisé pour extraire de l'information sur la structure et mieux reproduire l'apparence des textures. Une grandeur mise au point pour la détection de bords, la congruence de phases, est employée pour formuler une méthode de synthèse préservant des corrélations désirables de l'exemple d'entrée. Plusieurs applications de ces outils sont présentées et discutées.
+Le travail décrit dans ce manuscript vise à l'amélioration de la synthèse de texture à structure irrégulière en utilisant des outils du domaine du traitement d'image. Le cadre de l'analyse locale multirésolution des pyramides de Riesz est utilisé pour extraire de l'information sur la structure et mieux reproduire l'apparence des textures. Une mesure mise au point pour la détection de bords, la congruence de phases, est employée pour formuler une méthode de synthèse préservant des corrélations désirables de l'exemple d'entrée. Plusieurs applications de ces outils sont présentées et discutées.
 }
-\motsCles{informatique graphique; synthèse de texture; analyse multi-résolutionnelle; transformée de Riesz; congruence de phases; détection de bords}
+\motsCles{informatique graphique; synthèse de texture; analyse multirésolution; transformée de Riesz; congruence de phases; détection de bords}
 
 %  optionnel, valide si votre document est en anglais 
 %  optionnal, valid only if your document is written in english, you have to provide a french abstract 
@@ -57,9 +57,9 @@ Un grand merci aussi à toutes les machines à café qui m'ont alimenté. Merci 
 
 \newacronym{1d}{1D}{une dimension}
 \newacronym{2d}{2D}{deux dimensions}
-\newacronym{gpu}{GPU}{{\it Graphics Processing Unit}, processeur graphique}
-\newacronym{cpu}{CPU}{{\it Central Processing Unit}, processeur central}
-\newacronym{pc}{PC}{{\it Phase Congruency}, congruence de phase}
+\newacronym{gpu}{GPU}{{\it Graphics Processing Unit}, carte graphique}
+\newacronym{cpu}{CPU}{{\it Central Processing Unit}, unité centrale de traitement (CPU)}
+%\newacronym{pc}{PC}{{\it Phase Congruency}, congruence de phase}
 
 % La commande \glsaddallunused qui est juste avant \end{document} dans le fichier .tex principal fait en sorte que toutes les entrées 
 % d'abréviations définies dans le fichier prelim sont incluses dans la liste
