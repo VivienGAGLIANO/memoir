@@ -202,7 +202,7 @@ L'équation~\ref{eq:2.1} est ainsi ré-écrite comme suit :
 \end{figure}
 
 Le signal $F_{\alpha}$ créé est la somme dans le domaine fréquentiel de $F$, signal original pair, et de $F_h$, signal impair. Dans le domaine temporel, les représentations de $F$
-et $F_h$ sont purement réelle et purement imaginaire respectivement. La représentation dans le domaine temporel de $F_h$ est nommée $f_h$. Dans le domaine temporel, $f_{\alpha}$ est donc un signal complexe sans composantes de fréquences négatives. $f_\alpha$ est un signal analytique et est appelé la \og représentation analytique \fg de $f$ :
+et $F_h$ sont purement réelle et purement imaginaire respectivement. La représentation dans le domaine temporel de $F_h$ est nommée $f_h$. Dans le domaine temporel, $f_{\alpha}$ est donc un signal complexe sans composantes de fréquences négatives. $f_\alpha$ est un signal analytique et est appelé la représentation analytique de $f$ :
 
 \begin{equation}
     f_{\alpha}(t) = \underbrace{f(t)}_\text{réel pur} + \underbrace{f_h(t)}_\text{imaginaire pur}.
@@ -238,7 +238,7 @@ La transformée de Hilbert de $f$ est calculée en utilisant les relations prés
     &= Ae^{i\omega_0t}.
 \end{align}
 
-Pour une sinusoïde, la transformée de Hilbert est un simple déphasage de $-\frac{\pi}2$ du signal original. Or la théorie de Fourier indique que n'importe quel signal générique peut être décomposé comme une somme de sinusoïdes. La transformée de Hilbert agit donc de la même manière sur tous les signaux : c'est un déphasage de $-\frac{\pi}2$ de chaque composante fréquentielle qui compose le signal. Le signal $f$ et sa transformée de Hilbert $f_h$ sont dits en \og quadrature de phase \fg. Le signal analytique s'exprime comme une exponentielle complexe.
+Pour une sinusoïde, la transformée de Hilbert est un simple déphasage de $-\frac{\pi}2$ du signal original. Or la théorie de Fourier indique que n'importe quel signal générique peut être décomposé comme une somme de sinusoïdes. La transformée de Hilbert agit donc de la même manière sur tous les signaux : c'est un déphasage de $-\frac{\pi}2$ de chaque composante fréquentielle qui compose le signal. Le signal $f$ et sa transformée de Hilbert $f_h$ sont dits en quadrature de phase. Le signal analytique s'exprime comme une exponentielle complexe.
 
 \bigskip
 
@@ -255,7 +255,7 @@ avec
     \phi(t) &= \arctan\left(\frac{f_h(t)}{f(t)}\right).
 \end{align}
 
-Cette représentation introduit le concept d' \og amplitude locale \fg et de \og phase locale \fg (ici temporellement locales). L'amplitude et la phase locales sont deux outils d'analyse particulièrement intéressants pour l'étude approfondie du signal original. L'amplitude locale agit comme une mesure de l'enveloppe du signal. La phase locale agit comme une mesure de la forme du signal. Par exemple, une phase de $0$ indique un extremum, et une phase de $\pm\pi$ indique un passage par zéro. La figure~\ref{fig:local-pha-amp} montre un signal avec son amplitude locale et sa phase locale. À partir uniquement du signal initial, de l'information sur des caractéristiques et sur l'apparence du signal est obtenue.
+Cette représentation introduit le concept d' amplitude locale et de phase locale (ici temporellement locales). L'amplitude et la phase locales sont deux outils d'analyse particulièrement intéressants pour l'étude approfondie du signal original. L'amplitude locale agit comme une mesure de l'enveloppe du signal. La phase locale agit comme une mesure de la forme du signal. Par exemple, une phase de $0$ indique un extremum, et une phase de $\pm\pi$ indique un passage par zéro. La figure~\ref{fig:local-pha-amp} montre un signal avec son amplitude locale et sa phase locale. À partir uniquement du signal initial, de l'information sur des caractéristiques et sur l'apparence du signal est obtenue.
 
 \begin{figure}[h]
 
@@ -463,7 +463,7 @@ Le filtre log-Gabor est appliqué au signal avant de lui appliquer la transform�
     \label{fig:log-gabor-filters}
 \end{figure}
 
-Étudier la réponse du signal sur une large gamme de fréquences et d'échelles offre une représentation locale du signal à différentes échelles. La représentation du signal à différentes échelles permet d'extraire de l'information sur les différentes structures du signal. Les informations locales sont présentées dans un graphique appelé \og scalogramme \fg. Le scalogramme montre la réponse d'un signal en fonction du temps et de l'échelle, comme montré à la figure~\ref{fig:scalogram}. Les différents niveaux de structure du signal y sont visibles. Choisir le niveau d'échelle étudié donne un meilleur sens à l'interprétation des informations locales.
+Étudier la réponse du signal sur une large gamme de fréquences et d'échelles offre une représentation locale du signal à différentes échelles. La représentation du signal à différentes échelles permet d'extraire de l'information sur les différentes structures du signal. Les informations locales sont présentées dans un graphique appelé scalogramme. Le scalogramme montre la réponse d'un signal en fonction du temps et de l'échelle, comme montré à la figure~\ref{fig:scalogram}. Les différents niveaux de structure du signal y sont visibles. Choisir le niveau d'échelle étudié donne un meilleur sens à l'interprétation des informations locales.
 
 \bigskip
 
@@ -480,7 +480,7 @@ Les informations obtenues avec le signal analytique sont différentes de celles 
 
 \subsection{Deux dimensions, signal monogène}
 
-Le modèle du signal analytique permet l'extraction d'informations locales pour des signaux 1D. Il serait intéressant d'accéder à ces informations pour des images, des signaux 2D. En effet l'importance de la phase dans l'analyse d'image est connue depuis longtemps~\cite{oppenheim_importance_1981}. Cependant, l'application n'est pas directe dans le cas de deux (ou plus) dimensions, car il y a une notion de direction à considérer. Le modèle du \og signal monogène \fg, proposé par Felsberg et Sommer~\cite{felsberg_monogenic_2001}, permet de prendre en compte la direction. La dérivation de ce modèle est expliquée dans cette partie.
+Le modèle du signal analytique permet l'extraction d'informations locales pour des signaux 1D. Il serait intéressant d'accéder à ces informations pour des images, des signaux 2D. En effet l'importance de la phase dans l'analyse d'image est connue depuis longtemps~\cite{oppenheim_importance_1981}. Cependant, l'application n'est pas directe dans le cas de deux (ou plus) dimensions, car il y a une notion de direction à considérer. Le modèle du signal monogène, proposé par Felsberg et Sommer~\cite{felsberg_monogenic_2001}, permet de prendre en compte la direction. La dérivation de ce modèle est expliquée dans cette partie.
 
 \subsubsection{Construction du signal monogène}
 
@@ -488,7 +488,7 @@ Pour créer la représentation analytique d'un signal 1D, un imaginaire pur en q
 
 \bigskip
 
-Pour générer les parties impaires du signal, une généralisation de la transformée de Hilbert est utilisée. La \og transformée de Riesz \fg généralise la transformée de Hilbert à plusieurs dimensions et permet l'expression du signal analytique pour des signaux multi-dimensionnels. Soit $f$ un signal d'un espace 2D de la variable $\mathbf{x} = (x, y)^T$ et $F$ sa représentation dans le domaine fréquentiel obtenue par transformée de Fourier 2D, avec $\mathbf{\omega}=(\omega_x, \omega_y)^T$ une fréquence 2D. Alors les parties impaires de $f$, $F_{o1}$ et $F_{o2}$, sont données par :
+Pour générer les parties impaires du signal, une généralisation de la transformée de Hilbert est utilisée. La transformée de Riesz généralise la transformée de Hilbert à plusieurs dimensions et permet l'expression du signal analytique pour des signaux multi-dimensionnels. Soit $f$ un signal d'un espace 2D de la variable $\mathbf{x} = (x, y)^T$ et $F$ sa représentation dans le domaine fréquentiel obtenue par transformée de Fourier 2D, avec $\mathbf{\omega}=(\omega_x, \omega_y)^T$ une fréquence 2D. Alors les parties impaires de $f$, $F_{o1}$ et $F_{o2}$, sont données par :
 
 \begin{align}
     F_{o1}(\mathbf{\omega}) &= \widehat{\mathcal{R}_1(f)}(\mathbf{\omega}) =
@@ -688,13 +688,13 @@ La pyramide d'image est ensuite étendue par Simoncelli \textit{et al.}~\cite{si
 
 \subsection{Pyramide gaussienne}
 
-Il existe deux types principaux de pyramide, passe-bas et passe-bande. Pour créer une pyramide passe-bas, aussi dite \og gaussienne \fg, deux étapes sont répétées itérativement :
+Il existe deux types principaux de pyramide, passe-bas et passe-bande. Pour créer une pyramide passe-bas, aussi dite gaussienne, deux étapes sont répétées itérativement :
 
 \bigskip
 
 \begin{itemize}
-    \item une étape de \og lissage \fg (ou filtrage) de l'image, qui consiste à appliquer un filtre passe-bas à l'image, afin de supprimer les hautes fréquences. Une image lissée est formée, où les détails fins ont été supprimés ;
-    \item une étape de \og sous-échantillonnage \fg, qui consiste à réduire la taille de l'image en gardant un pixel sur deux dans chaque direction. L'image obtenue a la moitié de la taille de l'image originale.
+    \item une étape de lissage (ou filtrage) de l'image, qui consiste à appliquer un filtre passe-bas à l'image, afin de supprimer les hautes fréquences. Une image lissée est formée, où les détails fins ont été supprimés ;
+    \item une étape de sous-échantillonnage, qui consiste à réduire la taille de l'image en gardant un pixel sur deux dans chaque direction. L'image obtenue a la moitié de la taille de l'image originale.
 \end{itemize}
 
 \bigskip
@@ -757,7 +757,7 @@ Il est intéressant de constater que les pyramides gaussiennes sont notamment ut
 
 \subsection{Pyramide laplacienne}
 
-La \og pyramide laplacienne \fg est une autre forme de pyramide qui correspond à un type passe-bande. Comme l'expliquent Burt et Adelson~\cite{burt_laplacian_1983}, les texels voisins dans une image sont souvent hautement corrélés. Encoder une image en termes de valeur de pixels cause une perte d'efficacité à cause de la redondance d'information. Il est possible d'encoder une image plus efficacement, c'est-à-dire avec moins de bits. La pyramide laplacienne est une représentation qui décorelle les texels voisins et qui répond donc à cette problématique.
+La pyramide laplacienne est une autre forme de pyramide qui correspond à un type passe-bande. Comme l'expliquent Burt et Adelson~\cite{burt_laplacian_1983}, les texels voisins dans une image sont souvent hautement corrélés. Encoder une image en termes de valeur de pixels cause une perte d'efficacité à cause de la redondance d'information. Il est possible d'encoder une image plus efficacement, c'est-à-dire avec moins de bits. La pyramide laplacienne est une représentation qui décorelle les texels voisins et qui répond donc à cette problématique.
 
 \subsubsection{Construction de la pyramide}
 
@@ -805,7 +805,7 @@ Avec une pyramide gaussienne, les images lissées sont de taille différente (di
 
 \subsection{Pyramide de Riesz}
 
-La \og pyramide de Riesz \fg est une extension de la pyramide laplacienne. C'est le cadre permet l'étude du signal monogène d'une image à différents niveaux d'échelle. La pyramide de Riesz est construite en appliquant la transformée de Riesz à chaque étage de la pyramide laplacienne. La pyramide de Riesz est illustrée à la figure~\ref{fig:riesz-pyramid-cameraman}. Les informations locales sont ensuite calculées pour chaque étage de la pyramide. Les informations locales des différents niveaux sont mis en relation dans la suite des travaux afin plus d'information sur l'image, comme expliqué dans le chapitre implémentations~\ref{chap:chapitre2}.
+La pyramide de Riesz est une extension de la pyramide laplacienne. C'est le cadre permet l'étude du signal monogène d'une image à différents niveaux d'échelle. La pyramide de Riesz est construite en appliquant la transformée de Riesz à chaque étage de la pyramide laplacienne. La pyramide de Riesz est illustrée à la figure~\ref{fig:riesz-pyramid-cameraman}. Les informations locales sont ensuite calculées pour chaque étage de la pyramide. Les informations locales des différents niveaux sont mis en relation dans la suite des travaux afin plus d'information sur l'image, comme expliqué dans le chapitre implémentations~\ref{chap:chapitre2}.
 
 \bigskip
 
@@ -844,7 +844,7 @@ Avec cette implémentation de la pyramide de Riesz, le cadre d'étude multiréso
 
 \section{Congruence de phases}
 
-Le modèle de l'énergie locale est un modèle de détection de caractéristiques saillantes dans une image. Introduit par Morrone et al~\cite{morrone_mach_1986, morrone_feature_1987},il explique la présence de points saillants, tels que des bords et des coins, par l'alignement des phases locales de l'image. Le modèle d'énergie locale est basé sur l'observation que les bords et les coins sont des structures résultant de la superposition de sinusoïdes en phase les unes avec les autres. Contrairement aux autres méthodes de détection de caractéristiques, comme celles de Sobel ou Canny, le modèle de Morrone \textit{et al.} est insensible aux variations de luminosité et de grossissement. Les méthodes par gradient utilisent en effet un seuillage pour déterminer les bords, qui dépend de la luminosité et du niveau de zoom de l'image. À l'inverse, le modèle de l'énergie locale permet le calcul de la \og congruence de phases \fg (PC), une grandeur à valeurs dans $[0, 1]$ mesurant uniformément la présence d'éléments caractéristiques dans une image et la proximité d'un texel à un élément caractéristique. La congruence de phases est le sujet de la partie qui suit.
+Le modèle de l'énergie locale est un modèle de détection de caractéristiques saillantes dans une image. Introduit par Morrone et al~\cite{morrone_mach_1986, morrone_feature_1987},il explique la présence de points saillants, tels que des bords et des coins, par l'alignement des phases locales de l'image. Le modèle d'énergie locale est basé sur l'observation que les bords et les coins sont des structures résultant de la superposition de sinusoïdes en phase les unes avec les autres. Contrairement aux autres méthodes de détection de caractéristiques, comme celles de Sobel ou Canny, le modèle de Morrone \textit{et al.} est insensible aux variations de luminosité et de grossissement. Les méthodes par gradient utilisent en effet un seuillage pour déterminer les bords, qui dépend de la luminosité et du niveau de zoom de l'image. À l'inverse, le modèle de l'énergie locale permet le calcul de la congruence de phases (PC), une grandeur à valeurs dans $[0, 1]$ mesurant uniformément la présence d'éléments caractéristiques dans une image et la proximité d'un texel à un élément caractéristique. La congruence de phases est le sujet de la partie qui suit.
 
 \bigskip
 
