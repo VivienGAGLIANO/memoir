@@ -38,13 +38,13 @@ Godot a une classe qui gère les textures, mais la manipuler est compliqué et p
 
 \section{Sélection de niveaux de fréquences}
 
-La mise au point de la PC et l'utilisation d'un contexte multirésolution permettent de visualiser explicitement que les différents niveaux de structure trouvés dans une image sont liés à différents niveaux de d'échelle. Nous avons émis l'hypothèse que chaque niveau de structure distingué dans une image s'exprime comme la congruence en phases d'un sous-ensemble fréquentiel. Autrement dit, chaque échelle de structure est créée par un sous-ensemble de niveaux de la pyramide d'image. Pour vérifier l'hypothèse, la sélection de sous-ensembles de niveaux de la pyramide lors du calcul de la PC a été étudiée.
+La mise au point de la PC et l'utilisation d'un contexte multirésolution permettent de visualiser explicitement que les différents niveaux de structure trouvés dans une image sont liés à différents niveaux de d'échelle. Nous avons émis l'hypothèse que chaque niveau de structure distingué dans une image s'exprime comme la congruence en phases d'un sous-ensemble fréquentiel. Autrement dit, chaque échelle de structure est créée par un sous-ensemble de niveaux de la pyramide d'image. Pour vérifier l'hypothèse, la sélection de sous-ensembles de niveaux de la pyramide lors du calcul de la PC a été étudiée :
 
 \begin{equation}
     PC_{\mathcal{S}}(\mathbf{x}) = \frac{W(x)E(\mathbf{x})}{\epsilon + \sum_{n\in\mathcal{S}} A_{n}(\mathbf{x})},
 \end{equation}
 
-où $\mathcal{S}$ est un sous-ensemble de niveaux de la pyramide. L'algorithme a été testé avec tous les $\mathcal{S} = \llbracket a, b\rrbracket$ où $1 \leq a \leq b \leq d$. La sélection de niveaux a permis de confirmer que différents niveaux de structure sont bien causés par différents sous-ensembles fréquentiels, comme montré à la figure~\ref{fig:pc-selection-niveaux}.
+\noindent où $\mathcal{S}$ est un sous-ensemble de niveaux de la pyramide. L'algorithme a été testé avec tous les $\mathcal{S} = \llbracket a, b\rrbracket$ où $1 \leq a \leq b \leq d$. La sélection de niveaux a permis de confirmer que différents niveaux de structure sont bien causés par différents sous-ensembles fréquentiels, comme montré à la figure~\ref{fig:pc-selection-niveaux}.
 
 \bigskip
 
@@ -107,7 +107,7 @@ L'intérêt principal et raison d'être du cadre de travail présenté précéde
 
 \bigskip
 
-Quelques expériences ont été faites pour exploiter le principe de voisinage, puis une méthode de synthèse de texture a été mise au point pour traiter les textures à structure irrégulière. Cette étude s'est intéressée à un type de textures en particulier, qui présentent des caractéristiques communes. Les textures considérées sont caractérisées par la présence de pavés de toute sorte, entre lesquels se trouve un matériau unique que nous appellons arrière-plan. Ces textures représentent souvent des sols. Quelques exemples sont montrés à la figure~\ref{fig:typical-textures}.
+Quelques expériences ont été faites pour exploiter le principe de voisinage, puis une méthode de synthèse de texture a été mise au point pour traiter les textures à structure irrégulière. Cette étude s'est intéressée à un type de textures en particulier, qui présentent des caractéristiques communes. Les textures considérées sont caractérisées par la présence de pavés de toute sorte, entre lesquels se trouve un matériau unique que nous appelons arrière-plan. Ces textures représentent souvent des sols. Quelques exemples sont montrés à la figure~\ref{fig:typical-textures}.
 
 \bigskip
 
@@ -133,7 +133,7 @@ Quelques expériences ont été faites pour exploiter le principe de voisinage, 
 \end{figure}
 
 
-Lutz \textit{et al.}~\cite{lutz_preserving_2023} font le constat que les méthodes de synthèse par pavage apériodique échouent à préserver la fonction d'autocovariance de l'exemple. Une synthèse par pavage apériodique est une sorte de synthèse par réorganisation reposant sur un échantillonnage uniforme de l'exemple d'entrée. Des corrélations qui contribuent à préserver l'apparence de l'entrée sont mal reproduites, ce qui donne un air trop aléatoire au résultat. Pour mieux préserver les corrélations de l'exemple, ils améliorent l'étape d'échantillonnage en utilisant le principe d' échantillonnage préférentiel. L'échantillonnage préférentiel consiste à influer l'échantillonnage en fonction d'une fonction de densité de probabilité. En utilisant la fonction d'autocovariance comme densité de probabilité, ils montrent que les corrélations sont mieux préservées et que la synthèse est de meilleure qualité car elle préserve mieux l'apparence.
+Lutz \textit{et al.}~\cite{lutz_preserving_2023} font le constat que les méthodes de synthèse par pavage apériodique échouent à préserver la fonction d'autocovariance de l'exemple. Une synthèse par pavage apériodique est une sorte de synthèse par réorganisation reposant sur un échantillonnage uniforme de l'exemple d'entrée. Des corrélations qui contribuent à préserver l'apparence de l'entrée sont mal reproduites, ce qui donne un air trop aléatoire au résultat. Pour mieux préserver les corrélations de l'exemple, ils améliorent l'étape d'échantillonnage en utilisant le principe d'échantillonnage préférentiel. L'échantillonnage préférentiel consiste à influer l'échantillonnage en fonction d'une fonction de densité de probabilité. En utilisant la fonction d'autocovariance comme densité de probabilité, ils montrent que les corrélations sont mieux préservées et que la synthèse est de meilleure qualité car elle préserve mieux l'apparence.
 
 \bigskip
 
@@ -145,7 +145,7 @@ Pour la mise au point de méthode de synthèse, nous avons décidé de travaille
 
 \subsection{Échantillonneur préservant la congruence de phases}
 
-Pour mettre en place l'échantillonneur, la stratégie proposée par Pharr \textit{et al.} dans leur livre~\cite{pharr_physically_2023} est reprise. L'échantillonnage de Pharr \textit{et al.} utilise la méthode de la transformée inverse. Cette méthode d'échantillonnage repose sur le fait que l'échantillonnage d'une variable aléatoire de loi donnée peut se faire par l'échantillonnage d'une variable aléatoire uniforme et l'application de la fonction de répartition inverse de la loi. L'avantage de la méthode de la transformée inverse est que l'échantillonnage d'une variable de loi uniforme est facile, contrairement à celui d'une variable de loi quelconque. Pour appliquer la méthode d'échantillonnage de Pharr \textit{et al.}, il faut dans un premier temps définir l'échantillonnage d'une fonction constante par morceaux 1D. Soit une fonction $f$ constante par morceaux :
+Pour mettre en place l'échantillonneur, la stratégie proposée par Pharr \textit{et al.} dans leur livre~\cite{pharr_physically_2023} est reprise. L'échantillonnage de Pharr \textit{et al.} utilise la méthode de la transformée inverse. Cette méthode d'échantillonnage repose sur le fait que l'échantillonnage d'une variable aléatoire de loi donnée peut se faire par l'échantillonnage d'une variable aléatoire uniforme et l'application de la fonction de répartition inverse de la loi. L'avantage de la méthode de la transformée inverse est que l'échantillonnage d'une variable de loi uniforme est facile, contrairement à celui d'une variable de loi quelconque. Pour appliquer la méthode d'échantillonnage de Pharr \textit{et al.}, il faut dans un premier temps définir l'échantillonnage d'une fonction constante par morceaux 1D. Soit une fonction $f$ constante par morceaux
 
 \begin{equation}
     f(x) = \left\{
@@ -158,19 +158,19 @@ Pour mettre en place l'échantillonneur, la stratégie proposée par Pharr \text
     \right.
 \end{equation}
 
-d'intégrale $I$ :
+\noindent d'intégrale $I$
 
 \begin{equation}
     I = \int_{0}^{1} f(x) dx = \sum_{i=0}^{N-1} \frac{v_i}N.
 \end{equation}
 
-Sans perte de généralité, $f$ est définie entre 0 et 1 et les $x_i$ sont disposés de manière régulière $x_i = i / N$. La fonction de densité de probabilité associée à $f$ est alors $p(x) = f(x) / I$. La fonction de répartition $F$ est linéaire par morceaux, définie aux $x_i$ :
+Sans perte de généralité, $f$ est définie entre 0 et 1 et les $x_i$ sont disposés de manière régulière $x_i = i / N$. La fonction de densité de probabilité associée à $f$ est alors $p(x) = f(x) / I$. La fonction de répartition $F$ est linéaire par morceaux, définie aux $x_i$ et de coefficient directeur $v_i/I$ entre $x_i$ et $x_{i+1}$
 
 \begin{equation}
-    F(x_i) = \int_{0}^{x_i} p(t) dt = \sum_{j=0}^{x_i} \frac{v_j}{NI} = F(x_i-1) + \frac{v_i-1}{NI},
+    F(x_i) = \int_{0}^{x_i} p(t) dt = \sum_{j=0}^{x_i} \frac{v_j}{NI} = F(x_i-1) + \frac{v_i-1}{NI}.
 \end{equation}
 
-et de coefficient directeur $v_i/I$ entre $x_i$ et $x_{i+1}$. L'échantillonnage de $f$ se fait en échantillonnant une variable aléatoire uniforme $u$ et en calculant $F^{-1}(u)$.
+L'échantillonnage de $f$ se fait en échantillonnant une variable aléatoire uniforme $u$ et en calculant $F^{-1}(u)$.
 
 \bigskip
 
@@ -325,4 +325,4 @@ Le mélange des couleurs observé est aussi dû au choix de travailler avec des 
 
 \bigskip
 
-Enfin une dernière observation est que la synthèse gagnerait en variété si une disposition des pixels autre qu'un pavage périodique était utilisée. Le choix du pavage périodique est une question de simplicité, car le sujet de l'étude est l'échantillonneur plutôt que la disposition. L'utilisation de l'échantillonneur permet d'atténuer les artefacts visuels dûs à la répétition du pavage périodique. Cependant les artefacts visuels sont encore visibles lorsque la texture est observée de loin, comme à la figure~\ref{fig:pc-preserving-synthesis}. La recherche de méthode d'organisation de contenu pour générer des nouvelles dispositions (par exemple des pavés de forme similaire, mais différente à tous les autres pavés de l'exemple) en temps réel est néanmoins un sujet difficile et reste encore ouvert aujourd'hui~\cite{guehl_semi-procedural_2020, baldi_differentiable_2023}.
+Enfin une dernière observation est que la synthèse gagnerait en variété si une disposition des pixels autre qu'un pavage périodique était utilisée. Le choix du pavage périodique est une question de simplicité, car le sujet de l'étude est l'échantillonneur plutôt que la disposition. L'utilisation de l'échantillonneur permet d'atténuer les artefacts visuels dûs à la répétition du pavage périodique. Cependant les artefacts visuels sont encore visibles lorsque la texture est observée de loin, comme à la figure~\ref{fig:pc-preserving-synthesis}. La recherche de méthode d'organisation de contenu pour générer des nouvelles dispositions (par exemple des pavés de forme similaire, mais différente à tous les autres pavés de l'exemple) en temps réel est néanmoins un sujet difficile et reste encore ouvert aujourd'hui~\cite{baldi_differentiable_2023, guehl_semi-procedural_2020}.

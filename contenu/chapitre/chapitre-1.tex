@@ -1,4 +1,4 @@
-\chapter[Modèle de Riesz]{Étude théorique du modèle de Riesz} % signal monogénique ?
+\chapter[Modèle de Riesz]{Étude théorique du modèle de Riesz}
 \label{chap:chapitre1}
 
 Dans le but de synthétiser du contenu avec de la structure irrégulière, une approche locale est adoptée. Ce travail utilise le modèle du signal monogène~\cite{felsberg_monogenic_2001}, qui permet d'extraire l'énergie locale, en s'appuyant sur la transformée de Riesz. Le signal monogène est ensuite mis en application dans un cadre multirésolution, en utilisant une pyramide de Riesz~\cite{wadhwa_riesz_2014} pour calculer la congruence de phases.
@@ -14,10 +14,10 @@ Le signal monogène est un outil du domaine du traitement du signal introduit pa
 Pour comprendre l'utilité du signal monogène, il faut expliquer le fonctionnement du signal analytique. Le signal monogène est ensuite défini comme l'extension du signal analytique aux signaux de dimension arbitraire. Le signal analytique est une méthode de représentation d'un signal 1D à valeurs réelles, qui facilite la manipulation et l'extraction de certaines informations du signal original. Le constat qui donne lieu à cette représentation est que pour un signal à valeurs réelles, les fréquences négatives sont superflues pour sa représentation de Fourier. En effet, la transformée de Fourier $F(\omega)$ d'un signal à valeurs réelles $f(t)$ présente une symétrie hermitienne :
 
 \begin{equation}
-    F(-\omega) = \overline{F(\omega)}
+    F(-\omega) = \overline{F(\omega)},
 \end{equation}
 
-avec $\overline{\cdot}$ l'opérateur de conjugaison complexe. Les fréquences négatives, non-nécessaires, peuvent donc être mises de côté sans perte d'information. Un nouveau signal est construit en n'utilisant que les fréquences positives de $f(t)$. Le signal $F_{\alpha}$ est d'abord exprimé dans le domaine de Fourier :
+\noindent où $\overline{\{\}}$ est l'opérateur de conjugaison complexe. Les fréquences négatives, non-nécessaire, peuvent donc être mises de côté sans perte d'information. Un nouveau signal est construit en n'utilisant que les fréquences positives de $f(t)$. Le signal $F_{\alpha}$ est d'abord exprimé dans le domaine de Fourier :
 
 \begin{equation}
     F_{\alpha}(\omega) = \left\{
@@ -29,7 +29,7 @@ avec $\overline{\cdot}$ l'opérateur de conjugaison complexe. Les fréquences n�
     \right.
 \end{equation}
 
-où l'amplitude des composantes de fréquences positives est doublée, par soucis de conservation d'énergie. Avec cette formulation, toute l'information du signal original est conservée. Cette nouvelle forme permet en plus de faire des manipulations précédemment impossibles, qui permettent de mieux comprendre le signal.
+\noindent où l'amplitude des composantes de fréquences positives est doublée, par soucis de conservation d'énergie. Avec cette formulation, toute l'information du signal original est conservée. Cette nouvelle forme permet en plus de faire des manipulations précédemment impossibles, qui permettent de mieux comprendre le signal.
 
 \begin{figure}[h]
     %\noindent
@@ -119,13 +119,13 @@ où l'amplitude des composantes de fréquences positives est doublée, par souci
     \label{fig:complex-analytic-representation}
 \end{figure}
 
-La suppression des composantes de fréquences peut être vue comme l'ajout d'un certain signal impair au signal de base.
+La suppression des composantes de fréquences peut être vue comme l'ajout d'un certain signal impair au signal de base
 
 \begin{equation} \label{eq:2.1}
-    F_{\alpha}(\omega) = F(\omega) + F_h(\omega)
+    F_{\alpha}(\omega) = F(\omega) + F_h(\omega).
 \end{equation}
 
-La formation du signal analytique est montrée dans la figure~\ref{fig:complex-analytic-representation}. Dans l'équation~\ref{eq:2.1}, $F_h(\omega)$ est la « version impaire » du signal $F(\omega)$ :
+La formation du signal analytique est montrée dans la figure~\ref{fig:complex-analytic-representation}. Dans l'équation~\ref{eq:2.1}, $F_h(\omega)$ est la « version impaire » du signal $F(\omega)$
 
 \begin{equation}
     F_h(\omega) = \left\{
@@ -137,7 +137,7 @@ La formation du signal analytique est montrée dans la figure~\ref{fig:complex-a
     \right.
 \end{equation}
 
-qui se reformule à l'aide de la fonction signe :
+\noindent qui se reformule à l'aide de la fonction signe :
 
 \begin{equation}
     F_h(\omega) = \sgn(\omega)\cdot F(\omega).
@@ -214,11 +214,11 @@ Le signal ajouté pour annuler les fréquences $F_h$ est par ailleurs un objet c
     f_h(t) = i \cdot \textnormal{p.v.} \int_{-\infty}^{\infty} \frac{f(t)}{\pi(t-\tau)} \,d\tau,
 \end{equation}
 
-où p.v. est la valeur principale de Cauchy. Cette intégrale représente la convolution avec la distribution $\frac 1{\pi t}$. L'intégrale est impropre à cause de la singularité en $t=\tau$. La valeur principale est nécessaire pour définir correctement cet objet. Dû à la complexité de l'intégrale, l'expression fréquentielle de la transformée de Hilbert est utilisée à la place :
+\noindent où p.v. est la valeur principale de Cauchy. Cette intégrale représente la convolution avec la distribution $\frac 1{\pi t}$. L'intégrale est impropre à cause de la singularité en $t=\tau$. La valeur principale est nécessaire pour définir correctement cet objet. Dû à la complexité de l'intégrale, l'expression fréquentielle de la transformée de Hilbert est utilisée à la place :
 
-\begin{align*}
+\begin{align}
     &\hil(F) = F_h = \sgn\cdot F \\
-\end{align*}
+\end{align}
 
 
 \subsubsection{Amplitude et phase locales}
@@ -231,12 +231,12 @@ Pour comprendre l'intérêt du signal analytique, l'exemple d'une fonction sinus
 
 La transformée de Hilbert de $f$ est calculée en utilisant les relations présentées précédemment, ce qui donne la représentation analytique du signal :
 
-\begin{align}
+\begin{align*}
     f_h(t) &= iA\cos(\omega_0t) \\
     f_{\alpha}(t) &= f(t) + f_h(t) \\
     &= A\sin(\omega_0t)+iA\cos(\omega_0t) \\
     &= Ae^{i\omega_0t}.
-\end{align}
+\end{align*}
 
 Pour une sinusoïde, la transformée de Hilbert est un simple déphasage de $-\frac{\pi}2$ du signal original. Or la théorie de Fourier indique que n'importe quel signal générique peut être décomposé comme une somme de sinusoïdes. La transformée de Hilbert agit donc de la même manière sur tous les signaux : c'est un déphasage de $-\frac{\pi}2$ de chaque composante fréquentielle qui compose le signal. Le signal $f$ et sa transformée de Hilbert $f_h$ sont dits en quadrature de phase. Le signal analytique s'exprime comme une exponentielle complexe.
 
@@ -245,10 +245,10 @@ Pour une sinusoïde, la transformée de Hilbert est un simple déphasage de $-\f
 Puisque tout signal est représenté comme la somme d'un réel et d'un imaginaire pur, il est possible d'utiliser une représentation en coordonnées polaires pour exprimer l'exponentielle complexe. L'amplitude et la phase du signal sont alors variables au cours du temps :
 
 \begin{equation}
-    f_{\alpha} (t) = A(t)e^{i\phi(t)}.
+    f_{\alpha} (t) = A(t)e^{i\phi(t)},
 \end{equation}
 
-avec 
+\noindent avec
 
 \begin{align}
     A(t) &= \sqrt{f(t)^2 + h_h(t)^2} \\
@@ -488,7 +488,7 @@ Pour créer la représentation analytique d'un signal 1D, un imaginaire pur en q
 
 \bigskip
 
-Pour générer les parties impaires du signal, une généralisation de la transformée de Hilbert est utilisée. La transformée de Riesz généralise la transformée de Hilbert à plusieurs dimensions et permet l'expression du signal analytique pour des signaux multi-dimensionnels. Soit $f$ un signal d'un espace 2D de la variable $\mathbf{x} = (x, y)^T$ et $F$ sa représentation dans le domaine fréquentiel obtenue par transformée de Fourier 2D, avec $\mathbf{\omega}=(\omega_x, \omega_y)^T$ une fréquence 2D. Alors les parties impaires de $f$, $F_{o1}$ et $F_{o2}$, sont données par :
+Pour générer les parties impaires du signal, une généralisation de la transformée de Hilbert est utilisée. La transformée de Riesz généralise la transformée de Hilbert à plusieurs dimensions et permet l'expression du signal analytique pour des signaux multi-dimensionnels. Soit $f$ un signal d'un espace 2D de la variable $\mathbf{x} = (x, y)^T$ et $F$ sa représentation dans le domaine fréquentiel obtenue par transformée de Fourier 2D, avec $\mathbf{\omega}=(\omega_x, \omega_y)^T$ une fréquence 2D. Alors les parties impaires de $f$, $F_{o1}$ et $F_{o2}$, sont données par
 
 \begin{align}
     F_{o1}(\mathbf{\omega}) &= \widehat{\mathcal{R}_1(f)}(\mathbf{\omega}) =
@@ -508,7 +508,7 @@ Pour générer les parties impaires du signal, une généralisation de la transf
     \label{eq:2.20}
 \end{align}
 
-Avec cette définition de $F_{o1}$ et $F_{o2}$, les signaux correspondant dans le domaine spatial sont des signaux à valeurs réelles. En effet un signal 2D à valeurs réelles $f$ a un spectre dont la partie réelle est paire et la partie imaginaire impaire, soit :
+Avec cette définition de $F_{o1}$ et $F_{o2}$, les signaux correspondant dans le domaine spatial sont des signaux à valeurs réelles. En effet un signal 2D à valeurs réelles $f$ a un spectre dont la partie réelle est paire et la partie imaginaire impaire, soit
 
 \begin{equation}
     Re\{F(\omega)\} = Re\{F(-\omega)\}, \quad Im\{F(\omega)\} = -Im\{F(-\omega)\}.
@@ -555,7 +555,7 @@ Le signal monogène est alors exprimé comme un vecteur à trois composantes, un
     \right],
 \end{equation}
 
-où $f_e$ est le signal original, indexé par un $e$ pour souligner qu'il représente la partie paire du signal monogène. Une représentation d'un signal et de ses parties impaires est montrée à la figure~\ref{fig:monogenic-signal-disk}. Dans la figure, les parties impaires détectent des changements verticaux et horizontaux dans le signal. La détection des changements est due au fait que la transformée de Riesz présente une ressemblance et une connexion au gradient (l'équation~\ref{eq:2.20} rappelle fortement la définition du gradient, à un facteur près). La transformée de Hilbert présente d'ailleurs aussi une connexion au gradient en 1D. La relation entre les transformées étudiées et le gradient n'est pas le sujet de cette étude et n'est pas explorée plus en profondeur. La personne intéressée se référera à Unser \textit{et al.}\cite{unser_multiresolution_2009} pour plus de détails.
+\noindent où $f_e$ est le signal original, indexé par un $e$ pour souligner qu'il représente la partie paire du signal monogène. Une représentation d'un signal et de ses parties impaires est montrée à la figure~\ref{fig:monogenic-signal-disk}. Dans la figure, les parties impaires détectent des changements verticaux et horizontaux dans le signal. La détection des changements est due au fait que la transformée de Riesz présente une ressemblance et une connexion au gradient (l'équation~\ref{eq:2.20} rappelle fortement la définition du gradient, à un facteur près). La transformée de Hilbert présente d'ailleurs aussi une connexion au gradient en 1D. La relation entre les transformées étudiées et le gradient n'est pas le sujet de cette étude et n'est pas explorée plus en profondeur. La personne intéressée se référera à Unser \textit{et al.}\cite{unser_multiresolution_2009} pour plus de détails.
 
 \bigskip
 
@@ -565,20 +565,20 @@ Il est aussi commun de se représenter le signal monogène comme un vecteur de d
     f_o(\mathbf{x}) = \sqrt{f_{o1}(\mathbf{x})^2 + f_{o2}(\mathbf{x})^2}.
 \end{equation}
 
-La transformée de Riesz peut s'exprimer directement dans le domaine spatial. Comme la transformée de Hilbert, la représentation spatiale de la transformée de Riesz est un objet mathématique compliqué, une intégrale singulière :
+La transformée de Riesz peut s'exprimer directement dans le domaine spatial. Comme la transformée de Hilbert, la représentation spatiale de la transformée de Riesz est un objet mathématique compliqué, qui une intégrale singulière :
 
 \begin{equation}
-    R_if(x) = c_d \lim_{\epsilon \to 0}\int_{\mathbb{R}^d\setminus B_\epsilon(x)}\frac{(x_i-t_i)f(t)}{|x-t|^{d+1}}\,dt,
+    R_if(x) = c_d \lim_{\epsilon \to 0}\int_{\mathbb{R}^d\setminus B_\epsilon(x)}\frac{(x_i-t_i)f(t)}{|x-t|^{d+1}}\,dt.
     \label{eq:riesz-transform-spatial}
 \end{equation}
 
-pour $i\in\llbracket 0, d\rrbracket$ avec $d$ la dimension. $c_d$ est une constante de normalisation dimensionnelle :
+$i\in\llbracket 0, d\rrbracket$ représente la coordonnée avec $d$ la dimension et $c_d$ est une constante de normalisation dimensionnelle
 
 \begin{equation}
-    c_d = \frac1{\pi\omega_{d-1}} = \frac{\Gamma((d+1)/2)}{\pi^{(d+1)/2}},
+    c_d = \frac1{\pi\omega_{d-1}} = \frac{\Gamma((d+1)/2)}{\pi^{(d+1)/2}}.
 \end{equation}
 
-avec $\omega_{d-1}$ le volume de la $(d-1)$-sphère unité. Au vue de la complexité de calcul et de manipulation de cette expression, la formulation fréquentielle est utilisée dans la suite du travail.
+$\omega_{d-1}$ est le volume de la $(d-1)$-sphère unité. Au vue de la complexité de calcul et de manipulation de cette expression, la formulation fréquentielle est utilisée dans la suite du travail.
 
 \subsubsection{Amplitude, phase et orientation locales}
 
@@ -593,20 +593,20 @@ Avec le signal monogène, le concept d'informations locales est maintenant déri
     \label{fig:spherical-representation}
 \end{figure}
 
-L'amplitude locale $A$ représente, comme en 1D, le rayon de la représentation :
+L'amplitude locale $A$ représente, comme en 1D, le rayon de la représentation
 
-\begin{align}
+\begin{align*}
     A(\mathbf{x}) &= \sqrt{f_e(\mathbf{x})^2 + f_{o1}(\mathbf{x})^2 + f_{o2}(\mathbf{x})^2} \\
     &= \sqrt{f_e(\mathbf{x})^2 + f_o(\mathbf{x})^2}.
-\end{align}
+\end{align*}
 
-La phase locale $\phi$ mesure l'angle entre la partie paire $f_e$ et la partie impaire combinée $f_o$. La phase représente ainsi l'angle d'élévation de la représentation :
+La phase locale $\phi$ mesure l'angle entre la partie paire $f_e$ et la partie impaire combinée $f_o$. La phase représente ainsi l'angle d'élévation de la représentation
 
 \begin{equation}
     \phi(\mathbf{x}) = \arctan\left(\frac{f_o(\mathbf{x})}{f_e(\mathbf{x})}\right).
 \end{equation}
 
-Enfin l'orientation locale $\theta$ complète la représentation en donnant l'angle d'azimut. L'orientation locale indique la direction dominante dans l'image à cet endroit, exprimée comme l'orientation de la partie impaire $f_o$ :
+Enfin l'orientation locale $\theta$ complète la représentation en donnant l'angle d'azimut. L'orientation locale indique la direction dominante dans l'image à cet endroit, exprimée comme l'orientation de la partie impaire $f_o$
 
 \begin{equation}
     \theta(\mathbf{x}) = \arctan\left(\frac{f_{o2}(\mathbf{x})}{f_{o1}(\mathbf{x})}\right).
@@ -732,7 +732,7 @@ Les deux étapes sont répétées sur l'étage nouvellement créé, et ce jusqu'
     \label{fig:gaussian-pyramid}
 \end{figure}
 
-Différents noyaux de lissage ont été proposés dans la littérature. La famille des noyaux binomiaux par exemple est fréquemment utilisée. L'implémentation proposée dans ce travail utilise les noyaux binomiaux, qui s'expriment à l'aide des coefficients binomiaux :
+Différents noyaux de lissage ont été proposés dans la littérature. La famille des noyaux binomiaux par exemple est fréquemment utilisée. L'implémentation proposée dans ce travail utilise les noyaux binomiaux, qui s'expriment à l'aide des coefficients binomiaux
 
 \begin{equation}
     k = \frac{1}{256}\left[
@@ -743,7 +743,7 @@ Différents noyaux de lissage ont été proposés dans la littérature. La famil
             4 & 16 & 24 & 16 & 4 \\
             1 & 4 & 6 & 4 & 1
         \end{array}
-    \right],
+    \right].
 \end{equation}
 
 Il est intéressant de constater que les pyramides gaussiennes sont notamment utilisées dans la synthèse de texture. En effet les MIP maps employées pour remédier au sous-échantillonnage sont un pré-calcul des textures à différents niveaux de résolution ; ce sont des pyramides gaussiennes.
@@ -767,7 +767,7 @@ Plutôt que d'encoder la valeur même de chaque pixel, une prédiction est faite
     L = I - k * I,
 \end{equation}
 
-avec $I$ l'image originale, $L$ l'image d'erreur de prédiction et $k$ le filtre de moyenne pondérée. Pour la compression d'images, l'intérêt se trouve dans cette ré-écriture. Les pixels de $L$ sont décorrélés et de faible valeur, donc encodables avec peu de bits. $k*I$ est une image lissée, qui peut être sous-échantillonnée pour obtenir une image de moitié de taille. L'image est représentée par $L$ et $k*I$ uniquement et cette représentation est plus compacte que l'image originale.
+\noindent avec $I$ l'image originale, $L$ l'image d'erreur de prédiction et $k$ le filtre de moyenne pondérée. Pour la compression d'images, l'intérêt se trouve dans cette ré-écriture. Les pixels de $L$ sont décorrélés et de faible valeur, donc encodables avec peu de bits. $k*I$ est une image lissée, qui peut être sous-échantillonnée pour obtenir une image de moitié de taille. L'image est représentée par $L$ et $k*I$ uniquement et cette représentation est plus compacte que l'image originale.
 
 \bigskip
 
@@ -816,7 +816,7 @@ La pyramide de Riesz est une extension de la pyramide laplacienne. C'est le cadr
     \label{fig:riesz-pyramid-cameraman}
 \end{figure}
 
-Pour des raisons de vitesse de calcul et de simplicité d'implémentation, la vraie transformée de Riesz n'est pas utilisée dans ce travail. La transformée de Riesz nécessite une transformation de l'image dans le domaine de Fourier ou le calcul d'une intégrale singulière (voir l'équation~\ref{eq:riesz-transform-spatial}), deux méthodes qui sont complexes à opérationnaliser. À la place, l'approximation proposée par Wadhwa \textit{et al.}~\cite{wadhwa_riesz_2014} est utilisée. L'approximation de Wadhwa \textit{et al.} se calcule directement dans le domaine spatial en utilisant les filtres à réponse impulsionnelle finie $[-0.5, 0, 0.5]$ et $[-0.5, 0, 0.5]^T$, dont les réponses en fréquence sont :
+Pour des raisons de vitesse de calcul et de simplicité d'implémentation, la vraie transformée de Riesz n'est pas utilisée dans ce travail. La transformée de Riesz nécessite une transformation de l'image dans le domaine de Fourier ou le calcul d'une intégrale singulière (voir l'équation~\ref{eq:riesz-transform-spatial}), deux méthodes qui sont complexes à opérationnaliser. À la place, l'approximation proposée par Wadhwa \textit{et al.}~\cite{wadhwa_riesz_2014} est utilisée. L'approximation de Wadhwa \textit{et al.} se calcule directement dans le domaine spatial en utilisant les filtres à réponse impulsionnelle finie $[-0.5, 0, 0.5]$ et $[-0.5, 0, 0.5]^T$, dont les réponses en fréquence sont
 
 \begin{equation}
     -i\sin(\omega_x) \quad \text{et} \quad -i\sin(\omega_y).
@@ -844,7 +844,7 @@ Avec cette implémentation de la pyramide de Riesz, le cadre d'étude multiréso
 
 \section{Congruence de phases}
 
-Le modèle de l'énergie locale est un modèle de détection de caractéristiques saillantes dans une image. Introduit par Morrone et al~\cite{morrone_mach_1986, morrone_feature_1987},il explique la présence de points saillants, tels que des bords et des coins, par l'alignement des phases locales de l'image. Le modèle d'énergie locale est basé sur l'observation que les bords et les coins sont des structures résultant de la superposition de sinusoïdes en phase les unes avec les autres. Contrairement aux autres méthodes de détection de caractéristiques, comme celles de Sobel ou Canny, le modèle de Morrone \textit{et al.} est insensible aux variations de luminosité et de grossissement. Les méthodes par gradient utilisent en effet un seuillage pour déterminer les bords, qui dépend de la luminosité et du niveau de zoom de l'image. À l'inverse, le modèle de l'énergie locale permet le calcul de la congruence de phases (PC), une grandeur à valeurs dans $[0, 1]$ mesurant uniformément la présence d'éléments caractéristiques dans une image et la proximité d'un texel à un élément caractéristique. La congruence de phases est le sujet de la partie qui suit.
+Le modèle de l'énergie locale est un modèle de détection de caractéristiques saillantes dans une image. Introduit par Morrone \textit{et al.}~\cite{morrone_mach_1986, morrone_feature_1987},il explique la présence de points saillants, tels que des bords et des coins, par l'alignement des phases locales de l'image. Le modèle d'énergie locale est basé sur l'observation que les bords et les coins sont des structures résultant de la superposition de sinusoïdes en phase les unes avec les autres. Contrairement aux autres méthodes de détection de caractéristiques, comme celles de Sobel ou Canny, le modèle de Morrone \textit{et al.} est insensible aux variations de luminosité et de grossissement. Les méthodes par gradient utilisent en effet un seuillage pour déterminer les bords, qui dépend de la luminosité et du niveau de zoom de l'image. À l'inverse, le modèle de l'énergie locale permet le calcul de la congruence de phases (PC), une grandeur à valeurs dans $[0, 1]$ mesurant uniformément la présence d'éléments caractéristiques dans une image et la proximité d'un texel à un élément caractéristique. La congruence de phases est le sujet de la partie qui suit.
 
 \bigskip
 
@@ -852,13 +852,13 @@ La formulation initiale de la PC utilise les coefficients de la série de Fourie
 
 \subsubsection{Énergie locale}
 
-Venkatesh et Owens~\cite{venkatesh_energy_1989} montrent qu'il existe une relation directe entre la PC et l'énergie locale. Ils mettent ainsi en lumière une expression simplifiée de la PC :
+Venkatesh et Owens~\cite{venkatesh_energy_1989} montrent qu'il existe une relation directe entre la PC et l'énergie locale. Ils mettent ainsi en lumière une expression simplifiée de la PC
 
 \begin{equation}
     PC(x) = \frac{E(x)}{\sum_{n=0}^{+\infty} D_n},
 \end{equation}
 
-avec $E(x) = \sqrt{f^2(x) + f_h^2(x)}$ l'énergie locale et $D_n$ les coefficients d'amplitude de la série de Fourier du signal :
+\noindent avec $E(x) = \sqrt{f^2(x) + f_h^2(x)}$ l'énergie locale et $D_n$ les coefficients d'amplitude de la série de Fourier du signal :
 
 \begin{equation}
     f(x) = \sum_{n=0}^{+\infty} D_n\cos(n\omega x + \phi_n).
@@ -871,17 +871,17 @@ avec $E(x) = \sqrt{f^2(x) + f_h^2(x)}$ l'énergie locale et $D_n$ les coefficien
 Pour obtenir de l'information localisée en termes de fréquence et sélectionner successivement différents niveaux d'échelle, Kovesi utilise des ondelettes sous forme de banque de filtres passe-bande. Les filtres passe-bande utilisés sont des filtres de Gabor, très similaires à ceux présentés dans la section introduisant le signal monogène~\ref{subsubsec:echelle}. En faisant la convolution du signal par ces filtres, il obtient de l'information localisée à la fois spatialement et fréquentiellement :
 
 \begin{equation}
-    A_n(x) = \sqrt{(f(x)*M^e_n)^2 + (f(x)*M^o_n)^2},
+    A_n(x) = \sqrt{(f(x)*M^e_n)^2 + (f(x)*M^o_n)^2}
     \label{eq:local-scale-amplitude}
 \end{equation}
 
-et
+\noindent et
 
 \begin{equation}
     \phi_n(x) = \arctan\left(\frac{f(x)*M^o_n}{f(x)*M^e_n}\right),
 \end{equation}
 
-avec $M^e_n$ et $M^o_n$ les filtres passe-bande, paire et impaire, au niveau d'échelle $n$. À noter que le $n$ dans l'équation~\ref{eq:local-scale-amplitude}, entre 1 et $N$ (le nombre de nivaux d'échelle considéré), désigne le niveau d'échelle fréquentiel. Il est différent de celui dans l'équation de la série de Fourier~\ref{eq:phase-congruence-energy} qui, lui, représente les différentes sinusoïdes qui forment le signal. L'intérêt de la PC est exposé à la figure~\ref{fig:phase-congruence-scalogram} qui représente les scalogrammes de phase et d'amplitude d'un signal 1D. Les points saillants sont ceux où la phase est alignée à travers tous les niveaux d'échelle.
+\noindent avec $M^e_n$ et $M^o_n$ les filtres passe-bande, paire et impaire, au niveau d'échelle $n$. À noter que le $n$ dans l'équation~\ref{eq:local-scale-amplitude}, entre 1 et $N$ (le nombre de nivaux d'échelle considéré), désigne le niveau d'échelle fréquentiel. Il est différent de celui dans l'équation de la série de Fourier~\ref{eq:phase-congruence-energy} qui, lui, représente les différentes sinusoïdes qui forment le signal. L'intérêt de la PC est exposé à la figure~\ref{fig:phase-congruence-scalogram} qui représente les scalogrammes de phase et d'amplitude d'un signal 1D. Les points saillants sont ceux où la phase est alignée à travers tous les niveaux d'échelle.
 
 \bigskip
 
@@ -898,20 +898,20 @@ Une nouvelle expression de la PC qui prend en compte la localisation fréquentie
     PC(x) = \frac{E(x)}{\sum_{n=1}^{N} A_n(x)} = \frac{\sqrt{F^2(x)+F_H^2(x)}}{\epsilon + \sum_{n=1}^{N}},
 \end{equation}
 
-où $F$ et $F_H$ sont une reconstruction du signal et de sa transformée de Hilbert respectivement. Les reconstructions sont obtenues à partir des composantes filtrées :
+\noindent où $F$ et $F_H$ sont une reconstruction du signal et de sa transformée de Hilbert respectivement. Les reconstructions sont obtenues à partir des composantes filtrées :
 
 \begin{align}
-    F(x) &= \sum_{n=1}^{N} f(x)*M_n^e, \,\text{et}\\
+    F(x) &= \sum_{n=1}^{N} f(x)*M_n^e \,\text{et}\\
     F_H(x) &= \sum_{n=1}^{N} f(x)*M{_n^o}.
 \end{align}
 
-$\sum_{n=1}^{N} A_n(x)$ indique ici la somme des amplitudes locales à tous les niveaux d'échelle :
+$\sum_{n=1}^{N} A_n(x)$ indique ici la somme des amplitudes locales à tous les niveaux d'échelle
 
 \begin{equation}
-    \sum_{n=1}^{N} A_n(x) = \sum_{n=1}^{N} \sqrt{(f(x)*M^e_n)^2 + (f(x)*M^o_n)^2}
+    \sum_{n=1}^{N} A_n(x) = \sum_{n=1}^{N} \sqrt{(f(x)*M^e_n)^2 + (f(x)*M^o_n)^2},
 \end{equation}
 
-avec $\epsilon$ une petite constante positive qui assure la stabilité numérique de l'expression quand la somme des amplitudes est très petite. Dans l'implémentation du calcul de la PC, $\epsilon = 0.01$ est utilisé.
+\noindent avec $\epsilon$ une petite constante positive qui assure la stabilité numérique de l'expression quand la somme des amplitudes est très petite. Dans l'implémentation du calcul de la PC, $\epsilon = 0.01$ est utilisé.
 
 \bigskip
 
@@ -966,13 +966,13 @@ Pour remédier à ce problème, une fonction de pondération est mise au point. 
     s(x) = \frac1N\left(\frac{\sum_{n=1}^{N}A_n(x)}{\epsilon + A_{max}(x)}\right),
 \end{equation}
 
-où $A_{max}(x)$ est la plus grande amplitude parmi ces niveaux et $\epsilon$ est encore une petite constante positive qui assure la stabilité numérique de l'expression. Cette mesure de la répartition de la réponse en fréquence est à valeurs entre 0 et 1 et est utilisée pour construire la fonction de pondération avec la fonction sigmoïde :
+\noindent où $A_{max}(x)$ est la plus grande amplitude parmi ces niveaux et $\epsilon$ est encore une petite constante positive qui assure la stabilité numérique de l'expression. Cette mesure de la répartition de la réponse en fréquence est à valeurs entre 0 et 1 et est utilisée pour construire la fonction de pondération avec la fonction sigmoïde
 
 \begin{equation}
     W(x) = \frac{1}{1 + \exp^{g(c-s(x))}},
 \end{equation}
 
-avec $c$ la valeur de coupure en-dessous de laquelle la réponse en fréquence est considérée restreinte et $g$ un paramètre de gain qui contrôle la précision de la coupure. Dans la pratique, les valeurs $c = 0.4$ et $g = 10$ sont utilisées car elles donnent de bons résultats. La fonction de pondération vaut 1 lorsque la réponse en fréquence est uniformément répartie et décroit lorsque la réponse en fréquence est restreinte. La PC est ré-écrite en tenant compte de cette fonction de pondération :
+\noindent avec $c$ la valeur de coupure en-dessous de laquelle la réponse en fréquence est considérée restreinte et $g$ un paramètre de gain qui contrôle la précision de la coupure. Dans la pratique, les valeurs $c = 0.4$ et $g = 10$ sont utilisées car elles donnent de bons résultats. La fonction de pondération vaut 1 lorsque la réponse en fréquence est uniformément répartie et décroit lorsque la réponse en fréquence est restreinte. La PC est ré-écrite en tenant compte de cette fonction de pondération :
 
 \begin{equation}
     PC(x) = \frac{W(x)E(x)}{\epsilon + \sum_{n=1}^{N} A_n(x)}.
@@ -983,10 +983,10 @@ avec $c$ la valeur de coupure en-dessous de laquelle la réponse en fréquence e
 Pour étendre la méthode en deux dimensions, Kovesi utilise une banque de filtres de Gabor 2D auxquels il applique une fonction d'étalement gaussienne, perpendiculairement à la direction du filtre. En variant l'orientation des filtres, il s'assure de recouvrir totalement le spectre de l'image. L'expression de la PC s'étend pour prendre en compte toutes les orientations :
 
 \begin{equation}
-    PC(\mathbf{x}) = \frac{\sum_{o\in \mathcal{O}} W_o(x)E_o(\mathbf{x})}{\epsilon + \sum_{o \in \mathcal{O}}\sum_{n=1}^{N} A_{no}(\mathbf{x})}
-\end{equation},
+    PC(\mathbf{x}) = \frac{\sum_{o\in \mathcal{O}} W_o(x)E_o(\mathbf{x})}{\epsilon + \sum_{o \in \mathcal{O}}\sum_{n=1}^{N} A_{no}(\mathbf{x})},
+\end{equation}
 
-où $\mathcal{O}$ est l'ensemble des orientations utilisées dans la banque de filtres. Le calcul de la répartition des fréquences $W_o(x)$ doit aussi se faire pour chaque orientation.
+\noindent où $\mathcal{O}$ est l'ensemble des orientations utilisées dans la banque de filtres. Le calcul de la répartition des fréquences $W_o(x)$ doit aussi se faire pour chaque orientation.
 
 \subsubsection{Utilisation du cadre multirésolution local de Riesz}
 
@@ -996,7 +996,7 @@ Le but du travail présenté est d'appliquer le modèle de la PC pour synthétis
     PC(\mathbf{x}) = \frac{W(x)E(\mathbf{x})}{\epsilon + \sum_{n=0}^{d} A_{n}(\mathbf{x})} = \frac{W(x)\sqrt{F^2(\mathbf{x})+R_1^2(\mathbf{x})+R_2^2(\mathbf{x})}}{\epsilon + \sum_{n=0}^{d} \sqrt{f_n^2(\mathbf{x}) + r_{1n}^2(\mathbf{x}) + r_{2n}^2(\mathbf{x})}},
 \end{equation}
 
-avec $d$ la profondeur de la pyramide, $f_i, r_{1i}\, \text{et}\, r_{2i}$ les composantes de Riesz de l'étage $i$. $F, R_1$ et $R_2$ sont les reconstructions de l'image originale et des composantes de sa transformée de Riesz, qui se calculent avec les différents étages de la pyramide :
+\noindent avec $d$ la profondeur de la pyramide, $f_i, r_{1i}\, \text{et}\, r_{2i}$ les composantes de Riesz de l'étage $i$. $F, R_1$ et $R_2$ sont les reconstructions de l'image originale et des composantes de sa transformée de Riesz, qui se calculent avec les différents étages de la pyramide
 
 \begin{equation}
     F(\mathbf{x}) = \sum_{n=0}^{d} f_n(\mathbf{x}) \quad \text{et} \quad R_i(\mathbf{x}) = \sum_{n=0}^{d} r_{in}(\mathbf{x})\, \text{pour}\, i \in \{1, 2\}.
