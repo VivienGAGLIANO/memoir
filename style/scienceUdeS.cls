@@ -800,10 +800,10 @@
 %		\lstlistoflistings
 %	\fi
 
-%	% Listes des abbréviations
-%	\if@listedesabrev
-%		\printglossary[type=abbreviations]
-%	\fi
+	% Listes des abbréviations
+	\if@listedesabrev
+		\printglossary[type=abbreviations]
+	\fi
 
 	%
 	\mainmatter
