@@ -844,15 +844,15 @@ Avec cette implémentation de la pyramide de Riesz, le cadre d'étude multiréso
 
 \section{Congruence de phases}
 
-Le modèle de l'énergie locale est un modèle de détection de caractéristiques saillantes dans une image. Introduit par Morrone \textit{et al.}~\cite{morrone_mach_1986, morrone_feature_1987},il explique la présence de points saillants, tels que des bords et des coins, par l'alignement des phases locales de l'image. Le modèle d'énergie locale est basé sur l'observation que les bords et les coins sont des structures résultant de la superposition de sinusoïdes en phase les unes avec les autres. Contrairement aux autres méthodes de détection de caractéristiques, comme celles de Sobel ou Canny, le modèle de Morrone \textit{et al.} est insensible aux variations de luminosité et de grossissement. Les méthodes par gradient utilisent en effet un seuillage pour déterminer les bords, qui dépend de la luminosité et du niveau de zoom de l'image. À l'inverse, le modèle de l'énergie locale permet le calcul de la congruence de phases (PC), une grandeur à valeurs dans $[0, 1]$ mesurant uniformément la présence d'éléments caractéristiques dans une image et la proximité d'un texel à un élément caractéristique. La congruence de phases est le sujet de la partie qui suit.
+Le modèle de l'énergie locale est un modèle de détection de caractéristiques saillantes dans une image. Introduit par Morrone \textit{et al.}~\cite{morrone_mach_1986, morrone_feature_1987}, il explique la présence de points saillants, tels que des bords et des coins, par l'alignement des phases locales de l'image. Le modèle d'énergie locale est basé sur l'observation que les bords et les coins sont des structures résultant de la superposition de sinusoïdes en phase les unes avec les autres. Contrairement aux autres méthodes de détection de caractéristiques, comme celles de Sobel ou Canny, le modèle de Morrone \textit{et al.} est insensible aux variations de luminosité et de grossissement. Les méthodes par gradient utilisent en effet un seuillage pour déterminer les bords, qui dépend de la luminosité et du niveau de zoom de l'image. À l'inverse, le modèle de l'énergie locale permet le calcul de la congruence de phases, une grandeur à valeurs dans $[0, 1]$ mesurant uniformément la présence d'éléments caractéristiques dans une image et la proximité d'un texel à un élément caractéristique. La congruence de phases est le sujet de la partie qui suit.
 
 \bigskip
 
-La formulation initiale de la PC utilise les coefficients de la série de Fourier du signal. Cependant, cette formulation comporte trois problèmes : elle est difficile à calculer et manipuler, elle ne permet pas une bonne localisation de l'information (le même problème qui pousse à utiliser un cadre de travail multirésolution pour l'étude du signal monogène), et elle ne prend pas en compte la répartition des fréquences. Ces problèmes et leur solution sont expliqués dans un premier temps en 1D, puis en 2D.
+La formulation initiale de la congruence de phases utilise les coefficients de la série de Fourier du signal. Cependant, cette formulation comporte trois problèmes : elle est difficile à calculer et manipuler, elle ne permet pas une bonne localisation de l'information (le même problème qui pousse à utiliser un cadre de travail multirésolution pour l'étude du signal monogène), et elle ne prend pas en compte la répartition des fréquences. Ces problèmes et leur solution sont expliqués dans un premier temps en 1D, puis en 2D.
 
 \subsubsection{Énergie locale}
 
-Venkatesh et Owens~\cite{venkatesh_energy_1989} montrent qu'il existe une relation directe entre la PC et l'énergie locale. Ils mettent ainsi en lumière une expression simplifiée de la PC
+Venkatesh et Owens~\cite{venkatesh_energy_1989} montrent qu'il existe une relation directe entre l'énergie locale et la congruence de phases. Ils mettent ainsi en lumière une expression simplifiée de cette dernière
 
 \begin{equation}
     PC(x) = \frac{E(x)}{\sum_{n=0}^{+\infty} D_n},
@@ -881,7 +881,7 @@ Pour obtenir de l'information localisée en termes de fréquence et sélectionne
     \phi_n(x) = \arctan\left(\frac{f(x)*M^o_n}{f(x)*M^e_n}\right),
 \end{equation}
 
-\noindent avec $M^e_n$ et $M^o_n$ les filtres passe-bande, paire et impaire, au niveau d'échelle $n$. À noter que le $n$ dans l'équation~\ref{eq:local-scale-amplitude}, entre 1 et $N$ (le nombre de nivaux d'échelle considéré), désigne le niveau d'échelle fréquentiel. Il est différent de celui dans l'équation de la série de Fourier~\ref{eq:phase-congruence-energy} qui, lui, représente les différentes sinusoïdes qui forment le signal. L'intérêt de la PC est exposé à la figure~\ref{fig:phase-congruence-scalogram} qui représente les scalogrammes de phase et d'amplitude d'un signal 1D. Les points saillants sont ceux où la phase est alignée à travers tous les niveaux d'échelle.
+\noindent avec $M^e_n$ et $M^o_n$ les filtres passe-bande, paire et impaire, au niveau d'échelle $n$. À noter que le $n$ dans l'équation~\ref{eq:local-scale-amplitude}, entre 1 et $N$ (le nombre de nivaux d'échelle considéré), désigne le niveau d'échelle fréquentiel. Il est différent de celui dans l'équation de la série de Fourier~\ref{eq:phase-congruence-energy} qui, lui, représente les différentes sinusoïdes qui forment le signal. L'intérêt de la congruence de phases est exposé à la figure~\ref{fig:phase-congruence-scalogram} qui représente les scalogrammes de phase et d'amplitude d'un signal 1D. Les points saillants sont ceux où la phase est alignée à travers tous les niveaux d'échelle.
 
 \bigskip
 
@@ -892,7 +892,7 @@ Pour obtenir de l'information localisée en termes de fréquence et sélectionne
     \label{fig:phase-congruence-scalogram}
 \end{figure}
 
-Une nouvelle expression de la PC qui prend en compte la localisation fréquentielle est dérivée avec les composantes filtrées à différents niveaux d'échelle du signal :
+Une nouvelle expression de la congruence de phases qui prend en compte la localisation fréquentielle est dérivée avec les composantes filtrées à différents niveaux d'échelle du signal :
 
 \begin{equation}
     PC(x) = \frac{E(x)}{\sum_{n=1}^{N} A_n(x)} = \frac{\sqrt{F^2(x)+F_H^2(x)}}{\epsilon + \sum_{n=1}^{N}},
@@ -911,7 +911,7 @@ $\sum_{n=1}^{N} A_n(x)$ indique ici la somme des amplitudes locales à tous les 
     \sum_{n=1}^{N} A_n(x) = \sum_{n=1}^{N} \sqrt{(f(x)*M^e_n)^2 + (f(x)*M^o_n)^2},
 \end{equation}
 
-\noindent avec $\epsilon$ une petite constante positive qui assure la stabilité numérique de l'expression quand la somme des amplitudes est très petite. Dans l'implémentation du calcul de la PC, $\epsilon = 0.01$ est utilisé.
+\noindent avec $\epsilon$ une petite constante positive qui assure la stabilité numérique de l'expression quand la somme des amplitudes est très petite. Dans l'implémentation du calcul, $\epsilon = 0.01$ est utilisé.
 
 \bigskip
 
@@ -926,7 +926,7 @@ Pour pouvoir reconstruire le signal et sa transformée de Hilbert, le choix des 
 
 \subsubsection{Répartition des fréquences}
 
-La PC mesure l'alignement des phases à différents niveaux de fréquence. Afin que la PC soit un indicateur significatif, il faut qu'une large bande de fréquences soit couverte. Lorsque le signal a une réponse en fréquence restreinte, dans le cas d'un signal simple ou lissé par exemple, la bande de fréquence couverte est étroite. La PC prend alors des valeurs trop grandes sur des plages trop larges du signal, comme montré dans la figure~\ref{fig:phase-congruency-spread}. La qualité de détection de bords diminue puisque la PC est haute sur de larges régions.
+La congruence de phases mesure l'alignement des phases à différents niveaux de fréquence. Afin qu'elle soit un indicateur significatif, il faut qu'une large bande de fréquences soit couverte. Lorsque le signal a une réponse en fréquence restreinte, dans le cas d'un signal simple ou lissé par exemple, la bande de fréquence couverte est étroite. La congruence de phases prend alors des valeurs trop grandes sur des plages trop larges du signal, comme montré dans la figure~\ref{fig:phase-congruency-spread}. La qualité de détection de bords diminue puisque la valeur est haute sur de larges régions.
 
 \bigskip
 
@@ -972,7 +972,7 @@ Pour remédier à ce problème, une fonction de pondération est mise au point. 
     W(x) = \frac{1}{1 + \exp^{g(c-s(x))}},
 \end{equation}
 
-\noindent avec $c$ la valeur de coupure en-dessous de laquelle la réponse en fréquence est considérée restreinte et $g$ un paramètre de gain qui contrôle la précision de la coupure. Dans la pratique, les valeurs $c = 0.4$ et $g = 10$ sont utilisées car elles donnent de bons résultats. La fonction de pondération vaut 1 lorsque la réponse en fréquence est uniformément répartie et décroit lorsque la réponse en fréquence est restreinte. La PC est ré-écrite en tenant compte de cette fonction de pondération :
+\noindent avec $c$ la valeur de coupure en-dessous de laquelle la réponse en fréquence est considérée restreinte et $g$ un paramètre de gain qui contrôle la précision de la coupure. Dans la pratique, les valeurs $c = 0.4$ et $g = 10$ sont utilisées car elles donnent de bons résultats. La fonction de pondération vaut 1 lorsque la réponse en fréquence est uniformément répartie et décroit lorsque la réponse en fréquence est restreinte. La congruence de phases est ré-écrite en tenant compte de cette fonction de pondération :
 
 \begin{equation}
     PC(x) = \frac{W(x)E(x)}{\epsilon + \sum_{n=1}^{N} A_n(x)}.
@@ -980,7 +980,7 @@ Pour remédier à ce problème, une fonction de pondération est mise au point. 
 
 \subsubsection{Extension à deux dimensions}
 
-Pour étendre la méthode en deux dimensions, Kovesi utilise une banque de filtres de Gabor 2D auxquels il applique une fonction d'étalement gaussienne, perpendiculairement à la direction du filtre. En variant l'orientation des filtres, il s'assure de recouvrir totalement le spectre de l'image. L'expression de la PC s'étend pour prendre en compte toutes les orientations :
+Pour étendre la méthode en deux dimensions, Kovesi utilise une banque de filtres de Gabor 2D auxquels il applique une fonction d'étalement gaussienne, perpendiculairement à la direction du filtre. En variant l'orientation des filtres, il s'assure de recouvrir totalement le spectre de l'image. L'expression de la congruence de phases s'étend pour prendre en compte toutes les orientations :
 
 \begin{equation}
     PC(\mathbf{x}) = \frac{\sum_{o\in \mathcal{O}} W_o(x)E_o(\mathbf{x})}{\epsilon + \sum_{o \in \mathcal{O}}\sum_{n=1}^{N} A_{no}(\mathbf{x})},
@@ -990,7 +990,7 @@ Pour étendre la méthode en deux dimensions, Kovesi utilise une banque de filtr
 
 \subsubsection{Utilisation du cadre multirésolution local de Riesz}
 
-Le but du travail présenté est d'appliquer le modèle de la PC pour synthétiser des textures présentant de la structure irrégulière. Cependant, le cadre multirésolution local de Riesz présenté précédemment nous semble plus intéressant que les banques d'ondelettes de Gabor présentée par Kovesi~\cite{kovesi_image_1995}, car il est plus compact, plus simple à implémenter et donne plus d'informations. Notamment, il donne accès à l'orientation locale en chaque pixel de l'image, information pertinente pour l'analyse de texture. Le modèle de la PC est donc adapté au cadre de travail avec une pyramide de Riesz :
+Le but du travail présenté est d'appliquer le modèle de la congruence de phases pour synthétiser des textures présentant de la structure irrégulière. Cependant, le cadre multirésolution local de Riesz présenté précédemment nous semble plus intéressant que les banques d'ondelettes de Gabor présentée par Kovesi~\cite{kovesi_image_1995}, car il est plus compact, plus simple à implémenter et donne plus d'informations. Notamment, il donne accès à l'orientation locale en chaque pixel de l'image, information pertinente pour l'analyse de texture. Le modèle de la congruence de phases est donc adapté au cadre de travail avec une pyramide de Riesz :
 
 \begin{equation}
     PC(\mathbf{x}) = \frac{W(x)E(\mathbf{x})}{\epsilon + \sum_{n=0}^{d} A_{n}(\mathbf{x})} = \frac{W(x)\sqrt{F^2(\mathbf{x})+R_1^2(\mathbf{x})+R_2^2(\mathbf{x})}}{\epsilon + \sum_{n=0}^{d} \sqrt{f_n^2(\mathbf{x}) + r_{1n}^2(\mathbf{x}) + r_{2n}^2(\mathbf{x})}},
@@ -1028,4 +1028,4 @@ Le but du travail présenté est d'appliquer le modèle de la PC pour synthétis
 
 \bigskip
 
-Avec cette formulation, une méthode de calcul de la PC a été définie pour le cadre multirésolution local de Riesz. Une comparaison entre la PC de Kovesi et celle proposée dans ce travail est faite à la figure~\ref{fig:phase-congruency-riesz}. Le chapitre suivant décrit comment la méthode a été implémentée et comment elle est utilisée pour la synthèse de texture.
+Avec cette formulation, une méthode de calcul de la congruence de phases a été définie pour le cadre multirésolution local de Riesz. Une comparaison entre la mesure de Kovesi et celle proposée dans ce travail est faite à la figure~\ref{fig:phase-congruency-riesz}. Le chapitre suivant décrit comment la méthode a été implémentée et comment elle est utilisée pour la synthèse de texture.
