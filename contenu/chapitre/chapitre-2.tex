@@ -1,7 +1,7 @@
 \chapter{Implémentations et synthèse de texture}
 \label{chap:chapitre2}
 
-Le travail décrit dans ce manuscrit est une étude exploratoire du modèle local multirésolution. En particulier le rôle de la PC appliquée dans le contexte de la synthèse de texture est examiné. La mise en application des concepts exposés précédemment ainsi que les résultats obtenus sont le sujet de la partie qui suit.
+Le travail décrit dans ce manuscrit est une étude exploratoire du modèle local multirésolution. En particulier le rôle de la congruence de phases (CP) appliquée dans le contexte de la synthèse de texture est examiné. La mise en application des concepts exposés précédemment ainsi que les résultats obtenus sont le sujet de la partie qui suit.
 
 \section{Implémentation}
 
@@ -10,11 +10,11 @@ Les concepts d'énergie locale et de signal monogène sont des notions peu commu
 
 \paragraph{OpenCV}
 
-Malgré l'objectif final de travailler sur de la synthèse de texture, la première réalisation a été le développement d'un petit logiciel pour pouvoir itérer rapidement et expérimenter avec les concepts de base du modèle local multirésolution sur des images, sans prendre en compte les problématiques de la synthèse. Pour cela, un logiciel utilisant \cpp avec la librairie OpenCV~\cite{opencv_library} a été mis au point. OpenCV est une librairie standard de traitement d'image en temps réel et de vision par ordinateur, disponible pour les langages de programmation \cpp, Python et Java. Les images y sont représentées comme des matrices et les opérations de bas niveau courantes du traitement d'image y sont implémentées, comme la lecture, l'écriture, l'affichage, le filtrage, la convolution et autres. Le logiciel élaboré permet à un utilisateur de créer, visualiser et modifier les pyramides d'une image d'entrée, ainsi que de calculer et visualiser la PC. Avec ces fonctionnalités, des expérimentations ont été faites pour voir l'effet de différentes modifications et reconstructions de la pyramide de Riesz d'une image.
+Malgré l'objectif final de travailler sur de la synthèse de texture, la première réalisation a été le développement d'un petit logiciel pour pouvoir itérer rapidement et expérimenter avec les concepts de base du modèle local multirésolution sur des images, sans prendre en compte les problématiques de la synthèse. Pour cela, un logiciel utilisant \cpp avec la librairie OpenCV~\cite{opencv_library} a été mis au point. OpenCV est une librairie standard de traitement d'image en temps réel et de vision par ordinateur, disponible pour les langages de programmation \cpp, Python et Java. Les images y sont représentées comme des matrices et les opérations de bas niveau courantes du traitement d'image y sont implémentées, comme la lecture, l'écriture, l'affichage, le filtrage, la convolution et autres. Le logiciel élaboré permet à un utilisateur de créer, visualiser et modifier les pyramides d'une image d'entrée, ainsi que de calculer et visualiser la CP. Avec ces fonctionnalités, des expérimentations ont été faites pour voir l'effet de différentes modifications et reconstructions de la pyramide de Riesz d'une image.
 
 \bigskip
 
-Plusieurs raisons ont ensuite motivé le choix de changer d'implémentation. Après avoir expérimenté avec la PC sur des images, la prochaine étape était de travailler avec des textures, c'est-à-dire faire de la synthèse dans le cadre du pipeline graphique traditionnel. L'objectif était de synthétiser une texture à projeter sur une surface, potentiellement infinie, dans le but de la recouvrir. Dans un tel contexte, plusieurs problématiques surviennent. Pour être mise en place dans le pipeline graphique, la synthèse de texture doit pouvoir se faire dans le \textit{fragment shader}. Pour être exécutée dans le \textit{fragment shader}, une méthode de reconstruction parallélisable doit être utilisée pour profiter de la carte graphique. La méthode utilisée jusque-là ne pouvait pas être parallélisée à cause des convolutions impliquées dans le processus. Des questions de projection et de filtrage jusque-là non existantes furent nécessaires à considérer pour la synthèse de texture.
+Plusieurs raisons ont ensuite motivé le choix de changer d'implémentation. Après avoir expérimenté avec la CP sur des images, la prochaine étape était de travailler avec des textures, c'est-à-dire faire de la synthèse dans le cadre du pipeline graphique traditionnel. L'objectif était de synthétiser une texture à projeter sur une surface, potentiellement infinie, dans le but de la recouvrir. Dans un tel contexte, plusieurs problématiques surviennent. Pour être mise en place dans le pipeline graphique, la synthèse de texture doit pouvoir se faire dans le \textit{fragment shader}. Pour être exécutée dans le \textit{fragment shader}, une méthode de reconstruction parallélisable doit être utilisée pour profiter de la carte graphique. La méthode utilisée jusque-là ne pouvait pas être parallélisée à cause des convolutions impliquées dans le processus. Des questions de projection et de filtrage jusque-là non existantes furent nécessaires à considérer pour la synthèse de texture.
 
 \bigskip
 
@@ -26,7 +26,7 @@ Godot est un logiciel libre et gratuit, moteur de jeu 2D et 3D, qui permet de fa
 
 \bigskip
 
-Godot a une classe qui gère les textures, mais la manipuler est compliqué et peu efficace pour des opérations d'accès direct nécessaires à la synthèse. La librairie \textit{TexSyn} définit une classe d'image plus pratique à utiliser, avec toutes les opérations requises. La classe d'image de \textit{TexSyn} est ensuite interfacée avec la classe d'image de Godot pour être utilisable depuis les scripts Godot. Dans ce cadre de travail, les pyramides d'images sont construites en pré-calcul sur l'unité centrale de traitement. Les pyramides sont stockées dans des atlas de textures, puis chargées en mémoire sur la carte graphique. La reconstruction est faite depuis les \textit{shaders}, en temps réel, en utilisant les pyramides stockées dans les atlas. La reconstruction est cependant soumise à des problèmes de filtrage (voir figure\ref{fig:texsyn-reconstruction}), car la convolution par filtre utilisée pour faire le lissage ne peut pas être appliquée depuis le \textit{fragment shader} pour des raisons d'accès parallèle. La librairie \textit{TexSyn} est ensuite utilisée pour développer une méthode de syntèse pouvant traiter des textures à structure irrégulière. La méthode de synthèse proposée est basée sur un échantillonneur préservant la PC, détaillé plus loin dans ce chapitre.
+Godot a une classe qui gère les textures, mais la manipuler est compliqué et peu efficace pour des opérations d'accès direct nécessaires à la synthèse. La librairie \textit{TexSyn} définit une classe d'image plus pratique à utiliser, avec toutes les opérations requises. La classe d'image de \textit{TexSyn} est ensuite interfacée avec la classe d'image de Godot pour être utilisable depuis les scripts Godot. Dans ce cadre de travail, les pyramides d'images sont construites en pré-calcul sur l'unité centrale de traitement. Les pyramides sont stockées dans des atlas de textures, puis chargées en mémoire sur la carte graphique. La reconstruction est faite depuis les \textit{shaders}, en temps réel, en utilisant les pyramides stockées dans les atlas. La reconstruction est cependant soumise à des problèmes de filtrage (voir figure\ref{fig:texsyn-reconstruction}), car la convolution par filtre utilisée pour faire le lissage ne peut pas être appliquée depuis le \textit{fragment shader} pour des raisons d'accès parallèle. La librairie \textit{TexSyn} est ensuite utilisée pour développer une méthode de syntèse pouvant traiter des textures à structure irrégulière. La méthode de synthèse proposée est basée sur un échantillonneur préservant la CP, détaillé plus loin dans ce chapitre.
 
 \begin{figure}
     \centering
@@ -38,7 +38,7 @@ Godot a une classe qui gère les textures, mais la manipuler est compliqué et p
 
 \section{Sélection de niveaux de fréquences}
 
-La mise au point de la PC et l'utilisation d'un contexte multirésolution permettent de visualiser explicitement que les différents niveaux de structure trouvés dans une image sont liés à différents niveaux de d'échelle. Nous avons émis l'hypothèse que chaque niveau de structure distingué dans une image s'exprime comme la congruence en phases d'un sous-ensemble fréquentiel. Autrement dit, chaque échelle de structure est créée par un sous-ensemble de niveaux de la pyramide d'image. Pour vérifier l'hypothèse, la sélection de sous-ensembles de niveaux de la pyramide lors du calcul de la PC a été étudiée :
+La mise au point de la CP et l'utilisation d'un contexte multirésolution permettent de visualiser explicitement que les différents niveaux de structure trouvés dans une image sont liés à différents niveaux de d'échelle. Nous avons émis l'hypothèse que chaque niveau de structure distingué dans une image s'exprime comme la congruence en phases d'un sous-ensemble fréquentiel. Autrement dit, chaque échelle de structure est créée par un sous-ensemble de niveaux de la pyramide d'image. Pour vérifier l'hypothèse, la sélection de sous-ensembles de niveaux de la pyramide lors du calcul de la CP a été étudiée :
 
 \begin{equation}
     PC_{\mathcal{S}}(\mathbf{x}) = \frac{W(x)E(\mathbf{x})}{\epsilon + \sum_{n\in\mathcal{S}} A_{n}(\mathbf{x})},
@@ -103,7 +103,7 @@ Suite à cette observation, une méthode de sélection de niveaux de fréquences
 
 \section{Synthèse de texture préservant la congruence de phases}
 
-L'intérêt principal et raison d'être du cadre de travail présenté précédemment est néanmoins l'utilisation de la PC, notamment en tant qu'indicatrice de la proximité à un bord. Cette mesure se comporte en effet comme un gradient dans la direction perpendiculaire au bord et permet de savoir ponctuellement si un texel se situe proche d'un bord. Avoir des informations de proximité à un bord par texel est particulièrement utile dans un contexte de calcul parallèle, comme celui du pipeline graphique. Un problème des calculs parallèles sur la carte graphique est en effet la perte d'information sur le contexte local. Avoir accès à la PC offre une solution à ce problème en donnant des informations sur le voisinage du fragment considéré.
+L'intérêt principal et raison d'être du cadre de travail présenté précédemment est néanmoins l'utilisation de la CP, notamment en tant qu'indicatrice de la proximité à un bord. Cette mesure se comporte en effet comme un gradient dans la direction perpendiculaire au bord et permet de savoir ponctuellement si un texel se situe proche d'un bord. Avoir des informations de proximité à un bord par texel est particulièrement utile dans un contexte de calcul parallèle, comme celui du pipeline graphique. Un problème des calculs parallèles sur la carte graphique est en effet la perte d'information sur le contexte local. Avoir accès à la CP offre une solution à ce problème en donnant des informations sur le voisinage du fragment considéré.
 
 \bigskip
 
@@ -137,7 +137,7 @@ Lutz \textit{et al.}~\cite{lutz_preserving_2023} font le constat que les méthod
 
 \bigskip
 
-Cette idée a été appliquée au cadre d'étude utilisé. Nous avons émis l'hypothèse que deux échantillons de contenu provenant d'une même composante, avec une PC similaire, ont un profil de couleurs similaire, puisqu'ils se situent à une même distance d'un bord. Pour vérifier cette hypothèse, une méthode de synthèse préservant la PC de l'exemple a été mise au point. Le principe de la synthèse proposée est de réorganiser le contenu de l'exemple à l'aide d'un échantillonneur préférentiel. L'échantillonneur utilisé indique, à chaque endroit, un contenu de remplacement possible. Pour chaque fragment de l'image à synthétiser, l'échantillonneur prend en compte la position du fragment dans la texture pour trouver un contenu de remplacement idéal et créer de la nouveauté. Différentes propriétés sont prises en considération pour calculer cette indirection. Les étapes de cette méthode sont détaillées dans la section qui suit.
+Cette idée a été appliquée au cadre d'étude utilisé. Nous avons émis l'hypothèse que deux échantillons de contenu provenant d'une même composante, avec une CP similaire, ont un profil de couleurs similaire, puisqu'ils se situent à une même distance d'un bord. Pour vérifier cette hypothèse, une méthode de synthèse préservant la CP de l'exemple a été mise au point. Le principe de la synthèse proposée est de réorganiser le contenu de l'exemple à l'aide d'un échantillonneur préférentiel. L'échantillonneur utilisé indique, à chaque endroit, un contenu de remplacement possible. Pour chaque fragment de l'image à synthétiser, l'échantillonneur prend en compte la position du fragment dans la texture pour trouver un contenu de remplacement idéal et créer de la nouveauté. Différentes propriétés sont prises en considération pour calculer cette indirection. Les étapes de cette méthode sont détaillées dans la section qui suit.
 
 \bigskip
 
@@ -208,15 +208,15 @@ Il faut ensuite constater que les textures sont des tableaux, donc des fonctions
 
 \subsection{Synthèse avec l'échantillonneur préférentiel}
 
-Le principe d'échantillonnage préférentiel est utilisé pour synthétiser du nouveau contenu, en préservant la fonction de PC. La synthèse se fait en tirant, pour chaque fragment, un nouveau contenu avec une PC similaire. L'idéal serait d'avoir une fonction de densité de probabilité adaptée pour chaque valeur de PC. La fonction de densité idéale privilégierait l'échantillonnage des valeurs autour de $x$ pour tout $x$ dans l'espace des valeurs de la PC. Cependant, la PC est à valeurs continues, il est compliqué de stocker une fonction de densité pour chaque valeur. Pour résoudre le problème, la PC est quantifiée en $N$ intervalles de taille constante $1/N$. Avec la quantification,l'intervalle $i$ ne contient que les valeurs de la PC entre $[i/N, (i+1)/N[$. Ce sont les intervalles quantifiés qui servent de densité de probabilité pour l'échantillonnage préférentiel. En pratique, la PC est quantifiée en $N=10$ intervalles et le partitionnement est fait entre les valeurs minimum et maximum de la PC calculée, plutôt qu'entre 0 et 1 (qui sont les extremums théoriques). Au moment de tirer du nouveau contenu, la valeur de PC du fragment à remplacer est évaluée en échantillonnant la carte de PC stockée en mémoire. Un contenu de remplacement est trouvé en utilisant l'échantillonneur avec l'intervalle de PC correspondant à la valeur échantillonnée.
+Le principe d'échantillonnage préférentiel est utilisé pour synthétiser du nouveau contenu, en préservant la fonction de CP. La synthèse se fait en tirant, pour chaque fragment, un nouveau contenu avec une CP similaire. L'idéal serait d'avoir une fonction de densité de probabilité adaptée pour chaque valeur de CP. La fonction de densité idéale privilégierait l'échantillonnage des valeurs autour de $x$ pour tout $x$ dans l'espace des valeurs de la CP. Cependant, la CP est à valeurs continues, il est compliqué de stocker une fonction de densité pour chaque valeur. Pour résoudre le problème, la CP est quantifiée en $N$ intervalles de taille constante $1/N$. Avec la quantification,l'intervalle $i$ ne contient que les valeurs de la CP entre $[i/N, (i+1)/N[$. Ce sont les intervalles quantifiés qui servent de densité de probabilité pour l'échantillonnage préférentiel. En pratique, la CP est quantifiée en $N=10$ intervalles et le partitionnement est fait entre les valeurs minimum et maximum de la CP calculée, plutôt qu'entre 0 et 1 (qui sont les extremums théoriques). Au moment de tirer du nouveau contenu, la valeur de CP du fragment à remplacer est évaluée en échantillonnant la carte de CP stockée en mémoire. Un contenu de remplacement est trouvé en utilisant l'échantillonneur avec l'intervalle de CP correspondant à la valeur échantillonnée.
 
 \bigskip
 
-Pour préserver la cohérence dans l'image, les contenus provenant de différentes composantes de la texture ne doivent pas être mélangés. Les textures étudiées ont souvent deux composantes, les pavés et l'arrière-plan. L'image est donc partitionnée entre les différentes composantes à l'aide d'une classification par l'algorithme des K-moyennes. Pour chaque composante, un masque binaire est créé et appliqué sur les intervalles de PC par multiplication, pour obtenir la densité de probabilité finale pour chaque composante et chaque niveau de PC.
+Pour préserver la cohérence dans l'image, les contenus provenant de différentes composantes de la texture ne doivent pas être mélangés. Les textures étudiées ont souvent deux composantes, les pavés et l'arrière-plan. L'image est donc partitionnée entre les différentes composantes à l'aide d'une classification par l'algorithme des K-moyennes. Pour chaque composante, un masque binaire est créé et appliqué sur les intervalles de CP par multiplication, pour obtenir la densité de probabilité finale pour chaque composante et chaque niveau de CP.
 
 \bigskip
 
-Pour utiliser efficacement l'échantillonneur dans la synthèse en temps-réel, une première étape de pré-calcul hors-ligne est nécessaire. Plusieurs réalisations de l'échantillonneur sont calculées, pour chaque composante et pour chaque intervalle de PC, afin d'augmenter la variété de l'échantillonneur. Les réalisations de l'échantillonneur sont des vecteurs de translations $(u, v)$ stockés dans une carte de texture pour être chargés sur la carte graphique. La texture stockant les réalisations de l'échantillonneur est un jeu de données à trois dimensions : une pour les subdivisions de la PC, une pour les différentes composantes et la dernière pour les différentes réalisations de l'échantillonneur. Un schéma explicatif est montré à la figure~\ref{fig:sampler-realization}.
+Pour utiliser efficacement l'échantillonneur dans la synthèse en temps-réel, une première étape de pré-calcul hors-ligne est nécessaire. Plusieurs réalisations de l'échantillonneur sont calculées, pour chaque composante et pour chaque intervalle de CP, afin d'augmenter la variété de l'échantillonneur. Les réalisations de l'échantillonneur sont des vecteurs de translations $(u, v)$ stockés dans une carte de texture pour être chargés sur la carte graphique. La texture stockant les réalisations de l'échantillonneur est un jeu de données à trois dimensions : une pour les subdivisions de la CP, une pour les différentes composantes et la dernière pour les différentes réalisations de l'échantillonneur. Un schéma explicatif est montré à la figure~\ref{fig:sampler-realization}.
 
 \begin{figure}
     \centering
@@ -230,11 +230,11 @@ Pour utiliser efficacement l'échantillonneur dans la synthèse en temps-réel, 
         \includegraphics[width=\textwidth]{contenu/resources/images/realization_pc_0}
     \end{subfigure}
 
-    \caption[Réalisation de l'échantillonneur préférentiel]{Schéma explicatif de la texture 3D où la réalisation de l'échantillonneur est stockée (gauche) et un exemple de réalisation pour une composante avec 10 niveaux de subdivisions de PC et 128 échantillons (droite).}
+    \caption[Réalisation de l'échantillonneur préférentiel]{Schéma explicatif de la texture 3D où la réalisation de l'échantillonneur est stockée (gauche) et un exemple de réalisation pour une composante avec 10 niveaux de subdivisions de CP et 128 échantillons (droite).}
     \label{fig:sampler-realization}
 \end{figure}
 
-La texture de réalisation est ensuite utilisée dans le \textit{fragment shader} lors du rendu pour faire l'échantillonnage en temps-réel. La valeur de PC et la composante du fragment à remplacer sont échantillonnés, puis utilisés pour aller chercher la bonne réalisation dans la texture 3D. La réalisation est ensuite choisie aléatoirement entre toutes les réalisations qui ont la même PC et la même composante. En pratique, le choix de la réalisation se fait à l'aide d'une fonction de hachage, avec les coordonnées $(u, v)$ du fragment pour lequel l'échantillonnage est fait.
+La texture de réalisation est ensuite utilisée dans le \textit{fragment shader} lors du rendu pour faire l'échantillonnage en temps-réel. La valeur de CP et la composante du fragment à remplacer sont échantillonnés, puis utilisés pour aller chercher la bonne réalisation dans la texture 3D. La réalisation est ensuite choisie aléatoirement entre toutes les réalisations qui ont la même CP et la même composante. En pratique, le choix de la réalisation se fait à l'aide d'une fonction de hachage, avec les coordonnées $(u, v)$ du fragment pour lequel l'échantillonnage est fait.
 
 \bigskip
 
@@ -253,7 +253,7 @@ La texture de réalisation est ensuite utilisée dans le \textit{fragment shader
     \label{fig:offset-shuffle}
 \end{figure}
 
-Pour savoir quel pixel remplacer lors de l'évaluation du \textit{fragment shader}, le pavage périodique est utilisé. L'exemple d'entrée est dupliqué et déplacé pour couvrir la surface à remplir. Les coordonnées de texture du fragment sont utilisées pour savoir quel pixel de l'exemple d'entrée aller chercher. Il est ainsi possible de calculer la PC de l'exemple d'entrée et d'utiliser cette PC pour échantillonner le nouveau contenu. Le pavage périodique est connu pour créer des artefacts visuels, notamment des motifs de répétition. Cependant, nous pensons que l'utilisation de l'échantillonneur pourra atténuer ces artefacts en apportant de la variété dans l'échantillonnage.
+Pour savoir quel pixel remplacer lors de l'évaluation du \textit{fragment shader}, le pavage périodique est utilisé. L'exemple d'entrée est dupliqué et déplacé pour couvrir la surface à remplir. Les coordonnées de texture du fragment sont utilisées pour savoir quel pixel de l'exemple d'entrée aller chercher. Il est ainsi possible de calculer la CP de l'exemple d'entrée et d'utiliser cette CP pour échantillonner le nouveau contenu. Le pavage périodique est connu pour créer des artefacts visuels, notamment des motifs de répétition. Cependant, nous pensons que l'utilisation de l'échantillonneur pourra atténuer ces artefacts en apportant de la variété dans l'échantillonnage.
 
 \begin{figure}[t]
     \centering
@@ -264,7 +264,7 @@ Pour savoir quel pixel remplacer lors de l'évaluation du \textit{fragment shade
 
 \section{Discussion}
 
-Dans ce chapitre, plusieurs applications de la PC ont été présentées, à savoir la sélection de niveaux de fréquences et la synthèse de texture préservant la structure. Une analyse des résultats obtenus est faite et une discussion sur les limites et implications de l'approche proposée est présentée.
+Dans ce chapitre, plusieurs applications de la CP ont été présentées, à savoir la sélection de niveaux de fréquences et la synthèse de texture préservant la structure. Une analyse des résultats obtenus est faite et une discussion sur les limites et implications de l'approche proposée est présentée.
 
 \paragraph{Sélection de niveaux de fréquences}
 
@@ -277,15 +277,15 @@ Le processus présente cependant des désavantages. D'abord, il relève d'un tra
 \paragraph{Synthèse de texture préservant la congruence de phases}
 \label{par:discussion-synthesis}
 
-La synthèse de texture préservant la PC est la deuxième application de la PC et est au cœur de ce travail. La synthèse proposée est un prototype de recherche mis au point pour examiner notre hypothèse sur la PC. L'hypothèse émise est que la PC, qui est un indicateur de la proximité d'un bord, donne aussi une mesure de ressemblance entre plusieurs contenus d'une texture. La synthèse de texture préservant la PC ne permet pas la synthèse de texture utilisable dans un environnement virtuel telle quelle, mais a mené à plusieurs observations sur l'utilisation de la PC appliquée au domaine de la synthèse de texture.
+La synthèse de texture préservant la CP est la deuxième application de la CP et est au cœur de ce travail. La synthèse proposée est un prototype de recherche mis au point pour examiner notre hypothèse sur la CP. L'hypothèse émise est que la CP, qui est un indicateur de la proximité d'un bord, donne aussi une mesure de ressemblance entre plusieurs contenus d'une texture. La synthèse de texture préservant la CP ne permet pas la synthèse de texture utilisable dans un environnement virtuel telle quelle, mais a mené à plusieurs observations sur l'utilisation de la CP appliquée au domaine de la synthèse de texture.
 
 \bigskip
 
-Les résultats montrés en figure~\ref{fig:pc-preserving-synthesis} indiquent que la PC seule ne suffit pas à capturer la similarité entre deux contenus. Sur la figure, la couleur des pavés reconstruits tend vers un marron uniforme. Les pavés de la texture originale ont des couleurs variées, mais la synthèse donne une couleur uniforme, la même pour tous les pavés. La méthode d'échantillonnage ne prend pas en compte la couleur de chaque pavé et échantillonne sans distinction dans des pavés de couleurs différentes. Même si la PC est préservée, la couleur est mélangée et la variété diminue.
+Les résultats montrés en figure~\ref{fig:pc-preserving-synthesis} indiquent que la CP seule ne suffit pas à capturer la similarité entre deux contenus. Sur la figure, la couleur des pavés reconstruits tend vers un marron uniforme. Les pavés de la texture originale ont des couleurs variées, mais la synthèse donne une couleur uniforme, la même pour tous les pavés. La méthode d'échantillonnage ne prend pas en compte la couleur de chaque pavé et échantillonne sans distinction dans des pavés de couleurs différentes. Même si la CP est préservée, la couleur est mélangée et la variété diminue.
 
 \bigskip
 
-La PC semble cependant bien détecter et, dans une certaine mesure préserver, des éléments de structure internes aux pavés. À la figure~\ref{fig:mark-preserved} que les marques ou fissures dans les pavés sont encore présentes après la synthèse. Cette caractéristique a néanmoins un désavantage : l'échantillonneur ne fait pas de distinction entre le bord d'un pavé et le bord d'une marque à l'intérieur d'un pavé, comme montré à la figure~\ref{fig:pc-defect}. Des pixels sont échantillonnés au mauvais endroit et le contenu des bords et des marques des pavés sont mélangés, ce qui n'est pas désirable.
+La CP semble cependant bien détecter et, dans une certaine mesure préserver, des éléments de structure internes aux pavés. À la figure~\ref{fig:mark-preserved} que les marques ou fissures dans les pavés sont encore présentes après la synthèse. Cette caractéristique a néanmoins un désavantage : l'échantillonneur ne fait pas de distinction entre le bord d'un pavé et le bord d'une marque à l'intérieur d'un pavé, comme montré à la figure~\ref{fig:pc-defect}. Des pixels sont échantillonnés au mauvais endroit et le contenu des bords et des marques des pavés sont mélangés, ce qui n'est pas désirable.
 
 \bigskip
 
@@ -301,7 +301,7 @@ La PC semble cependant bien détecter et, dans une certaine mesure préserver, d
         \includegraphics[width=\textwidth]{contenu/resources/images/mark_preserved}
     \end{subfigure}
 
-    \caption[L'échantillonneur préserve partiellement les marques dans les pavés]{Zoom sur deux marques présentes au sein d'un pavé de la texture (gauche) qui se retrouvent sur la texture synthétisée avec l'échantillonneur préservant la PC (droite).}
+    \caption[L'échantillonneur préserve partiellement les marques dans les pavés]{Zoom sur deux marques présentes au sein d'un pavé de la texture (gauche) qui se retrouvent sur la texture synthétisée avec l'échantillonneur préservant la CP (droite).}
     \label{fig:mark-preserved}
 \end{figure}
 
@@ -317,11 +317,11 @@ La PC semble cependant bien détecter et, dans une certaine mesure préserver, d
         \includegraphics[width=\textwidth]{contenu/resources/images/stone_zoom_pc}
     \end{subfigure}
 
-    \caption[Problème d'échantillonnage dû à la présence de marques au sein des pavés de la texture]{Zoom sur une marque présente au sein d'un pavé de la texture (gauche) et la PC associée à cette zone (droite). La PC a des valeurs semblables sur les bords du pavé et autour de la marque foncée mise en évidence. Cela cause des problème pour l'échantillonnage.}
+    \caption[Problème d'échantillonnage dû à la présence de marques au sein des pavés de la texture]{Zoom sur une marque présente au sein d'un pavé de la texture (gauche) et la CP associée à cette zone (droite). La CP a des valeurs semblables sur les bords du pavé et autour de la marque foncée mise en évidence. Cela cause des problème pour l'échantillonnage.}
     \label{fig:pc-defect}
 \end{figure}
 
-Le mélange des couleurs observé est aussi dû au choix de travailler avec des pixels unitaires plutôt que des petites régions de pixels. En agissant au niveau du pixel, la préservation de la PC à elle seule n'est pas suffisante pour préserver des corrélations locales comme la couleur. Il faudrait travailler avec des régions de pixels pour avoir du contenu moins décorrélé de son entourage ou trouver une manière d'accorder une plus grande importance au voisinage local lors de l'échantillonnage du nouveau contenu.
+Le mélange des couleurs observé est aussi dû au choix de travailler avec des pixels unitaires plutôt que des petites régions de pixels. En agissant au niveau du pixel, la préservation de la CP à elle seule n'est pas suffisante pour préserver des corrélations locales comme la couleur. Il faudrait travailler avec des régions de pixels pour avoir du contenu moins décorrélé de son entourage ou trouver une manière d'accorder une plus grande importance au voisinage local lors de l'échantillonnage du nouveau contenu.
 
 \bigskip
 
