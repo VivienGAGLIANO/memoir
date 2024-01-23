@@ -1,5 +1,5 @@
-\chapter[Modèle de Riesz]{Étude théorique du modèle de Riesz}
-\label{chap:chapitre1}
+\chapter{Étude théorique du modèle de Riesz}
+\label{ch:chapitre1}
 
 Dans le but de synthétiser du contenu avec de la structure irrégulière, une approche locale est adoptée. Ce travail utilise le modèle du signal monogène~\cite{felsberg_monogenic_2001}, qui permet d'extraire l'énergie locale, en s'appuyant sur la transformée de Riesz. Le signal monogène est ensuite mis en application dans un cadre multirésolution, en utilisant une pyramide de Riesz~\cite{wadhwa_riesz_2014} pour calculer la congruence de phases.
 
@@ -30,6 +30,8 @@ Pour comprendre l'utilité du signal monogène, il faut expliquer le fonctionnem
 \end{equation}
 
 \noindent où l'amplitude des composantes de fréquences positives est doublée, par soucis de conservation d'énergie. Avec cette formulation, toute l'information du signal original est conservée. Cette nouvelle forme permet en plus de faire des manipulations précédemment impossibles, qui permettent de mieux comprendre le signal.
+
+\bigskip
 
 \begin{figure}[h]
     %\noindent
@@ -125,7 +127,7 @@ La suppression des composantes de fréquences peut être vue comme l'ajout d'un 
     F_{\alpha}(\omega) = F(\omega) + F_h(\omega).
 \end{equation}
 
-La formation du signal analytique est montrée dans la figure~\ref{fig:complex-analytic-representation}. Dans l'équation~\ref{eq:2.1}, $F_h(\omega)$ est la « version impaire » du signal $F(\omega)$
+\noindent La formation du signal analytique est montrée dans la figure~\ref{fig:complex-analytic-representation}. Dans l'équation~\ref{eq:2.1}, $F_h(\omega)$ est la « version impaire » du signal $F(\omega)$
 
 \begin{equation}
     F_h(\omega) = \left\{
@@ -144,7 +146,7 @@ La formation du signal analytique est montrée dans la figure~\ref{fig:complex-a
     \label{eq:2.5}
 \end{equation}
 
-L'expression de la fonction signe est la suivante :
+\noindent L'expression de la fonction signe est la suivante :
 
 \begin{equation}
     \sgn(x) = \left\{
@@ -156,11 +158,13 @@ L'expression de la fonction signe est la suivante :
     \right.
 \end{equation}
 
-L'équation~\ref{eq:2.1} est ainsi ré-écrite comme suit :
+\noindent L'équation~\ref{eq:2.1} est ainsi ré-écrite comme suit :
 
 \begin{equation}
     F_{\alpha}(\omega) = (1+\sgn(\omega))F(\omega)
 \end{equation}
+
+\bigskip
 
 \begin{figure}[h]
     %\noindent
@@ -208,7 +212,7 @@ et $F_h$ sont purement réelle et purement imaginaire respectivement. La représ
     f_{\alpha}(t) = \underbrace{f(t)}_\text{réel pur} + \underbrace{f_h(t)}_\text{imaginaire pur}.
 \end{equation}
 
-Le signal ajouté pour annuler les fréquences $F_h$ est par ailleurs un objet connu : c'est la transformée de Hilbert de $F$. Sa représentation, bien que très simple dans le domaine fréquentiel, est difficile à obtenir et manipuler dans le domaine temporel :
+\noindent Le signal ajouté pour annuler les fréquences $F_h$ est par ailleurs un objet connu : c'est la transformée de Hilbert de $F$. Sa représentation, bien que très simple dans le domaine fréquentiel, est difficile à obtenir et manipuler dans le domaine temporel :
 
 \begin{equation}
     f_h(t) = i \cdot \textnormal{p.v.} \int_{-\infty}^{\infty} \frac{f(t)}{\pi(t-\tau)} \,d\tau,
@@ -229,7 +233,7 @@ Pour comprendre l'intérêt du signal analytique, l'exemple d'une fonction sinus
     f(t) = A\sin(\omega_0t).
 \end{equation}
 
-La transformée de Hilbert de $f$ est calculée en utilisant les relations présentées précédemment, ce qui donne la représentation analytique du signal :
+\noindent La transformée de Hilbert de $f$ est calculée en utilisant les relations présentées précédemment, ce qui donne la représentation analytique du signal :
 
 \begin{align*}
     f_h(t) &= iA\cos(\omega_0t) \\
@@ -238,7 +242,7 @@ La transformée de Hilbert de $f$ est calculée en utilisant les relations prés
     &= Ae^{i\omega_0t}.
 \end{align*}
 
-Pour une sinusoïde, la transformée de Hilbert est un simple déphasage de $-\frac{\pi}2$ du signal original. Or la théorie de Fourier indique que n'importe quel signal générique peut être décomposé comme une somme de sinusoïdes. La transformée de Hilbert agit donc de la même manière sur tous les signaux : c'est un déphasage de $-\frac{\pi}2$ de chaque composante fréquentielle qui compose le signal. Le signal $f$ et sa transformée de Hilbert $f_h$ sont dits en quadrature de phase. Le signal analytique s'exprime comme une exponentielle complexe.
+\noindent Pour une sinusoïde, la transformée de Hilbert est un simple déphasage de $-\frac{\pi}2$ du signal original. Or la théorie de Fourier indique que n'importe quel signal générique peut être décomposé comme une somme de sinusoïdes. La transformée de Hilbert agit donc de la même manière sur tous les signaux : c'est un déphasage de $-\frac{\pi}2$ de chaque composante fréquentielle qui compose le signal. Le signal $f$ et sa transformée de Hilbert $f_h$ sont dits en quadrature de phase. Le signal analytique s'exprime comme une exponentielle complexe.
 
 \bigskip
 
@@ -255,7 +259,7 @@ Puisque tout signal est représenté comme la somme d'un réel et d'un imaginair
     \phi(t) &= \arctan\left(\frac{f_h(t)}{f(t)}\right).
 \end{align}
 
-Cette représentation introduit le concept d' amplitude locale et de phase locale (ici temporellement locales). L'amplitude et la phase locales sont deux outils d'analyse particulièrement intéressants pour l'étude approfondie du signal original. L'amplitude locale agit comme une mesure de l'enveloppe du signal. La phase locale agit comme une mesure de la forme du signal. Par exemple, une phase de $0$ indique un extremum, et une phase de $\pm\pi$ indique un passage par zéro. La figure~\ref{fig:local-pha-amp} montre un signal avec son amplitude locale et sa phase locale. À partir uniquement du signal initial, de l'information sur des caractéristiques et sur l'apparence du signal est obtenue.
+\noindent Cette représentation introduit le concept d' amplitude locale et de phase locale (ici temporellement locales). L'amplitude et la phase locales sont deux outils d'analyse particulièrement intéressants pour l'étude approfondie du signal original. L'amplitude locale agit comme une mesure de l'enveloppe du signal. La phase locale agit comme une mesure de la forme du signal. Par exemple, une phase de $0$ indique un extremum, et une phase de $\pm\pi$ indique un passage par zéro. La figure~\ref{fig:local-pha-amp} montre un signal avec son amplitude locale et sa phase locale. À partir uniquement du signal initial, de l'information sur des caractéristiques et sur l'apparence du signal est obtenue.
 
 \begin{figure}[hb]
 
@@ -408,7 +412,7 @@ Le problème à l'analyse de ce signal est le fait qu'il existe plusieurs niveau
     G(\omega) = \exp\left(-\frac{\log^2(\frac{|\omega|}{\omega_0})}{2\log(\sigma_0)^2}\right).
 \end{equation}
 
-Ces filtres sont caractérisés par deux paramètres : la fréquence centrale $\omega_0$ et et la largeur de bande $\sigma_0$. La fréquence centrale contrôle quelle échelle de structure est sélectionnée. La largeur de bande est un paramètre de forme qui contrôle la largeur de la bande de fréquence sélectionnée. Des exemples de filtre log-Gabor sont montrés à la figure~\ref{fig:log-gabor-filters}.
+\noindent Ces filtres sont caractérisés par deux paramètres : la fréquence centrale $\omega_0$ et et la largeur de bande $\sigma_0$. La fréquence centrale contrôle quelle échelle de structure est sélectionnée. La largeur de bande est un paramètre de forme qui contrôle la largeur de la bande de fréquence sélectionnée. Des exemples de filtre log-Gabor sont montrés à la figure~\ref{fig:log-gabor-filters}.
 
 \bigskip
 
@@ -463,7 +467,7 @@ Le filtre log-Gabor est appliqué au signal avant de lui appliquer la transform�
     \label{fig:log-gabor-filters}
 \end{figure}
 
-Étudier la réponse du signal sur une large gamme de fréquences et d'échelles offre une représentation locale du signal à différentes échelles. La représentation du signal à différentes échelles permet d'extraire de l'information sur les différentes structures du signal. Les informations locales sont présentées dans un graphique appelé scalogramme. Le scalogramme montre la réponse d'un signal en fonction du temps et de l'échelle, comme montré à la figure~\ref{fig:scalogram}. Les différents niveaux de structure du signal y sont visibles. Choisir le niveau d'échelle étudié donne un meilleur sens à l'interprétation des informations locales.
+\noindent Étudier la réponse du signal sur une large gamme de fréquences et d'échelles offre une représentation locale du signal à différentes échelles. La représentation du signal à différentes échelles permet d'extraire de l'information sur les différentes structures du signal. Les informations locales sont présentées dans un graphique appelé scalogramme. Le scalogramme montre la réponse d'un signal en fonction du temps et de l'échelle, comme montré à la figure~\ref{fig:scalogram}. Les différents niveaux de structure du signal y sont visibles. Choisir le niveau d'échelle étudié donne un meilleur sens à l'interprétation des informations locales.
 
 \bigskip
 
@@ -508,13 +512,13 @@ Pour générer les parties impaires du signal, une généralisation de la transf
     \label{eq:2.20}
 \end{align}
 
-Avec cette définition de $F_{o1}$ et $F_{o2}$, les signaux correspondant dans le domaine spatial sont des signaux à valeurs réelles. En effet un signal 2D à valeurs réelles $f$ a un spectre dont la partie réelle est paire et la partie imaginaire impaire, soit
+\noindent Avec cette définition de $F_{o1}$ et $F_{o2}$, les signaux correspondant dans le domaine spatial sont des signaux à valeurs réelles. En effet un signal 2D à valeurs réelles $f$ a un spectre dont la partie réelle est paire et la partie imaginaire impaire, soit
 
 \begin{equation}
     Re\{F(\omega)\} = Re\{F(-\omega)\}, \quad Im\{F(\omega)\} = -Im\{F(-\omega)\}.
 \end{equation}
 
-Dans la définition~\ref{eq:2.20}, comme $F$ est le spectre d'un signal réel. $F_{o1}$ et $F_{o2}$ vérifient donc ces propriétés de symétrie. Les signaux correspondants dans le domaine spatial sont bien réels.
+\noindent Dans la définition~\ref{eq:2.20}, comme $F$ est le spectre d'un signal réel. $F_{o1}$ et $F_{o2}$ vérifient donc ces propriétés de symétrie. Les signaux correspondants dans le domaine spatial sont bien réels.
 
 \bigskip
 
@@ -565,20 +569,20 @@ Il est aussi commun de se représenter le signal monogène comme un vecteur de d
     f_o(\mathbf{x}) = \sqrt{f_{o1}(\mathbf{x})^2 + f_{o2}(\mathbf{x})^2}.
 \end{equation}
 
-La transformée de Riesz peut s'exprimer directement dans le domaine spatial. Comme la transformée de Hilbert, la représentation spatiale de la transformée de Riesz est un objet mathématique compliqué, qui une intégrale singulière :
+\noindent La transformée de Riesz peut s'exprimer directement dans le domaine spatial. Comme la transformée de Hilbert, la représentation spatiale de la transformée de Riesz est un objet mathématique compliqué, qui une intégrale singulière :
 
 \begin{equation}
     R_if(x) = c_d \lim_{\epsilon \to 0}\int_{\mathbb{R}^d\setminus B_\epsilon(x)}\frac{(x_i-t_i)f(t)}{|x-t|^{d+1}}\,dt.
     \label{eq:riesz-transform-spatial}
 \end{equation}
 
-$i\in\llbracket 0, d\rrbracket$ représente la coordonnée avec $d$ la dimension et $c_d$ est une constante de normalisation dimensionnelle
+\noindent $i\in\llbracket 0, d\rrbracket$ représente la coordonnée avec $d$ la dimension et $c_d$ est une constante de normalisation dimensionnelle
 
 \begin{equation}
     c_d = \frac1{\pi\omega_{d-1}} = \frac{\Gamma((d+1)/2)}{\pi^{(d+1)/2}}.
 \end{equation}
 
-$\omega_{d-1}$ est le volume de la $(d-1)$-sphère unité. Au vue de la complexité de calcul et de manipulation de cette expression, la formulation fréquentielle est utilisée dans la suite du travail.
+\noindent $\omega_{d-1}$ est le volume de la $(d-1)$-sphère unité. Au vue de la complexité de calcul et de manipulation de cette expression, la formulation fréquentielle est utilisée dans la suite du travail.
 
 \subsubsection{Amplitude, phase et orientation locales}
 
@@ -600,19 +604,19 @@ L'amplitude locale $A$ représente, comme en 1D, le rayon de la représentation
     &= \sqrt{f_e(\mathbf{x})^2 + f_o(\mathbf{x})^2}.
 \end{align*}
 
-La phase locale $\phi$ mesure l'angle entre la partie paire $f_e$ et la partie impaire combinée $f_o$. La phase représente ainsi l'angle d'élévation de la représentation
+\noindent La phase locale $\phi$ mesure l'angle entre la partie paire $f_e$ et la partie impaire combinée $f_o$. La phase représente ainsi l'angle d'élévation de la représentation
 
 \begin{equation}
     \phi(\mathbf{x}) = \arctan\left(\frac{f_o(\mathbf{x})}{f_e(\mathbf{x})}\right).
 \end{equation}
 
-Enfin l'orientation locale $\theta$ complète la représentation en donnant l'angle d'azimut. L'orientation locale indique la direction dominante dans l'image à cet endroit, exprimée comme l'orientation de la partie impaire $f_o$
+\noindent Enfin l'orientation locale $\theta$ complète la représentation en donnant l'angle d'azimut. L'orientation locale indique la direction dominante dans l'image à cet endroit, exprimée comme l'orientation de la partie impaire $f_o$
 
 \begin{equation}
     \theta(\mathbf{x}) = \arctan\left(\frac{f_{o2}(\mathbf{x})}{f_{o1}(\mathbf{x})}\right).
 \end{equation}
 
-La figure~\ref{fig:monogenic-local-representation} montre un exemple de représentation locale pour une image, avec l'amplitude, la phase et l'orientation locales.
+\noindent La figure~\ref{fig:monogenic-local-representation} montre un exemple de représentation locale pour une image, avec l'amplitude, la phase et l'orientation locales.
 
 \bigskip
 
@@ -635,7 +639,7 @@ Le changement de représentation est réversible. Le signal monogène peut être
     \right].
 \end{equation}
 
-Notamment, l'image originale s'exprime simplement par $f(\mathbf{x}) = A(\mathbf{x})\cos(\phi(\mathbf{x}))$. Cette formule est utilisée plus tard dans ce travail pour reconstruire les images après modification de leurs informations locales.
+\noindent Notamment, l'image originale s'exprime simplement par $f(\mathbf{x}) = A(\mathbf{x})\cos(\phi(\mathbf{x}))$. Cette formule est utilisée plus tard dans ce travail pour reconstruire les images après modification de leurs informations locales.
 
 \bigskip
 
@@ -701,6 +705,8 @@ Il existe deux types principaux de pyramide, passe-bas et passe-bande. Pour cré
 
 Les deux étapes sont répétées sur l'étage nouvellement créé, et ce jusqu'à atteindre la profondeur désirée. Le résultat est une collection d'images de plus en plus petites et de moins en moins raffinées (en termes de résolution). Un exemple est donné en figure~\ref{fig:gaussian-pyramid}. La collection d'images peut être représentée graphiquement comme une pyramide en superposant les étages du plus grand au plus petit, comme montré à la figure~\ref{fig:pyramid-gauss}.
 
+\bigskip
+
 \begin{figure}[hb]
     \centering
 
@@ -746,7 +752,7 @@ Différents noyaux de lissage ont été proposés dans la littérature. La famil
     \right].
 \end{equation}
 
-Il est intéressant de constater que les pyramides gaussiennes sont notamment utilisées dans la synthèse de texture. En effet les MIP maps employées pour remédier au sous-échantillonnage sont un pré-calcul des textures à différents niveaux de résolution ; ce sont des pyramides gaussiennes.
+\noindent Il est intéressant de constater que les pyramides gaussiennes sont notamment utilisées dans la synthèse de texture. En effet les MIP maps employées pour remédier au sous-échantillonnage sont un pré-calcul des textures à différents niveaux de résolution ; ce sont des pyramides gaussiennes.
 
 \begin{figure}
     \centering
@@ -805,7 +811,7 @@ Avec une pyramide gaussienne, les images lissées sont de taille différente (di
 
 \subsection{Pyramide de Riesz}
 
-La pyramide de Riesz est une extension de la pyramide laplacienne. C'est le cadre permet l'étude du signal monogène d'une image à différents niveaux d'échelle. La pyramide de Riesz est construite en appliquant la transformée de Riesz à chaque étage de la pyramide laplacienne. La pyramide de Riesz est illustrée à la figure~\ref{fig:riesz-pyramid-cameraman}. Les informations locales sont ensuite calculées pour chaque étage de la pyramide. Les informations locales des différents niveaux sont mis en relation dans la suite des travaux afin plus d'information sur l'image, comme expliqué dans le chapitre implémentations~\ref{chap:chapitre2}.
+La pyramide de Riesz est une extension de la pyramide laplacienne. C'est le cadre permet l'étude du signal monogène d'une image à différents niveaux d'échelle. La pyramide de Riesz est construite en appliquant la transformée de Riesz à chaque étage de la pyramide laplacienne. La pyramide de Riesz est illustrée à la figure~\ref{fig:riesz-pyramid-cameraman}. Les informations locales sont ensuite calculées pour chaque étage de la pyramide. Les informations locales des différents niveaux sont mis en relation dans la suite des travaux afin plus d'information sur l'image, comme expliqué dans le chapitre implémentations~\ref{ch:chapitre2}.
 
 \bigskip
 
@@ -822,7 +828,7 @@ Pour des raisons de vitesse de calcul et de simplicité d'implémentation, la vr
     -i\sin(\omega_x) \quad \text{et} \quad -i\sin(\omega_y).
 \end{equation}
 
-Cette approximation donne de bons résultats ici, car les filtres ont une réponse équivalente à celle de la transformée de Riesz aux alentours de $\frac\pi2$, où se concentre la majorité de l'énergie des images dans la pyramide laplacienne~\cite{wadhwa_riesz_2014}. En $0$, il y a une différence notable entre la réponse des filtres et la réponse de la transformée de Riesz. Cependant, le contenu fréquentiel est faible en $0$ puisque, par construction, le contenu basse fréquences est supprimé dans la pyramide laplacienne. L'erreur due à la différence en $0$ est donc faible aussi. La figure~\ref{fig:riesz-approximation} montre une comparaison entre l'application de la transformée de Riesz et de son approximation. Les informations locales pour chaque étage, amplitude, phase et orientation, sont ensuite calculées comme expliqué dans la section précédente. La figure~\ref{fig:riesz-pyramid-local} présente les informations locales obtenues avec la pyramide de Riesz.
+\noindent Cette approximation donne de bons résultats ici, car les filtres ont une réponse équivalente à celle de la transformée de Riesz aux alentours de $\frac\pi2$, où se concentre la majorité de l'énergie des images dans la pyramide laplacienne~\cite{wadhwa_riesz_2014}. En $0$, il y a une différence notable entre la réponse des filtres et la réponse de la transformée de Riesz. Cependant, le contenu fréquentiel est faible en $0$ puisque, par construction, le contenu basse fréquences est supprimé dans la pyramide laplacienne. L'erreur due à la différence en $0$ est donc faible aussi. La figure~\ref{fig:riesz-approximation} montre une comparaison entre l'application de la transformée de Riesz et de son approximation. Les informations locales pour chaque étage, amplitude, phase et orientation, sont ensuite calculées comme expliqué dans la section précédente. La figure~\ref{fig:riesz-pyramid-local} présente les informations locales obtenues avec la pyramide de Riesz.
 
 \bigskip
 
@@ -905,7 +911,7 @@ Une nouvelle expression de la congruence de phases qui prend en compte la locali
     F_H(x) &= \sum_{n=1}^{N} f(x)*M{_n^o}.
 \end{align}
 
-$\sum_{n=1}^{N} A_n(x)$ indique ici la somme des amplitudes locales à tous les niveaux d'échelle
+\noindent $\sum_{n=1}^{N} A_n(x)$ indique ici la somme des amplitudes locales à tous les niveaux d'échelle
 
 \begin{equation}
     \sum_{n=1}^{N} A_n(x) = \sum_{n=1}^{N} \sqrt{(f(x)*M^e_n)^2 + (f(x)*M^o_n)^2},
