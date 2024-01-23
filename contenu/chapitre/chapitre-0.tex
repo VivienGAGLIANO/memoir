@@ -21,7 +21,7 @@ La visualisation de scènes virtuelles s'opérationnalise au travers d'un moteur
 
 \bigskip
 
-\begin{figure}[h]
+\begin{figure}[t]
     \centering
     \includegraphics[width=.65\textwidth]{contenu/resources/images/gollum}
     \caption[\textit{Gollum} (2002), \textit{Le Seigneur des Anneaux : Les Deux Tours}]{\textit{Gollum} \protect\footnotemark, personnage complètement généré par image de synthèse par rendu hors-ligne. Image par Mou~\cite{mou_keyframe_2018}.}
@@ -47,7 +47,7 @@ Une méthode de rendu en temps-réel doit répondre à certaines contraintes due
 
 Pour manipuler une scène virtuelle, il est nécessaire d'avoir une représentation des éléments qui la composent. Une représentation est une manière technique de décrire et stocker les données d'une scène. Il y a deux façons de représenter une géométrie dans un monde virtuel. Les représentations continues, comme les surfaces implicites, se rapprochent au mieux des formes des objets du monde réel, mais sont difficiles à créer. Les représentations discrètes, comme les maillages, approximent les représentations continues par des ensembles de polygones~\cite{coons_surfaces_1967}, souvent des triangles. Les polygones qui forment un maillage sont définis explicitement par des données géométriques, notamment les positions des sommets et les sommets des faces. La figure~\ref{fig:procedural-mesh} montre les polygones qui composent un modèle de terrain. Dans ce travail, seuls les maillages seront utilisés. Les maillages sont des structures habituelles dans les mondes virtuels.
 
-\begin{figure}[h!]
+\begin{figure}[h]
     \centering
     \includegraphics[width=\textwidth]{contenu/resources/images/full_terrain}
     \caption{Maillage d'un terrain généré procéduralement}
@@ -85,7 +85,7 @@ Les textures procédurales ont cependant des désavantages. Certaines apparences
 
 \bigskip
 
-\begin{figure}[h]
+\begin{figure}[t]
     \centering
     \includegraphics[width=.5\textwidth]{contenu/resources/images/perlin-noise}
     \caption[Bruit de Perlin]{La notion de texture procédurale est introduite par Ken Perlin en 1985 avec son bruit de Perlin~\cite{perlin_image_1985}.}
@@ -98,7 +98,7 @@ Résoudre les problématiques des textures procédurales est un enjeu de l'infor
 
 Le processus utilisé traditionnellement pour le rendu en temps-réel est appelé le pipeline graphique de tramage. Dans ce pipeline, la scène rendue est projetée sur le plan image, qui est une représentation virtuelle de l'écran. La géométrie est ensuite divisée en petits éléments de surface appelés fragments, durant l'étape éponyme de tramage. La figure~\ref{fig:rasterization} montre comment un triangle est tramé dans le pipeline traditionnel. Les fragments sont les éléments atomiques du pipeline : ce sont les plus petits éléments indivisibles manipulés. Au terme du processus de rendu, un fragment est soit défaussé car non visible dans l'image finale, soit donné une couleur et affiché. Un fragment affiché à l'écran est appelé un pixel (mot-valise de \textit{Picture Element}). L'ensemble des pixels forme l'image rendue.
 
-\begin{figure}[h]
+\begin{figure}[t]
     \centering
     \includegraphics[width=.55\textwidth]{contenu/resources/images/rasterization}
     \caption[Tramage d'un triangle]{Un triangle (rouge) tramé (noir). Crédit à \textit{Wojciech mula} pour l'image.}
@@ -175,7 +175,7 @@ Le travail présenté dans ce manuscript s'intéresse cependant à la synthèse 
 
 \bigskip
 
-\begin{figure}[hb]
+\begin{figure}
     \centering
     \includegraphics[width=\textwidth]{contenu/resources/images/structure_scale_loucas}
     \caption[Classification des textures selon leur niveau de structure]{Les textures peuvent être classées selon leur niveau de structure : stochastiques ou gaussiennes (gauche), semi-régulières (milieu), ou structurées (droite)}
@@ -184,7 +184,7 @@ Le travail présenté dans ce manuscript s'intéresse cependant à la synthèse 
 
 L'agencement des éléments de la texture peut se faire à différents niveaux d'échelle. Il y a donc différents niveaux de structure dans une image, principe illustré à la figure~\ref{fig:structure-level}. Les caractéristiques d'une texture telles que l'agencement sont déterminées par des relations statistiques entre les texels de la texture. Préserver toutes les relations statistiques entre les texels est désirable pour la conservation de l'apparence, mais certaines sont trop complexes à préserver en temps-réel. Comprendre quelles relations statistiques préserver et à quel niveau de structure œuvrer sont des enjeux majeurs pour la synthèse de texture structurée et sont l'objet de ce travail.
 
-\begin{figure}[ht!]
+\begin{figure}
     \centering
     \includegraphics[width=.85\linewidth]{contenu/resources/images/structure_level}
     \caption{Différents niveaux de structure au sein d'une image}
@@ -264,7 +264,7 @@ Dans une image, une discontinuité de luminosité est appelée un bord~\cite{tor
 
 \bigskip
 
-\begin{figure}[h]
+\begin{figure}[t]
     \centering
     \begin{subfigure}[b]{.45\textwidth}
         \centering
@@ -290,7 +290,7 @@ Une image peut être exprimée dans le domaine fréquentiel, ou de Fourier, à l
 
 \bigskip
 
-\begin{figure}[h]
+\begin{figure}[t]
     \centering
     \includegraphics[width=.35\linewidth]{contenu/resources/images/pc_1d_kovesi}
     \caption[Congruence de phases pour un signal 1D]{Congruence de phases pour un signal 1D, Kovesi (1995)~\cite{kovesi_image_1995}}
