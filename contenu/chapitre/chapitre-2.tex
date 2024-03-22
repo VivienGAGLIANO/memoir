@@ -26,7 +26,7 @@ Godot est un logiciel libre et gratuit, moteur de jeu 2D et 3D, qui permet de fa
 
 \bigskip
 
-Godot a une classe qui gère les textures, mais la manipuler est compliqué et peu efficace pour des opérations d'accès direct nécessaires à la synthèse. La librairie \textit{TexSyn} définit une classe d'image plus pratique à utiliser, avec toutes les opérations requises. La classe d'image de \textit{TexSyn} est ensuite interfacée avec la classe d'image de Godot pour être utilisable depuis les scripts Godot. Dans ce cadre de travail, les pyramides d'images sont construites en pré-calcul sur l'unité centrale de traitement. Les pyramides sont stockées dans des atlas de textures, puis chargées en mémoire sur la carte graphique. La reconstruction est faite depuis les \textit{shaders}, en temps réel, en utilisant les pyramides stockées dans les atlas. La reconstruction est cependant soumise à des problèmes de filtrage (voir figure~\ref{fig:texsyn-reconstruction}), car la convolution par filtre utilisée pour faire le lissage ne peut pas être appliquée depuis le \textit{fragment shader} pour des raisons d'accès parallèle. La librairie \textit{TexSyn} est ensuite utilisée pour développer une méthode de syntèse pouvant traiter des textures à structure irrégulière. La méthode de synthèse proposée est basée sur un échantillonneur préservant la congruence de phases, détaillé plus loin dans ce chapitre.
+Godot a une classe qui gère les textures, mais la manipuler est compliqué et peu efficace pour des opérations d'accès direct nécessaires à la synthèse. La librairie \textit{TexSyn} définit une classe d'image plus pratique à utiliser, avec toutes les opérations requises. La classe d'image de \textit{TexSyn} est ensuite interfacée avec la classe d'image de Godot pour être utilisable depuis les scripts Godot. Dans ce cadre de travail, les pyramides d'images sont construites en pré-calcul sur l'unité centrale de traitement. Les pyramides sont stockées dans des atlas de textures, puis chargées en mémoire sur la carte graphique. La reconstruction est faite depuis les \textit{shaders}, en temps réel, en utilisant les pyramides stockées dans les atlas. La reconstruction est cependant soumise à des problèmes de filtrage (voir figure~\ref{fig:texsyn-reconstruction}), car la convolution par filtre utilisée pour faire le lissage ne peut pas être appliquée depuis le \textit{fragment shader} pour des raisons d'accès parallèle. La librairie \textit{TexSyn} est ensuite utilisée pour développer une méthode de syntèhse pouvant traiter des textures à structure irrégulière. La méthode de synthèse proposée est basée sur un échantillonneur préservant la congruence de phases et est détaillée plus loin dans ce chapitre.
 
 \begin{figure}
     \centering
@@ -70,7 +70,7 @@ où $\mathcal{S}$ est un sous-ensemble de niveaux de la pyramide. L'algorithme a
     \label{fig:pc-selection-niveaux}
 \end{figure}
 
-Suite à cette observation, une méthode de sélection de niveaux de fréquences a été mise en place pour supprimer certains niveaux de la pyramide et observer l'effet sur la reconstruction. L'objectif était de pouvoir cibler certains niveaux de structure et les extraire de l'image. Cette méthode de sélection de niveaux a été mise application pour faire du filtrage de bandes de basses fréquences sur des textures de matériaux divers (voir figure~\ref{fig:filter-low-freq}) et gommer des tâches présentes sur les images.
+Suite à cette observation, une méthode de sélection de niveaux de fréquences a été mise en place pour supprimer certains niveaux de la pyramide et observer l'effet sur la reconstruction. L'objectif était de pouvoir cibler certains niveaux de structure et les extraire de l'image. Cette méthode de sélection de niveaux a été mise application pour faire du filtrage de bandes de basses fréquences sur des textures de matériaux divers (voir figure~\ref{fig:filter-low-freq}) et gommer des taches présentes sur les images.
 
 \begin{figure}
     \centering
@@ -95,7 +95,7 @@ Suite à cette observation, une méthode de sélection de niveaux de fréquences
         \includegraphics[width=\textwidth]{contenu/resources/images/lattice2_filtered}
     \end{subfigure}
 
-    \caption[Filtrage de bandes de basses fréquences]{Filtrages de bandes de basses fréquences. Cette opération permet de supprimer les tâches présentes sur les textures, tout en conservant la structure globale et les détails. Les images originales (gauche) sont comparées aux images reconstruites sans certains niveaux de la pyramide (droite). Typiquement, seuls les deux premiers niveaux sont gardés, ainsi que le dernier, le résidu basse fréquence. Textures tirées de la base de textures Brodatz~\cite{abdelmounaime_new_2013}.}
+    \caption[Filtrage de bandes de basses fréquences]{Filtrages de bandes de basses fréquences. Cette opération permet de supprimer les taches présentes sur les textures, tout en conservant la structure globale et les détails. Les images originales (gauche) sont comparées aux images reconstruites sans certains niveaux de la pyramide (droite). Typiquement, seuls les deux premiers niveaux sont gardés, ainsi que le dernier, le résidu basse fréquence. Textures tirées de la base de textures Brodatz~\cite{abdelmounaime_new_2013}.}
     \label{fig:filter-low-freq}
 \end{figure}
 
@@ -139,7 +139,7 @@ Cette idée a été appliquée au cadre d'étude utilisé. Nous avons émis l'hy
 
 \bigskip
 
-Pour la mise au point de méthode de synthèse, nous avons décidé de travailler avec le contenu le plus petit possible pour la réorganisation : le pixel. Il y a des avantages à travailler avec des petites régions de pixels plutôt que des pixels unitaires et plusieurs méthodes de la littérature font ce choix~\cite{wei_state_2009}. Le choix de travailler avec des pixels a cependant été fait pour avoir un premier prototype rapide et pouvoir tester notre hypothèse. L'utilisation de l'échantillonneur s'adapte en effet particulièrement bien à l'échelle du pixel, contrairement à la synthèse par patch, qui demande plus d'efforts de mise en place.
+Pour la mise au point de méthode de synthèse, nous avons décidé de travailler avec le contenu le plus petit possible pour la réorganisation : le pixel. Il y a des avantages à travailler avec des petites régions de pixels plutôt que des pixels unitaires et plusieurs méthodes de la littérature font ce choix~\cite{wei_state_2009}. Le choix de travailler avec des pixels a cependant été fait pour avoir un premier prototype rapide et pouvoir tester notre hypothèse. L'utilisation de l'échantillonneur s'adapte en effet particulièrement bien à l'échelle du pixel, contrairement à la synthèse par patchs, qui demande plus d'efforts de mise en place.
 
 \subsection{Échantillonneur préservant la congruence de phases}
 
@@ -228,7 +228,7 @@ Pour utiliser efficacement l'échantillonneur dans la synthèse en temps-réel, 
     \label{fig:sampler-realization}
 \end{figure}
 
-La texture de réalisation est ensuite utilisée dans le \textit{fragment shader} lors du rendu pour faire l'échantillonnage en temps-réel. La valeur de congruence de phases et la composante du fragment à remplacer sont échantillonnés, puis utilisés pour aller chercher la bonne réalisation dans la texture 3D. La réalisation est ensuite choisie aléatoirement entre toutes les réalisations qui ont la même congruence de phases et la même composante. En pratique, le choix de la réalisation se fait à l'aide d'une fonction de hachage, avec les coordonnées $(u, v)$ du fragment pour lequel l'échantillonnage est fait.
+La texture de réalisation est ensuite utilisée dans le \textit{fragment shader} lors du rendu pour faire l'échantillonnage en temps-réel. La valeur de congruence de phases et la composante du fragment à remplacer sont échantillonnées, puis utilisées pour aller chercher la bonne réalisation dans la texture 3D. La réalisation est ensuite choisie aléatoirement entre toutes les réalisations qui ont la même congruence de phases et la même composante. En pratique, le choix de la réalisation se fait à l'aide d'une fonction de hachage, avec les coordonnées $(u, v)$ du fragment pour lequel l'échantillonnage est fait.
 
 \bigskip
 
@@ -262,7 +262,7 @@ Dans ce chapitre, plusieurs applications de la congruence de phases ont été pr
 
 \paragraph{Sélection de niveaux de fréquences}
 
-La sélection de niveaux de fréquences par l'élimination de niveaux de la pyramide d'image est une méthode qui permet de visualiser différentes échelles de structure présentes dans l'image. Les différents niveaux de structure distingués dans une image sont liés à certaines fréquences dans le domaine spectral et donc à différents niveaux de la pyramide d'image. Étudier et sélectionner différents niveaux de la pyramide permet de mieux comprendre la structure de l'image. La sélection de niveaux de fréquences a été mise à profit pour faire du filtrage de bandes de basses fréquences pour effacer des tâches présentes sur des textures, comme présenté en figure~\ref{fig:filter-low-freq}. Une méthode similaire a d'ailleurs été publiée~\cite{zhang_pyramid_2023} indépendamment du travail décrit dans ce manuscrit, au cours des derniers mois de la recherche. Les deux méthodes n'ont pas été comparées, car ce n'était pas le but de cette recherche.
+La sélection de niveaux de fréquences par l'élimination de niveaux de la pyramide d'image est une méthode qui permet de visualiser différentes échelles de structure présentes dans l'image. Les différents niveaux de structure distingués dans une image sont liés à certaines fréquences dans le domaine spectral et donc à différents niveaux de la pyramide d'image. Étudier et sélectionner différents niveaux de la pyramide permet de mieux comprendre la structure de l'image. La sélection de niveaux de fréquences a été mise à profit pour faire du filtrage de bandes de basses fréquences pour effacer des taches présentes sur des textures, comme présenté en figure~\ref{fig:filter-low-freq}. Une méthode similaire a d'ailleurs été publiée~\cite{zhang_pyramid_2023} indépendamment du travail décrit dans ce manuscrit, au cours des derniers mois de la recherche. Les deux méthodes n'ont pas été comparées, car ce n'était pas le but de cette recherche.
 
 \bigskip
 
@@ -311,7 +311,7 @@ La congruence de phases semble cependant bien détecter et, dans une certaine me
         \includegraphics[width=\textwidth]{contenu/resources/images/stone_zoom_pc}
     \end{subfigure}
 
-    \caption[Problème d'échantillonnage dû à la présence de marques au sein des pavés de la texture]{Zoom sur une marque présente au sein d'un pavé de la texture (gauche) et la congruence de phases associée à cette zone (droite). La congruence de phases a des valeurs semblables sur les bords du pavé et autour de la marque foncée mise en évidence. Cela cause des problème pour l'échantillonnage.}
+    \caption[Problème d'échantillonnage dû à la présence de marques au sein des pavés de la texture]{Zoom sur une marque présente au sein d'un pavé de la texture (gauche) et la congruence de phases associée à cette zone (droite). La congruence de phases a des valeurs semblables sur les bords du pavé et autour de la marque foncée mise en évidence. Cela cause des problèmes pour l'échantillonnage.}
     \label{fig:pc-defect}
 \end{figure}
 

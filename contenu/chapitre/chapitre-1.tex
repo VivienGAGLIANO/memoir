@@ -27,7 +27,7 @@ où $\overline{\{\}}$ est l'opérateur de conjugaison complexe. Les fréquences 
     \end{array}
     \right.
 \end{equation}
-où l'amplitude des composantes de fréquences positives est doublée, par soucis de conservation d'énergie. Avec cette formulation, toute l'information du signal original est conservée. Cette nouvelle forme permet en plus de faire des manipulations précédemment impossibles, qui permettent de mieux comprendre le signal.
+où l'amplitude des composantes de fréquences positives est doublée, par souci de conservation d'énergie. Avec cette formulation, toute l'information du signal original est conservée. Cette nouvelle forme permet en plus de faire des manipulations précédemment impossibles, qui permettent de mieux comprendre le signal.
 
 \bigskip
 
@@ -536,7 +536,7 @@ Il est aussi commun de se représenter le signal monogène comme un vecteur de d
 \end{equation}
 Cette représentation est plus compacte, au détriment de la perte d'information sur l'orientation et sera parfois utilisée dans la suite de ce travail.
 
-\bigdskip
+\bigskip
 
 La transformée de Riesz peut s'exprimer directement dans le domaine spatial. Comme la transformée de Hilbert, la représentation spatiale de la transformée de Riesz est un objet mathématique compliqué qui possède une intégrale singulière
 \begin{equation}
@@ -637,7 +637,7 @@ Les parties paires et impaires du signal sont calculées en sélectionnant plusi
 
 \bigskip
 
-Le cadre de travail pour le restant du manuscript, le signal monogène, a été introduit. Le cadre choisi pour travailler à différents niveaux de structure va maintenant être discuté. Bridge présente dans son article~\cite{bridge_introduction_2018} un cadre de travail utilisant les filtres log-Gabor. Les filtres log-Gabor 2D possèdent une expression complexe dans le domaine spatial. Pour les travaux présentés, une autre méthode de représentation est utilisée : la pyramide de Riesz. Les calculs nécessaires à la création et manipulation de la pyramide de Riesz sont plus élémentaires que ceux des filtres log-Gabor. Le choix de la simplicité pour les calculs permet de concentrer les efforts de recherche sur l'analyse de textures. La section qui suit introduit la pyramide de Riesz et montre comment elle peut être utilisée pour l'analyse de textures.
+Le cadre de travail pour le restant du manuscrit, le signal monogène, a été introduit. Le cadre choisi pour travailler à différents niveaux de structure va maintenant être discuté. Bridge présente dans son article~\cite{bridge_introduction_2018} un cadre de travail utilisant les filtres log-Gabor. Les filtres log-Gabor 2D possèdent une expression complexe dans le domaine spatial. Pour les travaux présentés, une autre méthode de représentation est utilisée : la pyramide de Riesz. Les calculs nécessaires à la création et manipulation de la pyramide de Riesz sont plus élémentaires que ceux des filtres log-Gabor. Le choix de la simplicité pour les calculs permet de concentrer les efforts de recherche sur l'analyse de textures. La section qui suit introduit la pyramide de Riesz et montre comment elle peut être utilisée pour l'analyse de textures.
 
 \section{Pyramide de Riesz}
 
@@ -645,7 +645,7 @@ L'idée de travailler en considérant plusieurs niveaux d'échelle est introduit
 
 \bigskip
 
-La pyramide d'image est ensuite étendue par Simoncelli \textit{et al.}~\cite{simoncelli_shiftable_1992}. La pyramide de Simoncelli \textit{et al.}, dite orientable, a des propriétés d'invariance par rotation, translation et mise à l'échelle. Les propriétés d'invariance de la pyramide orientable sont une amélioration par rapport aux modèles précédent. La pyramide orientable sert de base à la pyramide de Riesz utilisée dans ces travaux. Wadhwa \textit{et al.}~\cite{wadhwa_phase_based_2013} mettent au point la pyramide de Riesz pour étudier les micro-mouvements dans des vidéos. La pyramide utilisée dans les travaux présentés est fortement inspirée de Wadhwa \textit{et al.} La construction de la pyramide, plus détaillée dans les paragraphes qui suivent, s'organise comme suit. Dans un premier temps les pyramides gaussienne puis laplacienne sont formées. La pyramide laplacienne offre une méthode de reconstruction de l'image. La transformée de Riesz est ensuite appliquée à tous les étages de la pyramide pour obtenir le signal monogène de chaque niveau. Les informations locales des différents niveaux sont enfin extraites pour analyser les différents niveaux de structure. La pyramide de Riesz est un outil d'analyse qui sera par la suite utilisée pour l'analyse et la synthèse de textures.
+La pyramide d'image est ensuite étendue par Simoncelli \textit{et al.}~\cite{simoncelli_shiftable_1992}. La pyramide de Simoncelli \textit{et al.}, dite orientable, a des propriétés d'invariance par rotation, translation et mise à l'échelle. Les propriétés d'invariance de la pyramide orientable sont une amélioration par rapport aux modèles précédent. La pyramide orientable sert de base à la pyramide de Riesz utilisée dans ces travaux. Wadhwa \textit{et al.}~\cite{wadhwa_phase_based_2013} mettent au point la pyramide de Riesz pour étudier les micro-mouvements dans des vidéos. La pyramide utilisée dans les travaux présentés est fortement inspirée de Wadhwa \textit{et al.} La construction de la pyramide, plus détaillée dans les paragraphes qui suivent, s'organise comme suit. Dans un premier temps les pyramides gaussiennes puis laplaciennes sont formées. La pyramide laplacienne offre une méthode de reconstruction de l'image. La transformée de Riesz est ensuite appliquée à tous les étages de la pyramide pour obtenir le signal monogène de chaque niveau. Les informations locales des différents niveaux sont enfin extraites pour analyser les différents niveaux de structure. La pyramide de Riesz est un outil d'analyse qui sera par la suite utilisée pour l'analyse et la synthèse de textures.
 
 \subsection{Pyramide gaussienne}
 
@@ -718,7 +718,7 @@ Il est intéressant de constater que les pyramides gaussiennes sont notamment ut
 
 \subsection{Pyramide laplacienne}
 
-La pyramide laplacienne est une autre forme de pyramide qui correspond à un type passe-bande. Comme l'expliquent Burt et Adelson~\cite{burt_laplacian_1983}, les texels voisins dans une image sont souvent hautement corrélés. Encoder une image en termes de valeur de pixels cause une perte d'efficacité à cause de la redondance d'information. Il est possible d'encoder une image plus efficacement, c'est-à-dire avec moins de bits. La pyramide laplacienne est une représentation qui décorelle les texels voisins et qui répond donc à cette problématique.
+La pyramide laplacienne est une autre forme de pyramide qui correspond à un type passe-bande. Comme l'expliquent Burt et Adelson~\cite{burt_laplacian_1983}, les texels voisins dans une image sont souvent hautement corrélés. Encoder une image en termes de valeur de pixels cause une perte d'efficacité à cause de la redondance d'information. Il est possible d'encoder une image plus efficacement, c'est-à-dire avec moins de bits. La pyramide laplacienne est une représentation qui décorrèle les texels voisins et qui répond donc à cette problématique.
 
 \subsubsection{Construction de la pyramide}
 
@@ -734,7 +734,7 @@ Le processus est répétable itérativement, en appliquant à chaque fois le mê
 
 \bigskip
 
-Le filtre de lissage utilisé est un filtre passe-bas, qui moyenne localement l'image. Le même genre de filtre passe-bas est utilisé pour créer une pyramide gaussienne. En fait, une pyramide gaussienne est souvent utilisée pour construire une pyramide laplacienne. La pyramide gaussienne représente toutes les images lissées nécessaires à la construction de la pyramide laplacienne. La pyramide gaussienne est calculée, puis à chaque étage est soustrait l'étage de résolution inférieure. Les images d'erreur de prédiction sont obtenus à partir de la pyramide gaussienne.
+Le filtre de lissage utilisé est un filtre passe-bas, qui moyenne localement l'image. Le même genre de filtre passe-bas est utilisé pour créer une pyramide gaussienne. En fait, une pyramide gaussienne est souvent utilisée pour construire une pyramide laplacienne. La pyramide gaussienne représente toutes les images lissées nécessaires à la construction de la pyramide laplacienne. La pyramide gaussienne est calculée, puis à chaque étage est soustrait l'étage de résolution inférieure. Les images d'erreur de prédiction sont obtenues à partir de la pyramide gaussienne.
 
 \bigskip
 
@@ -749,7 +749,7 @@ Pour soustraire une image lissée à son image de taille originale, une étape d
 
 \subsubsection{Reconstruction de l'image}
 
-L'image décomposée en pyramide laplacienne est stockée en enregistrant les images d'erreur de prédiction et l'image lissée de plus basse résolution. Pour reconstruire l'image originale, un processus itératif est utilisé. Le résidu basse fréquences est additionné à la dernière image d'erreur pour former une image lissée de résolution supérieure. Le processus est répété en additionnant à chaque fois l'image lissée obtenue à l'image d'erreur suivante, jusqu'à obtenir l'image originale.
+L'image décomposée en pyramide laplacienne est stockée en enregistrant les images d'erreur de prédiction et l'image lissée de plus basse résolution. Pour reconstruire l'image originale, un processus itératif est utilisé. Le résidu basses fréquences est additionné à la dernière image d'erreur pour former une image lissée de résolution supérieure. Le processus est répété en additionnant à chaque fois l'image lissée obtenue à l'image d'erreur suivante, jusqu'à obtenir l'image originale.
 
 \bigskip
 
@@ -783,7 +783,9 @@ Cette approximation donne de bons résultats ici, car les filtres ont une répon
 
 \bigskip
 
-\begin{figure}
+Avec cette implémentation de la pyramide de Riesz, le cadre d'étude multirésolution local a été défini. La prochaine partie décrit comment le cadre multirésolution local est utilisé afin d'extraire de l'information d'une texture.
+
+\begin{figure}[H]
     \centering
     \includegraphics[width=.65\textwidth]{contenu/resources/images/riesz_approximation}
     \caption[Approximation de la transformée de Riesz]{Comparaison de l'application de la transformée de Riesz (gauche) et de son approximation (droite) pour un niveau de pyramide. Les tranches horizontales en jaune sur les images (a) et (b) sont représentées dans le diagramme en (c). Image par Wadhwa \textit{et al.}~\cite{wadhwa_riesz_2014}.}
@@ -797,11 +799,9 @@ Cette approximation donne de bons résultats ici, car les filtres ont une répon
     \label{fig:riesz-pyramid-local}
 \end{figure}
 
-Avec cette implémentation de la pyramide de Riesz, le cadre d'étude multirésolution local a été défini. La prochaine partie décrit comment le cadre multirésolution local est utilisé afin d'extraire de l'information d'une texture.
-
 \section{Congruence de phases}
 
-Le modèle de l'énergie locale est un modèle de détection de caractéristiques saillantes dans une image. Introduit par Morrone \textit{et al.}~\cite{morrone_feature_1987, morrone_mach_1986}, il explique la présence de points saillants, tels que des bords et des coins, par l'alignement des phases locales de l'image. Le modèle d'énergie locale est basé sur l'observation que les bords et les coins sont des structures résultant de la superposition de sinusoïdes en phase les unes avec les autres. Contrairement aux autres méthodes de détection de caractéristiques, comme celles de Sobel ou Canny, le modèle de Morrone \textit{et al.} est insensible aux variations de luminosité et de grossissement. Les méthodes par gradient utilisent en effet un seuillage pour déterminer les bords, qui dépend de la luminosité et du niveau de zoom de l'image. À l'inverse, le modèle de l'énergie locale permet le calcul de la congruence de phases, une grandeur à valeurs dans $[0, 1]$ mesurant uniformément la présence d'éléments caractéristiques dans une image et la proximité d'un texel à un élément caractéristique. La congruence de phases est le sujet de la partie qui suit.
+Le modèle de l'énergie locale est un modèle de détection de caractéristiques saillantes dans une image. Introduit par Morrone \textit{et al.}~\cite{morrone_feature_1987, morrone_mach_1986}, il explique la présence de points saillants, tels que des bords et des coins, par l'alignement des phases locales de l'image. Le modèle d'énergie locale est basé sur l'observation que les bords et les coins sont des structures résultant de la superposition de sinusoïdes en phase les unes avec les autres. Contrairement aux autres méthodes de détection de caractéristiques, comme celles de Sobel ou Canny, le modèle de Morrone \textit{et al.} est insensible aux variations de luminosité et de grossissement. Les méthodes par gradient utilisent en effet un seuillage pour déterminer les bords, seuillage qui dépend de la luminosité et du niveau de zoom de l'image. À l'inverse, le modèle de l'énergie locale permet le calcul de la congruence de phases, une grandeur à valeurs dans l'intervalle $[0, 1]$ mesurant uniformément la présence d'éléments caractéristiques dans une image et la proximité d'un texel à un élément caractéristique. La congruence de phases est le sujet de la partie qui suit.
 
 \bigskip
 
@@ -831,7 +831,7 @@ et
 \begin{equation}
     \phi_n(x) = \arctan\left(\frac{f(x)*M^o_n}{f(x)*M^e_n}\right),
 \end{equation}
-où $M^e_n$ et $M^o_n$ sont les filtres passe-bande, paire et impaire, au niveau d'échelle $n$. À noter que le $n$ dans l'équation~\ref{eq:local-scale-amplitude}, entre 1 et $N$ (le nombre de nivaux d'échelle considéré), désigne le niveau d'échelle fréquentiel. Il est différent de celui dans l'équation de la série de Fourier~\ref{eq:phase-congruence-energy} qui, lui, représente les différentes sinusoïdes qui forment le signal. L'intérêt de la congruence de phases est exposé à la figure~\ref{fig:phase-congruence-scalogram} qui représente les scalogrammes de phase et d'amplitude d'un signal 1D. Les points saillants sont ceux où la phase est alignée à travers tous les niveaux d'échelle.
+où $M^e_n$ et $M^o_n$ sont les filtres passe-bande, pair et impair, au niveau d'échelle $n$. À noter que le $n$ dans l'équation~\ref{eq:local-scale-amplitude}, entre 1 et $N$ (le nombre de niveaux d'échelle considéré), désigne le niveau d'échelle fréquentiel. Il est différent de celui dans l'équation de la série de Fourier~\ref{eq:phase-congruence-energy} qui, lui, représente les différentes sinusoïdes qui forment le signal. L'intérêt de la congruence de phases est exposé à la figure~\ref{fig:phase-congruence-scalogram} qui représente les scalogrammes de phase et d'amplitude d'un signal 1D. Les points saillants sont ceux où la phase est alignée à travers tous les niveaux d'échelle.
 
 \bigskip
 

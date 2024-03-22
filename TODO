@@ -17,3 +17,12 @@ v signal monogène (et pas monogénique)
 v résumé et remerciements
 v orthographe, grammaire, coquilles, etc.
 v vérifier pas de failed latex command
+
+
+RÉVISIONS
+
+- checker les mots avec "-"
+- checker definition MIP-map, si besoin eclaircir p. 43
+- ajustements mineurs sur les figures
+- pertinence de l'approximation de Riesz
+- annexe sur l'utilisation de TexSyn
