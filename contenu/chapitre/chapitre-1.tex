@@ -17,7 +17,7 @@ Le signal analytique est une méthode de représentation d'un signal 1D à valeu
 \begin{equation}
     F(-\omega) = \overline{F(\omega)},
 \end{equation}
-où $\overline{\{\}}$ est l'opérateur de conjugaison complexe. Les fréquences négatives, non-nécessaire, peuvent donc être mises de côté sans perte d'information. Un nouveau signal est construit en n'utilisant que les fréquences positives de $f(t)$. Le signal $F_{\alpha}$ est d'abord exprimé dans le domaine de Fourier par
+où $\overline{\{\}}$ est l'opérateur de conjugaison complexe. Les fréquences négatives, non nécessaires, peuvent donc être mises de côté sans perte d'information. Un nouveau signal est construit en n'utilisant que les fréquences positives de $f(t)$. Le signal $F_{\alpha}$ est d'abord exprimé dans le domaine de Fourier par
 \begin{equation}
     F_{\alpha}(\omega) = \left\{
     \begin{array}{ll}
@@ -645,7 +645,7 @@ L'idée de travailler en considérant plusieurs niveaux d'échelle est introduit
 
 \bigskip
 
-La pyramide d'image est ensuite étendue par Simoncelli \textit{et al.}~\cite{simoncelli_shiftable_1992}. La pyramide de Simoncelli \textit{et al.}, dite orientable, a des propriétés d'invariance par rotation, translation et mise à l'échelle. Les propriétés d'invariance de la pyramide orientable sont une amélioration par rapport aux modèles précédent. La pyramide orientable sert de base à la pyramide de Riesz utilisée dans ces travaux. Wadhwa \textit{et al.}~\cite{wadhwa_phase_based_2013} mettent au point la pyramide de Riesz pour étudier les micro-mouvements dans des vidéos. La pyramide utilisée dans les travaux présentés est fortement inspirée de Wadhwa \textit{et al.} La construction de la pyramide, plus détaillée dans les paragraphes qui suivent, s'organise comme suit. Dans un premier temps les pyramides gaussiennes puis laplaciennes sont formées. La pyramide laplacienne offre une méthode de reconstruction de l'image. La transformée de Riesz est ensuite appliquée à tous les étages de la pyramide pour obtenir le signal monogène de chaque niveau. Les informations locales des différents niveaux sont enfin extraites pour analyser les différents niveaux de structure. La pyramide de Riesz est un outil d'analyse qui sera par la suite utilisée pour l'analyse et la synthèse de textures.
+La pyramide d'image est ensuite étendue par Simoncelli \textit{et al.}~\cite{simoncelli_shiftable_1992}. La pyramide de Simoncelli \textit{et al.}, dite orientable, a des propriétés d'invariance par rotation, translation et mise à l'échelle. Les propriétés d'invariance de la pyramide orientable sont une amélioration par rapport aux modèles précédent. La pyramide orientable sert de base à la pyramide de Riesz utilisée dans ces travaux. Wadhwa \textit{et al.}~\cite{wadhwa_phase_based_2013} mettent au point la pyramide de Riesz pour étudier les micromouvements dans des vidéos. La pyramide utilisée dans les travaux présentés est fortement inspirée de Wadhwa \textit{et al.} La construction de la pyramide, plus détaillée dans les paragraphes qui suivent, s'organise comme suit. Dans un premier temps les pyramides gaussiennes puis laplaciennes sont formées. La pyramide laplacienne offre une méthode de reconstruction de l'image. La transformée de Riesz est ensuite appliquée à tous les étages de la pyramide pour obtenir le signal monogène de chaque niveau. Les informations locales des différents niveaux sont enfin extraites pour analyser les différents niveaux de structure. La pyramide de Riesz est un outil d'analyse qui sera par la suite utilisée pour l'analyse et la synthèse de textures.
 
 \subsection{Pyramide gaussienne}
 
@@ -707,7 +707,7 @@ Différents noyaux de lissage ont été proposés dans la littérature. La famil
         \end{array}
     \right].
 \end{equation}
-Il est intéressant de constater que les pyramides gaussiennes sont notamment utilisées dans la synthèse de texture. En effet les MIP maps employées pour remédier au sous-échantillonnage sont un pré-calcul des textures à différents niveaux de résolution ; ce sont des pyramides gaussiennes.
+Il est intéressant de constater que les pyramides gaussiennes sont fréquemment utilisées dans la synthèse de texture. En effet dans le filtrage tri-linéaire, méthode extrêmement courante lors du rendu, un précalcul est effectué sur les textures à différents niveaux de résolution. Le résultat de ce précalcul, appelé MIP map, est en fait la pyramide gaussienne de la texture.
 
 \begin{figure}
     \centering
