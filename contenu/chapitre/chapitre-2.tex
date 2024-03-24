@@ -100,6 +100,7 @@ Suite à cette observation, une méthode de sélection de niveaux de fréquences
 \end{figure}
 
 \section{Synthèse de texture préservant la congruence de phases}
+\label{sec:pc-preserving-synthesis}
 
 L'intérêt principal et raison d'être du cadre de travail présenté précédemment est néanmoins l'utilisation de la congruence de phases, notamment en tant qu'indicatrice de la proximité à un bord. Cette mesure se comporte en effet comme un gradient dans la direction perpendiculaire au bord et permet de savoir ponctuellement si un texel se situe proche d'un bord. Avoir des informations de proximité à un bord par texel est particulièrement utile dans un contexte de calcul parallèle, comme celui du pipeline graphique. Un problème des calculs parallèles sur la carte graphique est en effet la perte d'information sur le contexte local. Avoir accès à la congruence de phases offre une solution à ce problème en donnant des informations sur le voisinage du fragment considéré.
 

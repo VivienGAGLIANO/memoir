@@ -946,7 +946,7 @@ avec $d$ la profondeur de la pyramide, $f_i, r_{1i}\, \text{et}\, r_{2i}$ les co
     \hfill
     \begin{subfigure}{.3\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{contenu/resources/images/geometric_shapes_pc_kovesi}
+        \includegraphics[width=\textwidth]{contenu/resources/images/geometric_shapes_pc_kovesi_cropped}
         \caption{Congruence de phases de Kovesi}
     \end{subfigure}
     \hfill
@@ -956,10 +956,10 @@ avec $d$ la profondeur de la pyramide, $f_i, r_{1i}\, \text{et}\, r_{2i}$ les co
         \caption{Congruence de phases de Riesz}
     \end{subfigure}
 
-    \caption[Comparaison de la congruence de phases de Kovesi et de Riesz]{Comparaison de la congruence de phases de Kovesi et de Riesz pour une image de test de formes géométriques.}
+    \caption[Comparaison de la congruence de phases de Kovesi et de Riesz]{Comparaison de la congruence de phases de Kovesi et de Riesz pour une image de test de formes géométriques. La congruence de Riesz est moins étalée autour des bords et présente un pic de valeur plus important sur les bords même. La congruence est cependant moins uniforme aux alentours de certains coins.}
     \label{fig:phase-congruency-riesz}
 \end{figure}
 
 \bigskip
 
-Avec cette formulation, une méthode de calcul de la congruence de phases a été définie pour le cadre multirésolution local de Riesz. Une comparaison entre la mesure de Kovesi et celle proposée dans ce travail est faite à la figure~\ref{fig:phase-congruency-riesz}. Le chapitre suivant décrit comment la méthode a été implémentée et comment elle est utilisée pour la synthèse de texture.
+Avec cette formulation, une méthode de calcul de la congruence de phases a été définie pour le cadre multirésolution local de Riesz. Une comparaison entre la mesure de Kovesi et celle proposée dans ce travail est faite à la figure~\ref{fig:phase-congruency-riesz}. La méthode de Riesz produit un résultat spatialement plus concentré autour des bords, la zone de détection de proximité avec un bord est plus étroite. Mais l'intensité de la congruence mesurée est plus haute aussi, les bords même sont donc mieux détectés. Le chapitre suivant décrit comment la méthode a été implémentée et comment elle est utilisée pour la synthèse de texture.

@@ -1,46 +1,44 @@
-\chapter[Titre cours d'une annexe]{Exemple d'annexe avec un nom beaucoup trop long}
-\label{app:exemple}
+\chapter{Utilisation de la bibliothèque TexSyn}
+\label{app:texsyn-use}
 
-Si le nom de l'annexe est très long, veuillez utiliser l'option «titre court» pour l'entrée dans la table des matières.
+La bibliothèque logicielle de synthèse de texture et de traitement d'image TexSyn est un outil de synthèse de texture procédurale développé en collaboration avec Nicolas Lutz, post-doctorant du laboratoire. Elle est disponible en ligne sur un dépôt Github à l'adresse suivante: \url{https://github.com/VivienGAGLIANO/godot} (fourche du projet initial de Nicolas Lutz). Une courte notice d'utilisation est ici présentée, afin de faciliter la prise en main de l'outil.
 
-Les annexes peuvent \^etre en fran\c{c}ais ou en anglais. 
+\section{Présentation et mise en place}
 
-% Si elles sont en anglais, elles doivent contenir \modeAnglais ou \englishMode afin de gérer correctement les coupures de mots,
-% à partir du moment où l'anglais est utilisé.
+La bibliothèque développée est un module pour le logiciel Godot, moteur de jeu et logiciel libre. Un bref aperçu du développement pour Godot est décrit, puis la méthode d'installation de la bibliothèque est expliquée. Enfin quelques conseils d'utilisation sont fournis.
 
-Vous devez introduire en français le contenu de l'annexe
+\subsection{Développement pour Godot}
 
-\modeAnglais
+Une force du moteur Godot, et un de ses aspects qui le rendent populaire notamment pour la recherche, est que le code source est accessible et facilement modifiable. Cet aspect participatif du développement du moteur fait d'ailleurs partie de la philosophie de Godot, qui est pensé pour être une base de code à laquelle les utilisateurs contribuent selon leurs besoins. L'implémentation de fonctionnalités pour Godot est donc facilitée par la structure du moteur, qui permet l'intégration de modules écrits en divers langages de programmation.
 
-\section{Titre de section}
+\bigskip
 
-Vous devez introduire la section.
+La bibliothèque TexSyn est développée en C++, pour des raisons de performances. L'objectif étant la mise au point de méthodes de synthèse en temps réel, il est important que le code soit le plus rapide possible, le choix du langage C++ reflète ce désir. La bibliothèque est ensuite intégrée à Godot en tant que module, et les fonctionnalités de synthèse sont accessibles directement dans l'interface de Godot.
 
-\subsection{Titre de sous-section}
+\subsection{Installation de la bibliothèque}
 
-Vous devez introduire la  sous-section.
+Pour intégrer TexSyn (ou tout autre module personnalisé) à un projet Godot, il est nécessaire de construire soit-même le moteur à partir du code source. Ce code source se trouve dans le dépôt Github mentionné au-dessus. Le code pour TexSyn se trouve dans la branche \texttt{texsyn4} du dépôt, qui est écrit pour Godot 4 (version 4.0 au moment du développement). Le processus d'installation et les détails de construction sont décrits en détail dans la \href{https://docs.godotengine.org/en/stable/contributing/development/compiling/index.html}{documentation} de Godot, mais un résumé des étapes importantes est donné ici.
 
-\subsection{Titre de sous-section}
+\paragraph{Construction du logiciel}
 
-Vous devez introduire la  sous-section.
+Godot est développé en C++ et utilise SCons comme moteur de production. Il peut être construit pour plusieurs plateformes, celles utilisées lors du développement sont Linux et Windows. Lors de la compilation, il faut appeler le script SCons avec les options nécessaires pour spécifier la bonne plateforme et d'éventuels autres paramètres de compilation.
 
-\subsubsection{Titre de sous-sous-section}
+\paragraph{Compilation et édition de liens de TexSyn}
 
-Vous devez introduire la  sous-sous-section.
+La bibliothèque TexSyn est implémentée comme une bibliothèque dynamique partagée. Une fois la compilation initiale du moteur faite, il est possible de modifier et compiler TexSyn sans avoir à recompiler tout le moteur (voir cette \href{https://docs.godotengine.org/en/stable/contributing/development/core_and_modules/custom_modules_in_cpp.html}{page de documentation} pour plus de détails). Pour cela, utiliser la variable d'environnement \texttt{texsyn\_shared=yes} et préciser la cible \texttt{bin/libtexsyn.linuxbsd.editor.dev.x86\_64.so} (nom pouvant différer légèrement selon la plateforme et les options de configurations sélectionnées) lors de la compilation. Pour que la bibliothèque soit accessible dans l'interface de Godot, il est aussi nécessaire que l'objet partagé créé soit accessible par le moteur. Il faut pour cela placer cet objet partagé avec l'exécutable du moteur créé, ou référencer son chemin d'accès, par exemple avec la variable d'environnement LD\_LIBRARY\_PATH sous Linux : \texttt{export LD\_LIBRARY\_PATH=\$PWD/bin/} depuis la racine du projet.
 
-\paragraph{Un paragraphe:} exemple
+\paragraph{Ajout à la bibliothèque TexSyn}
 
-\subparagraph{Un sous paragraphe:} exemple
+Pour ajouter des fonctionnalités, classes ou fonctions à TexSyn, il faut suivre le \href{https://docs.godotengine.org/en/stable/contributing/development/core_and_modules/custom_modules_in_cpp.html}{procédé} décrit dans la documentation. Pour créer une nouvelle classe utilisable depuis un script Godot en GDScript (langage de script utilisé pour programmer la logique de jeu dans l'interface), il faut s'assurer que la classe hérite de \texttt{RefCounted}, inclure la commande \texttt{GDCLASS(NomDeMaClasse, RefCounted);} au début de la déclaration de la classe, définir et implémenter la méthode \texttt{\_bind\_methods()} pour lier les méthodes de la classe à l'interface de Godot, et enfin enregistrer la classe dans la liste des classes exportées dans le fichier \texttt{register\_types.cpp}. La classe et ses fonctions seront ensuite accessibles depuis l'interface. Plusieurs classes sont implémentées dans TexSyn et pourront servir d'exemple pour l'ajout de nouvelles fonctionnalités.
 
-\subsubsection{Titre de sous-sous-section}
+\section{Utilisation de TexSyn pour l'analyse et synthèse de texture}
 
-Vous devez introduire la  sous-sous-section.
+Une fois le moteur et TexSyn construits, il est possible de créer un projet Godot et de commencer à utiliser les fonctions déjà implémentées. La personne intéressée trouvera un exemple de projet utilisant TexSyn pour implémenter des méthodes de base de synthèse procédurale de texture dans le dépôt Github suivant : \url{https://github.com/DrLutzi/godot-texsyn-scripts} (crédits à Nicolas Lutz pour ce projet). La scène d'exemple présente dans ce projet ne concerne par contre pas les travaux dont ce mémoire fait l'objet. L'utilisation de ces implémentations est ici brièvement décrite.
 
-\subsection{Titre de sous-section}
+\paragraph{Construction de la pyramide de Riesz et calcul de la congruence de phases}
 
-Vous devez introduire la  sous-section.
+Pour construire la pyramide de Riesz d'une texture, la classe \texttt{RieszPyr} est utilisée. Cette classe comporte de nombreuses fonctions utiles à la construction et manipulation de la pyramide. La classe s'initialise avec la fonction \texttt{init}, en donnant en argument une \texttt{Image} qui contient les données d'une \texttt{Texture2D}. Les étages de la pyramide sont accessibles de manière unitaire à l'aide de la fonction \texttt{get\_layer}. Il est aussi possible de les récupérer tous à la fois, stockés dans un atlas de texture, avec la fonction \texttt{pack\_in\_texture}. Cette fonctionnalité est notamment utile lorsqu'il est nécessaire d'accéder à tous les niveaux de la pyramide simultanément depuis le \textit{fragment shader}. Enfin la congruence de phases est calculée à l'aide de la fonction \texttt{phase\_congruency}.
 
-\begin{enumerate}
-	\item \textbf{Quantifying affinity relations from online discussions} \\ 
-	The concept of affinity relationship discovery is relatively new in the context of online discussion communities and there has been little work addressing it to date. This problem entails finding affinity relationships in a community by combining structural features, temporal information ...
-\end{enumerate}
+\paragraph{Utilisation de l'échantillonneur préférentiel}
+
+Pour utiliser l'échantillonneur préférentiel et la méthode de synthèse discutés dans la section~\ref{sec:pc-preserving-synthesis}, la classe \texttt{RieszSampling} est utilisée. Les étapes à suivre sont l'extraction de la congruence de phases de l'exemple d'entrée (avec la classe \texttt{RieszPyr}) et sa quantification avec la méthode \texttt{quantize\_texture}, le partitionnement de la texture en différentes composantes (typiquement deux, les pavés et l'arrière-plan) avec \texttt{partition\_image}, et enfin le pré-calcul de la réalisation avec \texttt{precompute\_sampler\_realization}. Cette réalisation peut ensuite être chargée sur GPU comme un \texttt{Texture2DArray} pour être utilisée dans la synthèse qui se fait depuis le \textit{fragment shader}.
