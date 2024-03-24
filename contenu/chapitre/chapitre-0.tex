@@ -78,7 +78,7 @@ La méthode de travail usuelle en industrie consiste à regrouper ces différent
 Il existe deux méthodes classiques de stockage pour une texture : procédurale ou discrète. Une texture procédurale est représentée sous une forme fonctionnelle, à l'aide d'équations ou de procédures. Une texture discrète, quant à elle, est stockée comme une image numérique, c'est-à-dire un tableau discret et fini de données. La représentation procédurale, dont un exemple est donné à la figure~\ref{fig:perlin-noise}, présente plusieurs avantages par rapport à la représentation discrète :
 
 \begin{itemize}
-    \item la compacité : pour stocker une texture procédurale, il suffit de stocker les fonctions ou chaines d'instructions qui la définissent. Une texture procédurale n'occupe donc que très peu d'espace en mémoire.
+    \item la compacité : pour stocker une texture procédurale, il suffit de stocker les fonctions ou chaînes d'instructions qui la définissent. Une texture procédurale n'occupe donc que très peu d'espace en mémoire.
     \item la taille : une texture procédurale est définie comme une fonction sur un espace de paramètre. Une texture procédurale est donc intrinsèquement infinie.
     \item la résolution : une texture procédurale est une fonction continue au sens mathématique. Il est possible de connaître la valeur exacte d'une texture procédurale en n'importe quel point de l'espace de coordonnées en l'évaluant en ce point.
 \end{itemize}
@@ -112,16 +112,16 @@ Le processus utilisé traditionnellement pour le rendu en temps réel est appel�
 \begin{figure}
     \centering
     \includegraphics[width=.55\textwidth]{contenu/resources/images/uv_suzanne}
-    \caption[Coordonnées UV du modèle Suzanne]{Visualisation des coordonnées UV de Suzanne \footnote{\textit{Suzanne}, 2002, Willem-Paul van Overbruggen}, modèle 3D de référence du logiciel Blender}
+    \caption[Coordonnées UV du modèle Suzanne]{Visualisation des coordonnées UV de Suzanne \footnote{\textit{Suzanne}, 2002, Willem-Paul van Overbruggen}, modèle 3D de référence du logiciel Blender. Les composantes rouges et vertes de la teinte de chaque fragment correspondent aux coordonnées U et V du fragment respectivement.}
     \label{fig:uv-suzanne}
 \end{figure}
 
-Pour appliquer une texture à une géométrie, un système de coordonnées UV, est utilisé. Les coordonnées UV sont des vecteurs 2D, entre $(0, 0)$ et $(1, 1)$. Les sommets des maillages des objets de la scène ont chacun des coordonnées UV, qui leurs sont associées à la création de l'objet. Les coordonnées sont ensuite interpolées entre les sommets pour chaque fragment lors du tramage. Un exemple de rendu exhibant les coordonnées UV d'un modèle 3D est montré à la figure~\ref{fig:uv-suzanne}. Les coordonnées UV indiquent quelles parties de la texture correspondent à chaque fragment de la géométrie. L'action d'évaluer une texture en utilisant les coordonnées des fragments est appelée échantillonnage de la texture. Ce processus d'échantillonnage s'effectue en général au moment du rendu.
+Pour appliquer une texture à une géométrie, un système de coordonnées UV, est utilisé. Les coordonnées UV sont des vecteurs 2D, entre $(0, 0)$ et $(1, 1)$. Les lettres U et V représentent les deux axes de la texture 2D, car les lettres X, Y et Z symbolisent traditionnellement les coordonnées 3D dans l'espace des éléments de la scène. Les sommets des maillages des objets de la scène ont chacun des coordonnées UV, qui leur sont associées à la création de l'objet. Les coordonnées sont ensuite interpolées entre les sommets pour chaque fragment lors du tramage. Un exemple de rendu exhibant les coordonnées UV d'un modèle 3D est montré à la figure~\ref{fig:uv-suzanne}. Les coordonnées UV indiquent quelles parties de la texture correspondent à chaque fragment de la géométrie. L'action d'évaluer une texture en utilisant les coordonnées des fragments est appelée échantillonnage de la texture. Ce processus d'échantillonnage s'effectue en général au moment du rendu.
 
 \subsection{Filtrage}
 \label{subsec:filtering}
 
-L'étape d'échantillonnage comporte un problème inhérent, dû au fonctionnement d'un écran et à la nature discrète du système de pixels. Comme expliqué, la géométrie de la scène est projetée, puis découpée en fragments. Le fragment représente donc une partie de surface continue. Mais un fragment est un élément discret, il ne prend qu'une seule valeur. Le schéma en figure~\ref{fig:aliasing} illustre cette problématique. Avec les notations de la figure, un fragment $P$ représente la surface projetée $e(P)$ avec une seule valeur. La valeur que devrait prendre le fragment est l'intégrale de la texture sur l'empreinte $e(P)$. Cette valeur est cependant difficile à calculer dans la majorité des cas. Dans le cas de textures discrètes, une considération supplémentaire doit être faite. L'empreinte du fragment sur la surface texturée est souvent de taille différente que le texel (mot-valise de \textit{Texture Element}) de la texture.
+L'étape d'échantillonnage comporte un problème inhérent, dû au fonctionnement d'un écran et à la nature discrète du système de pixels. Comme expliqué, la géométrie de la scène est projetée, puis découpée en fragments. Le fragment représente donc une partie de surface continue. Mais un fragment est un élément discret, il ne prend qu'une seule valeur. Le schéma en figure~\ref{fig:aliasing} illustre cette problématique. Avec les notations de la figure, un fragment $P$ représente la surface projetée $e(P)$ avec une seule valeur. La valeur que devrait prendre le fragment est l'intégrale de la texture sur l'empreinte $e(P)$. Cette valeur est cependant difficile à calculer dans la majorité des cas. Dans le cas de textures discrètes, une considération supplémentaire doit être faite. Une texture discrète peut être vue comme un tableau discret de valeurs appelées texels (mot-valise de \textit{Texture Element}), et est souvent représentée comme une image, où chaque texel est un petit élément de surface de couleur uniforme. Le problème est que l'empreinte du fragment sur la surface texturée est souvent de taille différente que le texel de la texture.
 
 \bigskip
 
@@ -168,12 +168,12 @@ S'assurer de filtrer correctement lors de l'échantillonnage est un enjeu majeur
 
 \section{Synthèse de texture}
 
-De nombreuses surfaces texturées lors d'un rendu, comme des sols, sont de grande taille. Comme discuté précédemment~\ref{subsec:filtering}, produire des textures de résolution suffisante pour texturer de grandes surfaces sans artefacts demande une grande occupation mémoire et un long temps de création. Étirer les textures en utilisant les coordonnées UV est une solution, qui atteint cependant ses limites assez rapidement. Utiliser une texture de plus basse résolution cause des artefacts visuels. Il est possible de résoudre le problème en créant directement une texture de taille adaptée à la surface à couvrir, procédé appelé synthèse de texture. Par extension, une texture générée par un algorithme de synthèse est aussi appelée une synthèse. Les textures représentent des apparences visuelles de matériaux diverses. Il est possible de classifier des textures de plusieurs manières différentes. Une façon commune de classifier des textures est d'opposer les textures stochastiques, dont les couleurs de pixels semblent aléatoires, et les textures régulières, qui présentent une répétition régulière de motifs~\cite{liu_near-regular_2004}.
+De nombreuses surfaces texturées lors d'un rendu, comme des sols, sont de grande taille. Comme discuté précédemment en section~\ref{subsec:filtering}, produire des textures de résolution suffisante pour texturer de grandes surfaces sans artefacts demande une grande occupation mémoire et un long temps de création. Étirer les textures en utilisant les coordonnées UV est une solution, qui atteint cependant ses limites assez rapidement. Utiliser une texture de plus basse résolution cause des artefacts visuels. Il est possible de résoudre le problème en créant directement une texture de taille adaptée à la surface à couvrir, procédé appelé synthèse de texture. Par extension, une texture générée par un algorithme de synthèse est aussi appelée une synthèse. Les textures représentent des apparences visuelles de matériaux diverses. Il est possible de classifier des textures de plusieurs manières différentes. Une façon commune de classifier des textures est d'opposer les textures stochastiques, dont les couleurs de pixels semblent aléatoires, et les textures régulières, qui présentent une répétition régulière de motifs~\cite{liu_near-regular_2004}.
 
 \subsection{Notion de structure}
 \label{subsec:structure}
 
-Le travail présenté dans ce manuscrit s'intéresse cependant à la synthèse de texture présentant de la structure. Le concept de structure, bien que visuellement intuitif, est difficile à définir de manière formelle. Dans le cadre de ce manuscrit, la structure d'une texture désigne comment les différentes parties de la structure sont agencées les unes par rapport aux autres. Dans une texture structurée, les éléments de la texture forment certains schémas ou présentent une certaine forme de régularité. La classification de textures utilisée dans ce travail est faite selon le niveau de structure des textures car c'est le thème central de l'étude. La figure~\ref{fig:échelle-structure} illustre la classification proposée.
+Le travail présenté dans ce manuscrit s'intéresse cependant à la synthèse de texture présentant de la structure. Le concept de structure, bien que visuellement intuitif, est difficile à définir de manière formelle. Dans le cadre de ce manuscrit, la structure d'une texture désigne comment les différentes parties de la texture sont agencées les unes par rapport aux autres. Dans une texture structurée, les éléments de la texture forment certains schémas ou présentent une certaine forme de régularité. La classification de textures utilisée dans ce travail est faite selon le niveau de structure des textures car c'est le thème central de l'étude. La figure~\ref{fig:échelle-structure} illustre la classification proposée.
 
 \bigskip
 
@@ -199,7 +199,7 @@ Une synthèse de texture un procédé qui permet de produire une texture de tail
 
 \bigskip
 
-Il existe plusieurs types de synthèses différentes, qui produisent des types de textures différentes. Une première distinction majeure qui est souvent faite est, comme pour le rendu, entre une synthèse hors-ligne et une synthèse en temps réel. Les ressources en temps et en puissance de calcul impliquées diffèrent, les enjeux ne sont pas les mêmes. Les travaux proposés étudient le rendu et la synthèse temps réel, les synthèses hors-lignes comme les synthèses par optimisation ou par apprentissage profond ne seront pas abordées. Les algorithmes étudiés ici ont la contrainte de devoir s'exécuter au vol, sans que le budget de temps du rendu dépasse le seuil établi. Pour rentrer dans ces contraintes de temps, les méthodes de synthèse exploitent la puissance des cartes graphiques, notamment leur aspect hautement parallélisable. Les algorithmes de synthèse doivent s'exécuter de manière parallèle et chaque fragment doit se calculer indépendamment de ses voisins.
+Il existe plusieurs types de synthèses différentes, qui produisent des types de textures différentes. Une première distinction majeure qui est souvent faite est, comme pour le rendu, entre une synthèse hors-ligne et une synthèse en temps réel. Les ressources en temps et en puissance de calcul impliquées diffèrent, les enjeux ne sont pas les mêmes. Les travaux proposés étudient le rendu et la synthèse temps réel, les synthèses hors-lignes comme les synthèses par optimisation ou par apprentissage profond, comme les modèles génératifs (DALL-E~2~\cite{ramesh_hierarchical_2022} en est un exemple célèbre), ne seront pas abordées. Les algorithmes étudiés ici ont la contrainte de devoir s'exécuter au vol, sans que le budget de temps du rendu dépasse le seuil établi. Pour rentrer dans ces contraintes de temps, les méthodes de synthèse exploitent la puissance des cartes graphiques, notamment leur aspect hautement parallélisable. Les algorithmes de synthèse doivent s'exécuter de manière parallèle et chaque fragment doit se calculer indépendamment de ses voisins.
 
 \subsection{Synthèse temps réel} % / Types de synthèse
 
@@ -222,7 +222,7 @@ La gestion de l'équilibre entre cohérence et variété est un enjeu majeur dan
 
 \bigskip
 
-Le faible qualité du pavage périodique illustre l'importance du choix de la taille de tuile dans la gestion de l'équilibre entre cohérence et variété. Une grosse tuile capture bien l'apparence de la texture, mais reproduit des motifs saillants qui causent des artefacts et n'offrent pas beaucoup de variété. À l'inverse avec une petite tuile, seulement quelques texels sont réutilisés et certaines relations entre texels éloignés sont perdues, ce qui cause une perte de cohérence. Il est préférable de prendre des tuiles plus petites et mieux les mélanger~\cite{heitz_high-performance_2018} afin de d'obtenir de la variété et d'éviter la répétition de motifs saillants.
+Le faible qualité du pavage périodique illustre l'importance du choix de la taille de tuile dans la gestion de l'équilibre entre cohérence et variété. Une grosse tuile capture bien l'apparence de la texture, mais reproduit des motifs saillants qui causent des artefacts et n'offrent pas beaucoup de variété. À l'inverse avec une petite tuile, seulement quelques texels sont réutilisés et certaines relations entre texels éloignés sont perdues, ce qui cause une perte de cohérence. Il est préférable de prendre des tuiles plus petites et mieux les mélanger~\cite{heitz_high-performance_2018} afin d'obtenir de la variété et d'éviter la répétition de motifs saillants.
 
 
 \subsubsection{Synthèse par convolution}
@@ -238,23 +238,35 @@ L'objectif d'une synthèse par convolution est de construire une texture en disp
     \label{fig:lrpn}
 \end{figure}
 
-Cependant, la synthèse de texture comportant de la structure en temps réel est encore un sujet difficile. Les méthodes existantes de synthèse ne fonctionnent pas lorsque la cible contient des motifs organisés ou de la répétition. Quand des méthodes traditionnelles de synthèse temps réel sont utilisées sur des textures structurées, des artefacts visuels apparaissent. La figure~\ref{fig:synthesis-failure} montre quelques cas d'échec de synthèses de la littérature appliquées aux textures structurées. Il est difficile de créer du contenu réellement nouveau et préservant le même genre de motifs structurés que ceux de l'exemple, car la synthèse cohérente de structure n'est pas encore possible. Certaines configurations présentant des caractéristiques particulières facilitent le problème. Lutz \textit{et al.} ont par exemple montré que la synthèse est possible pour des textures dont la structure est régulière~\cite{lutz_cyclostationary-gaussian_2021}. Le cadre général reste néanmoins non résolu.
-
 \begin{figure}
     \centering
-    \begin{subfigure}{.45\textwidth}
+    \begin{subfigure}{.48\textwidth}
         \includegraphics[width=\textwidth]{contenu/resources/images/hpn_failure}
-        \caption{Synthèse par pavage et mélange~\cite{heitz_high-performance_2018}.}
+        \caption{Synthèse par pavage et mélange~\cite{heitz_high-performance_2018}.\\ \phantom{a}}
     \end{subfigure}
     \hfill
-    \begin{subfigure}{.45\textwidth}
+    \begin{subfigure}{.48\textwidth}
         \includegraphics[width=\textwidth]{contenu/resources/images/acf_preserving_hpn_failure}
         \caption{Synthèse préservant la fonction d'autocovariance~\cite{lutz_preserving_2023}.}
     \end{subfigure}
+    \\
+    \begin{subfigure}{.48\textwidth}
+        \includegraphics[width=\textwidth]{contenu/resources/images/hpn_failure_zoom}
+        \caption{Artefacts la synthèse par pavage et mélange.}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{.48\textwidth}
+        \includegraphics[width=\textwidth]{contenu/resources/images/acf_preserving_hpn_failure_zoom}
+        \caption{Artefacts de la synthèse préservant la fonction d'autocovariance.}
+    \end{subfigure}
 
-    \caption[Échec de synthèse de texture structurée]{Échec de synthèse de texture structurée. Les méthodes de synthèse actuelles ne sont pas capables de reproduire des textures structurées.}
+    \caption[Échec de synthèse de texture structurée]{Échec de synthèse de texture structurée (haut) avec grossissement sur les artefacts engendrés (bas). Les méthodes de synthèse actuelles ne sont pas capables de reproduire des textures structurées.}
     \label{fig:synthesis-failure}
 \end{figure}
+
+Cependant, la synthèse de texture comportant de la structure en temps réel est encore un sujet difficile. Les méthodes existantes de synthèse ne fonctionnent pas lorsque la cible contient des motifs organisés ou de la répétition. Quand des méthodes traditionnelles de synthèse temps réel sont utilisées sur des textures structurées, des artefacts visuels apparaissent. La figure~\ref{fig:synthesis-failure} montre quelques cas d'échec de synthèses de la littérature appliquées aux textures structurées. Il est difficile de créer du contenu réellement nouveau et préservant le même genre de motifs structurés que ceux de l'exemple, car la synthèse cohérente de structure n'est pas encore possible. Certaines configurations présentant des caractéristiques particulières facilitent le problème. Lutz \textit{et al.} ont par exemple montré que la synthèse est possible pour des textures dont la structure est régulière~\cite{lutz_cyclostationary-gaussian_2021}. Le cadre général reste néanmoins non résolu.
+
+
 
 \section{Analyse locale multirésolution}
 
@@ -294,7 +306,7 @@ Une image peut être exprimée dans le domaine fréquentiel, ou de Fourier, à l
 
 \begin{figure}[t]
     \centering
-    \includegraphics[width=.35\linewidth]{contenu/resources/images/pc_1d_kovesi}
+    \includegraphics[width=.31\linewidth]{contenu/resources/images/pc_1d_kovesi}
     \caption[Congruence de phases pour un signal 1D]{Congruence de phases pour un signal 1D, Kovesi (1995)~\cite{kovesi_image_1995}}
     \label{fig:pc-1D-kovesi}
 \end{figure}

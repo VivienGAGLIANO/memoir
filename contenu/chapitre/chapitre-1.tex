@@ -205,7 +205,7 @@ Le signal ajouté pour annuler les fréquences $F_h$ est par ailleurs un objet c
 \end{equation}
 est difficile à obtenir et manipuler. p.v. est la valeur principale de Cauchy. Cette intégrale représente la convolution avec la distribution $\frac 1{\pi t}$. L'intégrale est impropre à cause de la singularité en $t=\tau$. La valeur principale est nécessaire pour définir correctement cet objet. Dû à la complexité de l'intégrale, l'expression de la transformée de Hilbert est à la place utilisée sous sa forme fréquentielle
 \begin{align}
-    &\hil(F) = F_h = \sgn\cdot F.
+    &\hil(F)(\omega) = F_h(\omega) = \sgn(\omega)\cdot F(\omega).
 \end{align}
 
 
@@ -385,7 +385,7 @@ Le problème à l'analyse de ce signal est le fait qu'il existe plusieurs niveau
 
 \bigskip
 
-Pour filtrer les niveaux de structure, il est possible d'utiliser des filtres passe-bande. Les filtres log-Gabor, utilisés par Bridge, sont un choix commun pour ce genre de pratique. Un filtre log-Gabor permet de sélectionner une bande de fréquence centrée autour d'une fréquence centrale $\omega_0$. Les filtres log-Gabor sont définis dans le domaine fréquentiel et quand observés en échelle logarithmique ont une réponse en fréquence de forme gaussienne
+Pour filtrer les niveaux de structure, il est possible d'utiliser des filtres passe-bande. Les filtres log-Gabor~\cite{field_relations_1987}, utilisés par Bridge, sont un choix commun pour ce genre de pratique. Un filtre log-Gabor permet de sélectionner une bande de fréquence centrée autour d'une fréquence centrale $\omega_0$. Les filtres log-Gabor sont définis dans le domaine fréquentiel et quand observés en échelle logarithmique ont une réponse en fréquence de forme gaussienne
 \begin{equation}
     G(\omega) = \exp\left(-\frac{\log^2(\frac{|\omega|}{\omega_0})}{2\log(\sigma_0)^2}\right).
 \end{equation}
@@ -461,7 +461,7 @@ Le modèle du signal analytique permet l'extraction d'informations locales pour 
 
 \subsubsection{Construction du signal monogène}
 
-Pour créer la représentation analytique d'un signal 1D, un imaginaire pur en quadrature de phase avec le signal original est ajouté au signal. La transformée de Hilbert est utilisée pour former le signal analytique. Pour un signal 2D, deux parties imaginaires sont nécessaires, une pour chaque direction. Il n'est donc pas possible de représenter le signal monogène comme un complexe. Pour un traitement exact, il faudrait utiliser les quaternions. Les quaternions peuvent être vus comme une extension des nombres complexes à une plus haute dimension. Pour simplifier la compréhension et manipulation, il est cependant possible se passer de la théorie des quaternions. Le signal monogène est traité comme s'il avait trois parties réelles distinctes dans un premier temps.
+Pour créer la représentation analytique d'un signal 1D, un imaginaire pur en quadrature de phase avec le signal original est ajouté au signal. La transformée de Hilbert est utilisée pour former le signal analytique. Pour un signal 2D, deux parties imaginaires sont nécessaires, une pour chaque direction. Il n'est donc pas possible de représenter le signal monogène comme un complexe. Pour un traitement exact, il faudrait utiliser les quaternions. Les quaternions peuvent être vus comme une extension des nombres complexes à une plus haute dimension. Pour simplifier la compréhension et manipulation, il est cependant possible de se passer de la théorie des quaternions. Le signal monogène est traité comme s'il avait trois parties réelles distinctes dans un premier temps.
 
 \bigskip
 
@@ -722,7 +722,7 @@ La pyramide laplacienne est une autre forme de pyramide qui correspond à un typ
 
 \subsubsection{Construction de la pyramide}
 
-Plutôt que d'encoder la valeur même de chaque pixel, une prédiction est faite sur la valeur que chaque pixel devrait avoir. C'est l'erreur de prédiction qui est alors encodée. La valeur prédite de chaque pixel est obtenue en calculant une moyenne pondérée locale centrée autour du pixel. Dans un premier temps, une image lissée est créée par convolution. La convolution par filtre correspond au calcul de la moyenne pondérée. L'image lissée représente les corrélations locales entre les texels au niveau d'échelle correspondant au filtre choisi. L'image lissée comporte les éléments redondants à encoder plus efficacement. Pour améliorer l'encodage, l'image lissée est soustraire à l'image originale. L'image obtenue exprime l'erreur de prédiction pour chaque texel. Le procédé est illustré par la relation
+Plutôt que d'encoder la valeur même de chaque pixel, une prédiction est faite sur la valeur que chaque pixel devrait avoir. C'est l'erreur de prédiction qui est alors encodée. La valeur prédite de chaque pixel est obtenue en calculant une moyenne pondérée locale centrée autour du pixel. Dans un premier temps, une image lissée est créée par convolution. La convolution par filtre correspond au calcul de la moyenne pondérée. L'image lissée représente les corrélations locales entre les texels au niveau d'échelle correspondant au filtre choisi. L'image lissée comporte les éléments redondants à encoder plus efficacement. Pour améliorer l'encodage, l'image lissée est soustraite à l'image originale. L'image obtenue exprime l'erreur de prédiction pour chaque texel. Le procédé est illustré par la relation
 \begin{equation}
     L = I - k * I,
 \end{equation}
